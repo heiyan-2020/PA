@@ -4,6 +4,7 @@
 #include <readline/history.h>
 #include "sdb.h"
 #include <utils.h>
+#include <memory/paddr.h>
 static int is_batch_mode = false;
 
 void init_regex();
@@ -60,6 +61,22 @@ static int cmd_info(char* args) {
 	return 0;
 }
 
+static int cmd_x(char *args) {
+	char *arg_1 = strtok(NULL, " ");
+	int n4bytes;
+	sscanf(arg_1, "%d", &n4bytes);
+	char *arg_2 = strtok(NULL, " ");
+	paddr_t address;
+	sscanf(arg_2, "%d", &address);
+	int bytes = n4bytes * 4;
+	printf("%x:", address);
+	for (int i = 0; i < bytes; i ++) {
+		printf(" %x", *guest_to_host(address + i));
+	}
+	printf("\n");
+	return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -69,7 +86,8 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si", "program executes N instructions in a single step", cmd_si},
-	{	"info", "print out state of programm", cmd_info}
+	{	"info", "print out state of programm", cmd_info},
+	{"x", "scan memory", cmd_x}
 };
 
 #define NR_CMD ARRLEN(cmd_table)

@@ -71,7 +71,7 @@ static int cmd_x(char *args) {
 	int bytes = n4bytes * 4;
 	printf("%08x:", address);
 	for (int i = 0; i < bytes; i += 4) {
-		printf(" %02x%02x%02x%02x", *guest_to_host(address + i), *guest_to_host(address + i + 1), *guest_to_host(address + i + 2), *guest_to_host(address + i + 3));
+		printf(" %02x%02x%02x%02x", *guest_to_host(address + i + 3), *guest_to_host(address + i + 2), *guest_to_host(address + i + 1), *guest_to_host(address + i));
 	}
 	printf("\n");
 	return 0;

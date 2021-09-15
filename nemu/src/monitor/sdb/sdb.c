@@ -41,12 +41,13 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char* args) {
-  if (args == NULL) {
-	  cpu_exec(1);
-	  return 0;
-  }
+  char *arg = strtok(NULL, " ");
   int steps;
-  sscanf(args, "%d", &steps);
+  if (arg == NULL) {
+    steps = 1;
+  } else {
+    sscanf(args, "%d", &steps);
+  }
   cpu_exec(steps);
   return 0;  
 }

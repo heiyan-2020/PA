@@ -70,8 +70,8 @@ static int cmd_x(char *args) {
 	sscanf(arg_2, "%x", &address);
 	int bytes = n4bytes * 4;
 	printf("%x:", address);
-	for (int i = 0; i < bytes; i ++) {
-		printf(" %x", *guest_to_host(address + i));
+	for (int i = 0; i < bytes; i += 4) {
+		printf(" %x%x%x%x", *guest_to_host(address + i), *guest_to_host(address + i + 1), *guest_to_host(address + i + 2), *guest_to_host(address + i + 3));
 	}
 	printf("\n");
 	return 0;

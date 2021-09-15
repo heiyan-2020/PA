@@ -52,6 +52,14 @@ static int cmd_si(char* args) {
   return 0;  
 }
 
+static int cmd_info(char* args) {
+	char *arg = strtok(NULL, " ");
+	if (strcmp(arg, "r") == 0) {
+		isa_reg_display();
+	}
+	return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -60,9 +68,8 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  {"si", "program executes N instructions in a single step", cmd_si}
-  /* TODO: Add more commands */
-
+  {"si", "program executes N instructions in a single step", cmd_si},
+	{	"info", "print out state of programm", cmd_info}
 };
 
 #define NR_CMD ARRLEN(cmd_table)

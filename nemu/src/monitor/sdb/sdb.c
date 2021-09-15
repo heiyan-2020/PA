@@ -67,7 +67,7 @@ static int cmd_x(char *args) {
 	sscanf(arg_1, "%d", &n4bytes);
 	char *arg_2 = strtok(NULL, " ");
 	paddr_t address;
-	sscanf(arg_2, "%d", &address);
+	sscanf(arg_2, "%x", &address);
 	int bytes = n4bytes * 4;
 	printf("%x:", address);
 	for (int i = 0; i < bytes; i ++) {

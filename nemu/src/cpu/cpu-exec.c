@@ -51,7 +51,7 @@ void fetch_decode(Decode *s, vaddr_t pc) {
   s->EHelper = g_exec_table[idx];
 #ifdef CONFIG_DEBUG
   char *p = s->logbuf;
-  int len = snprintf(p, sizeof(s->logbuf), FMT_WORD ":   %shello", s->pc, log_bytebuf);
+  int len = snprintf(p, sizeof(s->logbuf), FMT_WORD ":   %s", s->pc, log_bytebuf);
   p += len;
   int ilen = s->snpc - s->pc;
   int ilen_max = MUXDEF(CONFIG_ISA_x86, 16, 4);

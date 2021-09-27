@@ -70,13 +70,11 @@ static bool make_token(char *e) {
   nr_token = 0;
 
   while (e[position] != '\0') {
-					printf("once!\n");
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
-				printf("substr_len = %d, wholestr_len = %ld\n", substr_len, strlen(substr_start));
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
@@ -102,7 +100,6 @@ static bool make_token(char *e) {
 							  }
 								case TK_NUM: {
 									if (substr_len < 32) {
-										printf("num len < 32\n");
 										struct token single_token;	
 										single_token.type = TK_NUM;
 										strncpy(single_token.str, substr_start, substr_len);
@@ -129,7 +126,6 @@ static bool make_token(char *e) {
 								}
           default: break;
         }
-printf("substr_len = %d, wholestr_len = %ld\n", substr_len, strlen(substr_start));
 
         break;
       }

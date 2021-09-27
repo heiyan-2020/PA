@@ -222,6 +222,8 @@ int find_op(int begin, int end) {
 					assert(0);
 				}
 			}
+			ptr--;
+			assert(ptr >= 0);
 		} else {
 			stack[ptr++] = i;
 		}

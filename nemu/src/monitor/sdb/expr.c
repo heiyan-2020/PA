@@ -102,6 +102,7 @@ static bool make_token(char *e) {
 							  }
 								case TK_NUM: {
 									if (substr_len < 32) {
+										printf("num len < 32\n");
 										struct token single_token;	
 										single_token.type = TK_NUM;
 										strcpy(single_token.str, substr_start);

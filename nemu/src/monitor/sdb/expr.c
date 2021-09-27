@@ -59,7 +59,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[320] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -94,7 +94,6 @@ static bool make_token(char *e) {
 								case TK_SUB:
 								case TK_LEFT:
 								case TK_RIGHT: {
-									printf("this token is %d\n", rules[i].token_type);
 									struct token tmp_token;
 									tmp_token.type = rules[i].token_type;
 									tokens[nr_token++] = tmp_token;
@@ -145,9 +144,6 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-	printf("make %d tokens\n", nr_token);
-	printf("The first token is %d\n", tokens[0].type);
-	printf("The last token is %d\n", tokens[nr_token - 1].type);
 	return (word_t) eval(0, nr_token- 1);
 }
   /* TODO: Insert codes to evaluate the expression. */
@@ -160,15 +156,11 @@ uint32_t eval(int begin, int end) {
 		sscanf(tokens[begin].str, "%u", &rtnValue);
 		return rtnValue;
 	} else if(check_parentheses(begin, end) == true){
-		printf("parentheses are corresponding!\n");
 		return eval(begin + 1, end - 1);
 	} else {
 		int op = find_op(begin, end);
-		printf("the index of operator is %d\n", op);
 		uint32_t lhs = eval(begin, op - 1);
-		printf("the lhs is %u\n", lhs);
 		uint32_t rhs = eval(op + 1, end);
-		printf("the rhs is %u\n", rhs);
 		switch (tokens[op].type) {
 			case TK_PLUS : return lhs + rhs;
 			case TK_SUB : return lhs - rhs;
@@ -224,7 +216,6 @@ int find_op(int begin, int end) {
 			op_pos = stack[i];
 		}
 	}
-	printf("the position of op is %d, the type of op is %d\n", op_pos, tokens[op_pos].type);
 	if (tokens[op_pos].type >= TK_PLUS && tokens[op_pos].type <= TK_DIV) {
 		return op_pos;
 	}

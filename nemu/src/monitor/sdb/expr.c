@@ -157,6 +157,7 @@ uint32_t eval(int begin, int end) {
 	} else if(begin == end) {
 		uint32_t rtnValue;
 		assert(tokens[begin].type == TK_NUM);
+		printf("the num is %s\n", tokens[begin].str);
 		sscanf(tokens[begin].str, "%u", &rtnValue);
 	} else if(check_parentheses(begin, end) == true){
 		printf("parentheses are corresponding!\n");

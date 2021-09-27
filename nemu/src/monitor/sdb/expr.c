@@ -219,7 +219,7 @@ int find_op(int begin, int end) {
 	}
 	int op_pos = stack[ptr - 1];
 	for (int i = ptr - 1; i >= 0; i --) {
-		if (tokens[stack[i]].type > tokens[op_pos].type) {
+		if (tokens[stack[i]].type < tokens[op_pos].type) {
 			op_pos = stack[i];
 		}
 	}

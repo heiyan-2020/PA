@@ -21,7 +21,6 @@ void test_eval() {
 		char *result = strtok(line, " ");
 		char *expression = result + strlen(result) + 1;
 		*(expression + strlen(expression) - 1) = '\0';
-		printf("%s", expression);
 		uint32_t ures;
 		sscanf(result, "%u", &ures);
 word_t expr(char *a, bool* b);

@@ -176,7 +176,7 @@ bool check_parentheses(int begin, int end) {
 	if (tokens[begin].type != TK_LEFT || tokens[end].type != TK_RIGHT) {
 		return false;
 	}
-	int stack[40];
+	int stack[400];
 	int ptr = 0;
 	for (int i = begin; i <= end; i ++) {
 		if (tokens[i].type == TK_LEFT) {
@@ -196,7 +196,7 @@ bool check_parentheses(int begin, int end) {
 }
 
 int find_op(int begin, int end) {
-	int stack[40];
+	int stack[400];
 	int ptr = 0;
 	for (int i = begin; i <= end; i ++) {
 		if (tokens[i].type == TK_RIGHT){

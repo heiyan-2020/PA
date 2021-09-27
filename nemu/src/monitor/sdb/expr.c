@@ -76,7 +76,7 @@ static bool make_token(char *e) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
-				printf("substr_len = %d, wholestr_len = %ld", substr_len, strlen(substr_start));
+				printf("substr_len = %d, wholestr_len = %ld\n", substr_len, strlen(substr_start));
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
@@ -125,7 +125,7 @@ static bool make_token(char *e) {
 								}
           default: break;
         }
-printf("substr_len = %d, wholestr_len = %ld", substr_len, strlen(substr_start));
+printf("substr_len = %d, wholestr_len = %ld\n", substr_len, strlen(substr_start));
 
         break;
       }

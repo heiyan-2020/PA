@@ -158,6 +158,10 @@ uint32_t eval(int begin, int end) {
 		sscanf(tokens[begin].str, "%u", &rtnValue);
 		return rtnValue;
 	} else if(check_parentheses(begin, end) == true){
+		if (begin + 1 > end - 1) {
+		printf("it's me!\n");
+		}
+	
 		return eval(begin + 1, end - 1);
 	} else {
 		int op = find_op(begin, end);

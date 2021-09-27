@@ -225,6 +225,9 @@ int find_op(int begin, int end) {
 			stack[ptr++] = i;
 		}
 	}
+	for (int i = 0; i < ptr; i ++) {
+		printf("%d", stack[i]);
+	}
 	int op_pos = stack[ptr - 1];
 	for (int i = ptr - 1; i >= 0; i --) {
 		if (tokens[stack[i]].type < tokens[op_pos].type) {

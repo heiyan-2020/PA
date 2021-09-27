@@ -223,6 +223,7 @@ int find_op(int begin, int end) {
 			op_pos = stack[i];
 		}
 	}
+	printf("the position of op is %d, the type of op is %d\n", op_pos, tokens[op_pos].type);
 	if (tokens[op_pos].type >= TK_PLUS && tokens[op_pos].type <= TK_DIV) {
 		return op_pos;
 	}

@@ -6,12 +6,13 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
-
-  /* TODO: Add more token types */
+  TK_NOTYPE = 256, TK_PLUS, TK_EQ, TK_SUB, TK_MUL, TK_DIV, TK_LEFT, TK_RIGHT,
+	TK_NUM
 
 };
-
+int find_op(int begin, int end);
+bool check_parentheses(int begin, int end);
+uint32_t eval(int begin, int end) ;
 static struct rule {
   const char *regex;
   int token_type;
@@ -22,8 +23,14 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
+  {"[0-9]+", TK_NUM},
   {"==", TK_EQ},        // equal
+  {"\\+", TK_PLUS},         // plus
+	{"-", TK_SUB},
+	{"\\*", TK_MUL},
+	{"/", TK_DIV},
+	{"\\(", TK_LEFT},
+	{"\\)", TK_RIGHT}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -80,6 +87,41 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
+								case TK_NOTYPE: break;
+								case TK_MUL: 
+								case TK_DIV:
+								case TK_PLUS:
+								case TK_SUB:
+								case TK_LEFT:
+								case TK_RIGHT: {
+									struct token tmp_token;
+									tmp_token.type = rules[i].token_type;
+									tokens[nr_token++] = tmp_token;
+									break;
+							  }
+								case TK_NUM: {
+									if (substr_len < 32) {
+										struct token single_token;	
+										single_token.type = TK_NUM;
+										strcpy(single_token.str, substr_start);
+										tokens[nr_token++] = single_token;
+									}	else {
+										int offset = 0;
+										while (substr_len - offset >= 32) {
+											struct token single_token;
+											single_token.type = TK_NUM;
+											strncpy(single_token.str, substr_start + offset, 31);
+											single_token.str[31] = '\0';
+											offset += 31;
+											tokens[nr_token++] = single_token;
+										}
+										struct token single_token;
+										single_token.type = TK_NUM;
+										strcpy(single_token.str, substr_start + offset);
+										tokens[nr_token++] = single_token;
+									}					
+									break;
+								}
           default: TODO();
         }
 
@@ -102,9 +144,79 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
+	return (word_t) eval(0, nr_token- 1);
+}
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+uint32_t eval(int begin, int end) {
+	if (begin > end) {
+		assert(0);
+	} else if(begin == end) {
+		uint32_t rtnValue;
+		assert(tokens[begin].type == TK_NUM);
+		sscanf(tokens[begin].str, "%u", &rtnValue);
+	} else if(check_parentheses(begin, end) == true){
+		return eval(begin + 1, end - 1);
+	} else {
+		int op = find_op(begin, end);
+		uint32_t lhs = eval(begin, op - 1);
+		uint32_t rhs = eval(op + 1, end);
+		switch (tokens[op].type) {
+			case TK_PLUS : return lhs + rhs;
+			case TK_SUB : return lhs - rhs;
+			case TK_MUL : return lhs * rhs;
+			case TK_DIV : return lhs / rhs;
+			default : assert(0);
+		}		
+	}
+	return 0;
+}
 
-  return 0;
+bool check_parentheses(int begin, int end) {
+	if (tokens[begin].type != TK_LEFT || tokens[end].type != TK_RIGHT) {
+		return false;
+	}
+	int stack[40];
+	int ptr = 0;
+	for (int i = begin; i <= end; i ++) {
+		if (tokens[i].type == TK_LEFT) {
+			stack[ptr++] = i;
+		} else if (tokens[i].type == TK_RIGHT) {
+			ptr--;
+		}
+		if (ptr < 0) {
+			assert(0);
+			return false;
+		}
+	}
+	if (ptr != 0) {
+		assert(0);
+	}
+	return stack[0] == begin;
+}
+
+int find_op(int begin, int end) {
+	int stack[40];
+	int ptr = 0;
+	for (int i = begin; i <= end; i ++) {
+		if (tokens[i].type == TK_RIGHT){
+			while (tokens[stack[ptr - 1]].type != TK_LEFT) {
+				ptr--;
+				if (ptr < 0) {
+					assert(0);
+				}
+			}
+		} else {
+			stack[ptr++] = i;
+		}
+	}
+	int op_pos = stack[ptr - 1];
+	for (int i = ptr - 1; i >= 0; i --) {
+		if (tokens[stack[i]].type > tokens[op_pos].type) {
+			op_pos = stack[i];
+		}
+	}
+	if (tokens[op_pos].type >= TK_PLUS && tokens[op_pos].type <= TK_DIV) {
+		return op_pos;
+	}
+	return -1;
 }

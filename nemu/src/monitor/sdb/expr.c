@@ -150,6 +150,7 @@ word_t expr(char *e, bool *success) {
 	for (int i = 0; i < nr_token; i ++) {
 		printf("%d",tokens[i].type - 256);
 	}
+	printf("\n");
 	return (word_t) eval(0, nr_token- 1);
 }
   /* TODO: Insert codes to evaluate the expression. */
@@ -226,8 +227,9 @@ int find_op(int begin, int end) {
 		}
 	}
 	for (int i = 0; i < ptr; i ++) {
-		printf("%d", stack[i]);
+		printf("%d ", stack[i]);
 	}
+	printf("\n");
 	int op_pos = stack[ptr - 1];
 	for (int i = ptr - 1; i >= 0; i --) {
 		if (tokens[stack[i]].type < tokens[op_pos].type) {

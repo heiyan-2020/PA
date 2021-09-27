@@ -2,7 +2,7 @@
 #include <assert.h>
 
 int main() {
-	FILE *fp = fopen("../a.c", "r");
+	FILE *fp = fopen("../tools/gen-expr/input", "r");
 	assert(fp != NULL);
 	fclose(fp);
 	printf("open successfully!\n");

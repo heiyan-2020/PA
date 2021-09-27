@@ -10,7 +10,7 @@ word_t expr(char *a, bool *b);
  */
 
 void test_eval() {
-	FILE *file = fopen("../tools/gen-expr/input", "r");
+	FILE *file = fopen("../tools/gen-expr/input", "r"); 
 	assert(file != NULL);
 
 	char *line = NULL;
@@ -22,6 +22,7 @@ void test_eval() {
 		char *expression = result + strlen(result) + 1;
 		uint32_t ures;
 		sscanf(result, "%u", &ures);
+word_t expr(char *a, bool* b);
 		bool succ = true;
 		uint32_t eval = expr(expression, &succ);
 		assert(ures == eval);

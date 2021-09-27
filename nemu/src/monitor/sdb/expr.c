@@ -147,6 +147,9 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
 	printf("nr_token is %d\n", nr_token);
+	for (int i = 0; i < nr_token; i ++) {
+		printf("%d",tokens[i].type - 256);
+	}
 	return (word_t) eval(0, nr_token- 1);
 }
   /* TODO: Insert codes to evaluate the expression. */

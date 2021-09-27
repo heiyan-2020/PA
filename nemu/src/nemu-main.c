@@ -20,6 +20,7 @@ void test_eval() {
 	while ((read = getline(&line, &len, file)) != -1) {
 		char *result = strtok(line, " ");
 		char *expression = result + strlen(result) + 1;
+		*(expression + strlen(expression) - 1) = '\0';
 		printf("%s", expression);
 		uint32_t ures;
 		sscanf(result, "%u", &ures);

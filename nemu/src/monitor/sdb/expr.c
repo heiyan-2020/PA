@@ -145,6 +145,8 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
 	printf("make %d tokens\n", nr_token);
+	printf("The first token is %d\n", tokens[0].type);
+	printf("The last token is %d\n", tokens[nr_token - 1].type);
 	return (word_t) eval(0, nr_token- 1);
 }
   /* TODO: Insert codes to evaluate the expression. */
@@ -156,11 +158,15 @@ uint32_t eval(int begin, int end) {
 		assert(tokens[begin].type == TK_NUM);
 		sscanf(tokens[begin].str, "%u", &rtnValue);
 	} else if(check_parentheses(begin, end) == true){
+		printf("parentheses are corresponding!\n");
 		return eval(begin + 1, end - 1);
 	} else {
 		int op = find_op(begin, end);
+		printf("the index of operator is %d\n", op);
 		uint32_t lhs = eval(begin, op - 1);
+		printf("the lhs is %u\n", lhs);
 		uint32_t rhs = eval(op + 1, end);
+		printf("the rhs is %u\n", rhs);
 		switch (tokens[op].type) {
 			case TK_PLUS : return lhs + rhs;
 			case TK_SUB : return lhs - rhs;

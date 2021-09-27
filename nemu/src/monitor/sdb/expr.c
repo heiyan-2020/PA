@@ -94,6 +94,7 @@ static bool make_token(char *e) {
 								case TK_SUB:
 								case TK_LEFT:
 								case TK_RIGHT: {
+									printf("this token is %d\n", rules[i].token_type);
 									struct token tmp_token;
 									tmp_token.type = rules[i].token_type;
 									tokens[nr_token++] = tmp_token;
@@ -122,7 +123,7 @@ static bool make_token(char *e) {
 									}					
 									break;
 								}
-          default: TODO();
+          default: break;
         }
 
         break;

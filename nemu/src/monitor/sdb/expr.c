@@ -146,17 +146,13 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-	printf("nr_token is %d\n", nr_token);
 	for (int i = 0; i < nr_token; i ++) {
-		printf("%d",tokens[i].type - 256);
 	}
-	printf("\n");
 	return (word_t) eval(0, nr_token- 1);
 }
   /* TODO: Insert codes to evaluate the expression. */
 uint32_t eval(int begin, int end) {
 	if (begin > end) {
-		printf("begin is %d; end is %d\n", begin, end);
 		assert(0);
 	} else if(begin == end) {
 		uint32_t rtnValue;
@@ -165,17 +161,14 @@ uint32_t eval(int begin, int end) {
 		return rtnValue;
 	} else if(check_parentheses(begin, end) == true){
 		if (begin + 1 > end - 1) {
-		printf("it's me!\n");
 		}
 	
 		return eval(begin + 1, end - 1);
 	} else {
 		int op = find_op(begin, end);
-		printf("pos is %d, type is %d\n", op, tokens[op].type);
 		uint32_t lhs = eval(begin, op - 1);
 		uint32_t rhs = eval(op + 1, end);
 		if (begin > op - 1 || op + 1 > end) {
-		printf("begin: %d; op: %d; end: %d\n", begin, op, end);
 		}
 		switch (tokens[op].type) {
 			case TK_PLUS : return lhs + rhs;
@@ -228,10 +221,6 @@ int find_op(int begin, int end) {
 			stack[ptr++] = i;
 		}
 	}
-	for (int i = 0; i < ptr; i ++) {
-		printf("%d ", stack[i]);
-	}
-	printf("\n");
 	int op_pos = stack[ptr - 1];
 	for (int i = ptr - 1; i >= 0; i --) {
 		if (tokens[stack[i]].type < tokens[op_pos].type) {

@@ -77,6 +77,12 @@ static int cmd_x(char *args) {
 	return 0;
 }
 
+static int cmd_p(char *args) {
+	bool success = true;
+	word_t res = expr(args,&success);
+	printf("%u\n", res);
+	return 0;
+}
 static struct {
   const char *name;
   const char *description;
@@ -87,7 +93,8 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   {"si", "program executes N instructions in a single step", cmd_si},
 	{	"info", "print out state of programm", cmd_info},
-	{"x", "scan memory", cmd_x}
+	{"x", "scan memory", cmd_x},
+	{"p", "evaluate and print the expression", cmd_p}
 };
 
 #define NR_CMD ARRLEN(cmd_table)

@@ -163,6 +163,9 @@ uint32_t eval(int begin, int end) {
 		int op = find_op(begin, end);
 		uint32_t lhs = eval(begin, op - 1);
 		uint32_t rhs = eval(op + 1, end);
+		if (begin > op - 1 || op + 1 > end) {
+		printf("begin: %d; op: %d; end: %d\n", begin, op, end);
+		}
 		switch (tokens[op].type) {
 			case TK_PLUS : return lhs + rhs;
 			case TK_SUB : return lhs - rhs;

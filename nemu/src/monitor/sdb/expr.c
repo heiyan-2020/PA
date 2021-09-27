@@ -1,5 +1,5 @@
 #include <isa.h>
-
+#include <string.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -76,12 +76,12 @@ static bool make_token(char *e) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
-				printf("substr_len = %d\n", substr_len);
+				printf("substr_len = %d, wholestr_len = %ld", substr_len, strlen(substr_start));
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
-
+				
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
@@ -125,6 +125,7 @@ static bool make_token(char *e) {
 								}
           default: break;
         }
+printf("substr_len = %d, wholestr_len = %ld", substr_len, strlen(substr_start));
 
         break;
       }

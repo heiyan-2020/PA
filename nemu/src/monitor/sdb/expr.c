@@ -170,6 +170,7 @@ uint32_t eval(int begin, int end) {
 		return eval(begin + 1, end - 1);
 	} else {
 		int op = find_op(begin, end);
+		printf("pos is %d, type is %d\n", op, tokens[op].type);
 		uint32_t lhs = eval(begin, op - 1);
 		uint32_t rhs = eval(op + 1, end);
 		if (begin > op - 1 || op + 1 > end) {

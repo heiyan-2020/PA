@@ -105,9 +105,11 @@ static bool make_token(char *e) {
 										printf("num len < 32\n");
 										struct token single_token;	
 										single_token.type = TK_NUM;
-										strcpy(single_token.str, substr_start);
+										strncpy(single_token.str, substr_start, substr_len);
+										single_token.str[substr_len] = '\0';
 										tokens[nr_token++] = single_token;
 									}	else {
+													assert(0);
 										int offset = 0;
 										while (substr_len - offset >= 32) {
 											struct token single_token;
@@ -119,7 +121,8 @@ static bool make_token(char *e) {
 										}
 										struct token single_token;
 										single_token.type = TK_NUM;
-										strcpy(single_token.str, substr_start + offset);
+										strncpy(single_token.str, substr_start + offset, substr_len - offset);
+										single_token.str[substr_len - offset] = '\0';
 										tokens[nr_token++] = single_token;
 									}					
 									break;

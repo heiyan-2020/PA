@@ -170,7 +170,6 @@ word_t expr(char *e, bool *success) {
 }
   /* TODO: Insert codes to evaluate the expression. */
 uint32_t eval(int begin, int end) {
-	print_test(begin, end);
 	if (begin > end) {
 		assert(0);
 	} else if(begin == end) {
@@ -187,6 +186,10 @@ uint32_t eval(int begin, int end) {
 		int op = find_op(begin, end);
 		uint32_t lhs = eval(begin, op - 1);
 		uint32_t rhs = eval(op + 1, end);
+		printf("left subexpr is: ");
+		print_test(begin, op - 1);
+		printf("right subexpr is: ");
+		print_test(op + 1, end);
 		switch (tokens[op].type) {
 			case TK_PLUS : return lhs + rhs;
 			case TK_SUB : return lhs - rhs;

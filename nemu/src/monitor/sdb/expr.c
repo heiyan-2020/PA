@@ -161,6 +161,7 @@ uint32_t eval(int begin, int end) {
 		assert(0);
 	} else if(begin == end) {
 		uint32_t rtnValue;
+		assert(begin == 0);
 		assert(tokens[begin].type == TK_NUM);
 		sscanf(tokens[begin].str, "%u", &rtnValue);
 		return rtnValue;
@@ -173,8 +174,6 @@ uint32_t eval(int begin, int end) {
 		int op = find_op(begin, end);
 		uint32_t lhs = eval(begin, op - 1);
 		uint32_t rhs = eval(op + 1, end);
-		if (begin > op - 1 || op + 1 > end) {
-		}
 		switch (tokens[op].type) {
 			case TK_PLUS : return lhs + rhs;
 			case TK_SUB : return lhs - rhs;
@@ -233,7 +232,7 @@ int find_op(int begin, int end) {
 		}
 	}
 	printf("bgein = %d, end = %d, op = %d\n", begin, end, op_pos);
-	if (tokens[op_pos].type <= TK_PLUS && tokens[op_pos].type >= TK_DIV) {
+	if (tokens[op_pos].type >= TK_PLUS && tokens[op_pos].type <= TK_MUL) {
 		return op_pos;
 	}
 	return -1;

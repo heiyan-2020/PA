@@ -37,6 +37,7 @@ static struct rule {
 
 #define NR_REGEX ARRLEN(rules)
 
+
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -63,6 +64,23 @@ typedef struct token {
 
 static Token tokens[3200] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
+
+static void print_test(int begin,int end) {
+	for(int i = begin; i <= end; i++) {
+		switch (tokens[i].type) {
+						case TK_PLUS: printf("+");break;
+						case TK_SUB: printf("-");break;
+						case TK_MUL: printf("*");break;
+						case TK_DIV: printf("/");break;
+						case TK_NUM: printf("%s", tokens[i].str);break;
+						case TK_LEFT: printf("(");break;
+						case TK_RIGHT: printf(")");break;
+						default: break;
+		}
+	}
+	printf("\n");
+}
+
 
 static bool make_token(char *e) {
   int position = 0;
@@ -152,6 +170,7 @@ word_t expr(char *e, bool *success) {
 }
   /* TODO: Insert codes to evaluate the expression. */
 uint32_t eval(int begin, int end) {
+	print_test(begin, end);
 	if (begin > end) {
 		assert(0);
 	} else if(begin == end) {

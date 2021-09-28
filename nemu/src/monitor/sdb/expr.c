@@ -5,7 +5,7 @@
  */
 #include <regex.h>
 
-int precedence[32] = {16, 6, 10, 6, 5, 5, 3, 3, 16};
+int precedence[32] = {0, 6, 10, 6, 5, 5, 3, 3, 0};
 
 enum {
   TK_NOTYPE, TK_PLUS, TK_EQ, TK_SUB, TK_DIV, TK_MUL, TK_LEFT, TK_RIGHT,

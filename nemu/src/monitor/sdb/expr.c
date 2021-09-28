@@ -154,7 +154,7 @@ word_t expr(char *e, bool *success) {
 }
   /* TODO: Insert codes to evaluate the expression. */
 uint32_t eval(int begin, int end) {
-	printf("eval: begin = %d, end = %d", begin, end);
+	printf("eval: begin = %d, end = %d\n", begin, end);
 	if (begin > end) {
 		assert(0);
 	} else if(begin == end) {

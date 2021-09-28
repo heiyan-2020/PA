@@ -230,6 +230,7 @@ int find_op(int begin, int end) {
 			op_pos = stack[i];
 		}
 	}
+	printf("bgein = %d, end = %d, op = %d\n", begin, end, op_pos);
 	if (tokens[op_pos].type <= TK_PLUS && tokens[op_pos].type >= TK_DIV) {
 		return op_pos;
 	}

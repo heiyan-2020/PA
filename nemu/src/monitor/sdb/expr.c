@@ -188,10 +188,10 @@ uint32_t eval(int begin, int end) {
 		uint32_t rhs = eval(op + 1, end);
 		printf("left subexpr is: ");
 		print_test(begin, op - 1);
-		printf("the left result is: %u\n", lhs);
+		printf("the left result is: %d\n", lhs);
 		printf("right subexpr is: ");
 		print_test(op + 1, end);
-		printf("the right resultis %u\n", rhs);
+		printf("the right resultis %d\n", rhs);
 		switch (tokens[op].type) {
 			case TK_PLUS : return lhs + rhs;
 			case TK_SUB : return lhs - rhs;

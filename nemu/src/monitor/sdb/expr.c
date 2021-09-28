@@ -226,12 +226,11 @@ int find_op(int begin, int end) {
 	}
 	int op_pos = stack[ptr - 1];
 	for (int i = ptr - 1; i >= 0; i --) {
-		printf("%d\n", precedence[tokens[stack[i]].type]);
 		if (precedence[tokens[stack[i]].type] > precedence[tokens[op_pos].type]) {
 			op_pos = stack[i];
 		}
 	}
-	if (tokens[op_pos].type >= TK_PLUS && tokens[op_pos].type <= TK_DIV) {
+	if (tokens[op_pos].type <= TK_PLUS && tokens[op_pos].type >= TK_DIV) {
 		return op_pos;
 	}
 	return -1;

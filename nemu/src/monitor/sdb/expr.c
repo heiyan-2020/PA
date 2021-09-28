@@ -5,8 +5,10 @@
  */
 #include <regex.h>
 
+int precedence[32] = {16, 6, 10, 6, 5, 5, 3, 3, 16};
+
 enum {
-  TK_NOTYPE = 256, TK_PLUS, TK_EQ, TK_SUB, TK_MUL, TK_DIV, TK_LEFT, TK_RIGHT,
+  TK_NOTYPE, TK_PLUS, TK_EQ, TK_SUB, TK_DIV, TK_MUL, TK_LEFT, TK_RIGHT,
 	TK_NUM
 
 };
@@ -223,7 +225,7 @@ int find_op(int begin, int end) {
 	}
 	int op_pos = stack[ptr - 1];
 	for (int i = ptr - 1; i >= 0; i --) {
-		if (tokens[stack[i]].type < tokens[op_pos].type) {
+		if (precedence[tokens[stack[i]].type] > precedence[tokens[op_pos].type]) {
 			op_pos = stack[i];
 		}
 	}

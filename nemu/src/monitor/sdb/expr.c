@@ -148,20 +148,15 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-	for (int i = 0; i < nr_token; i ++) {
-			printf("%d ", tokens[i].type);
-	}
 	printf("\n");
 	return (word_t) eval(0, nr_token- 1);
 }
   /* TODO: Insert codes to evaluate the expression. */
 uint32_t eval(int begin, int end) {
-	printf("eval: begin = %d, end = %d\n", begin, end);
 	if (begin > end) {
 		assert(0);
 	} else if(begin == end) {
 		uint32_t rtnValue;
-		assert(begin == 0);
 		assert(tokens[begin].type == TK_NUM);
 		sscanf(tokens[begin].str, "%u", &rtnValue);
 		return rtnValue;
@@ -231,7 +226,6 @@ int find_op(int begin, int end) {
 			op_pos = stack[i];
 		}
 	}
-	printf("bgein = %d, end = %d, op = %d\n", begin, end, op_pos);
 	if (tokens[op_pos].type >= TK_PLUS && tokens[op_pos].type <= TK_MUL) {
 		return op_pos;
 	}

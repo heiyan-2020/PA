@@ -29,7 +29,7 @@ OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 $(OBJ_DIR)/%.o: %.c
 	@echo + CC $<
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -g -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 	$(call call_fixdep, $(@:.o=.d), $@)
 
 # Depencies

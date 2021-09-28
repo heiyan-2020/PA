@@ -184,8 +184,8 @@ uint32_t eval(int begin, int end) {
 		return eval(begin + 1, end - 1);
 	} else {
 		int op = find_op(begin, end);
-		uint32_t lhs = eval(begin, op - 1);
-		uint32_t rhs = eval(op + 1, end);
+		int lhs = eval(begin, op - 1);
+		int rhs = eval(op + 1, end);
 		printf("left subexpr is: ");
 		print_test(begin, op - 1);
 		printf("the left result is: %d\n", lhs);

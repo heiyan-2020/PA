@@ -159,7 +159,6 @@ static bool make_token(char *e) {
 									strncpy(single_token.str, substr_start, substr_len);
 									single_token.str[substr_len] = '\0';
 									tokens[nr_token++] = single_token;
-									printf("DEBUG INFO: the hexnum is 0x%s\n", single_token.str);
 									break;									
 								}
          				default: break;
@@ -197,7 +196,6 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
 uint32_t eval(int begin, int end, bool* success) {
 	if (begin > end) {
-		printf("DEBUG INFO\nbegin = %d, end = %d\n",begin, end);
 		printf("A syntax error in expression!\n");
 		assert(0);	
 	} else if(begin == end) {
@@ -239,20 +237,15 @@ uint32_t eval(int begin, int end, bool* success) {
 				default : assert(0);
 			}		
 		} else {
-			printf("DEBUG INFO: It's preparing to return value in memory\n");
 			assert(tokens[op].type == TK_DEREF);
 			uint32_t result = 0;
 			paddr_t address;
-			printf("DEBUG INFO: string address = %s\n", tokens[op + 1].str);
 			sscanf(tokens[op + 1].str, "%x", &address);
-			printf("DEBUG INFO: address = %x\n", address);
 			for (int i = 3; i >= 0; i --) {
 				uint8_t bits = *(guest_to_host(address + (3 - i)));
-				printf("DEBUG INFO: the no.%d memory has value of 0x%02x\n",3 - i,bits);
 				uint32_t tmp = (uint32_t) bits;
 				result |= (tmp << (8 * i));
 			}
-			printf("DEBUG INFO: hex of result is %x\n", result);
 			return result;
 		}
 	}

@@ -27,6 +27,12 @@ static void gen(char ch) {
 	buf[pos++] = ch;
 }
 
+static void gen_str(char *chs) {
+	for(int i = 0; i < strlen(chs); i++) {
+		gen(chs[i]);
+	}
+}
+
 static void gen_num() {
 	int num_len = choose (4) + 1;
 	for (int i = 0; i < num_len; i ++) {
@@ -39,10 +45,13 @@ static void gen_num() {
 }
 
 static void gen_rand_op() {
-	switch (choose(4)) {
+	switch (choose(8)) {
 		case 0: gen('+');break;
 		case 1: gen('-');break;
 		case 2: gen('*');break;
+		case 3: gen_str("==");break;
+		case 4: gen_str("!=");break;
+		case 5: gen_str("&&");break;
 		default: gen('/');break;
 	}
 }

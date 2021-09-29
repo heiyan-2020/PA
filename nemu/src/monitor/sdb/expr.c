@@ -305,13 +305,13 @@ int find_op(int begin, int end) {
 		}
 	}
 	int op_pos = stack[0];
+	printf("here!\n");
 	for (int i = nr_token; i >= 0; i--) {
 		if (precedence[tokens[stack[i]].type] > precedence[tokens[op_pos].type]) {
 			op_pos = stack[i];
 		}
 	}
 	if (precedence[tokens[op_pos].type] >= 2) {
-		printf("pos = %d\n", op_pos);
 		return op_pos;
 	}
 	return -1;

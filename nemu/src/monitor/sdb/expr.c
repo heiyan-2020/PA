@@ -196,6 +196,7 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
 uint32_t eval(int begin, int end, bool* success) {
 	if (begin > end) {
+		printf("DEBUG INFO\nbegin = %d, end = %d\n",begin, end);
 		printf("A syntax error in expression!\n");
 		assert(0);	
 	} else if(begin == end) {

@@ -68,24 +68,24 @@ typedef struct token {
 static Token tokens[3200] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
-static void print_test(int begin,int end) {
-	for(int i = begin; i <= end; i++) {
-		switch (tokens[i].type) {
-						case TK_PLUS: printf("+");break;
-						case TK_SUB: printf("-");break;
-						case TK_MUL: printf("*");break;
-						case TK_DIV: printf("/");break;
-						case TK_NUM: printf("%s", tokens[i].str);break;
-						case TK_LEFT: printf("(");break;
-						case TK_RIGHT: printf(")");break;
-						case TK_EQ: printf("==");break;
-						case TK_NEQ: printf("!=");break;
-						case TK_AND: printf("&&");break;
-						default: break;
-		}
-	}
-	printf("\n");
-}
+//static void print_test(int begin,int end) {
+//	for(int i = begin; i <= end; i++) {
+//		switch (tokens[i].type) {
+//						case TK_PLUS: printf("+");break;
+//						case TK_SUB: printf("-");break;
+//						case TK_MUL: printf("*");break;
+//						case TK_DIV: printf("/");break;
+//						case TK_NUM: printf("%s", tokens[i].str);break;
+//						case TK_LEFT: printf("(");break;
+//						case TK_RIGHT: printf(")");break;
+//						case TK_EQ: printf("==");break;
+//						case TK_NEQ: printf("!=");break;
+//						case TK_AND: printf("&&");break;
+//						default: break;
+//		}
+//	}
+//	printf("\n");
+//}
 
 
 static bool make_token(char *e) {
@@ -198,7 +198,6 @@ word_t expr(char *e, bool *success) {
 }
   /* TODO: Insert codes to evaluate the expression. */
 uint32_t eval(int begin, int end, bool* success) {
-	printf("DEBUG INFO:begin = %d, end = %d\n", begin, end);
 	if (begin > end) {
 		printf("A syntax error in expression!\n");
 		assert(0);	
@@ -222,19 +221,12 @@ uint32_t eval(int begin, int end, bool* success) {
 			return result;
 } else if(check_parentheses(begin, end) == true){
 		if (begin + 1 > end - 1) {
-						printf("done!\n");
 		}
 	
 		return eval(begin + 1, end - 1, success);
 	} else {
-		printf("find_op\n");
 		int op = find_op(begin, end);
 		if (tokens[op].type != TK_DEREF) {
-			printf("LEFT EXPR IS\n");
-			print_test(begin, op - 1);
-			printf("RIGHT EXPR IS\n");
-			print_test(op + 1, end);
-			
 			int lhs = eval(begin, op - 1, success);
 			int rhs = eval(op + 1, end, success);
 
@@ -306,7 +298,6 @@ int find_op(int begin, int end) {
 	}
 	int op_pos = stack[ptr - 1];
 	for (int i = ptr - 1; i >= 0; i--) {
-		printf("%d\n", tokens[stack[i]].type);
 		if (precedence[tokens[stack[i]].type] > precedence[tokens[op_pos].type]) {
 			op_pos = stack[i];
 		}

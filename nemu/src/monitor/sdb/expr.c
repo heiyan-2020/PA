@@ -156,7 +156,7 @@ static bool make_token(char *e) {
 								case TK_HEXNUM: {
 									Token single_token;
 									single_token.type = TK_HEXNUM;
-									strncpy(single_token.str, substr_start + 2, substr_len);
+									strncpy(single_token.str, substr_start, substr_len);
 									single_token.str[substr_len] = '\0';
 									tokens[nr_token++] = single_token;
 									printf("DEBUG INFO: the hexnum is 0x%s\n", single_token.str);

@@ -248,10 +248,11 @@ uint32_t eval(int begin, int end, bool* success) {
 			printf("DEBUG INFO: address = %x\n", address);
 			for (int i = 3; i >= 0; i --) {
 				uint8_t bits = *(guest_to_host(address + (3 - i)));
-				printf("DEBUG INFO: the no.%d memory has value of 0x%02x\n",i - 3,bits);
+				printf("DEBUG INFO: the no.%d memory has value of 0x%02x\n",3 - i,bits);
 				uint32_t tmp = (uint32_t) bits;
 				result |= (tmp << (8 * i));
 			}
+			printf("DEBUG INFO: hex of result is %x\n", result);
 			return result;
 		}
 	}

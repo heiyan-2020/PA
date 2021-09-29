@@ -228,6 +228,9 @@ uint32_t eval(int begin, int end, bool* success) {
 		int op = find_op(begin, end);
 		if (tokens[op].type != TK_DEREF) {
 			uint32_t lhs = eval(begin, op - 1, success);
+			if (tokens[op].type == TK_AND && lhs == 0) {
+							return 0;
+			}
 			uint32_t rhs = eval(op + 1, end, success);
 
 			switch (tokens[op].type) {

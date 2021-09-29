@@ -304,8 +304,8 @@ int find_op(int begin, int end) {
 			stack[ptr++] = i;
 		}
 	}
-	int op_pos = stack[0];
-	for (int i = nr_token; i >= 0; i--) {
+	int op_pos = stack[ptr - 1];
+	for (int i = ptr - 1; i >= 0; i--) {
 		printf("%d\n", tokens[stack[i]].type);
 		if (precedence[tokens[stack[i]].type] > precedence[tokens[op_pos].type]) {
 			op_pos = stack[i];

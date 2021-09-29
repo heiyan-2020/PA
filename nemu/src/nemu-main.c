@@ -10,7 +10,7 @@ word_t expr(char *a, bool *b);
  */
 
 void test_eval() {
-	FILE *file = fopen("/home/heiyan/ics2021/nemu/tools/gen-expr/input", "r"); 
+	FILE *file = fopen("tools/gen-expr/input", "r"); 
 	assert(file != NULL);
 
 	char *line = NULL;
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 #endif
 
   /* Start engine. */
-//	test_eval();
-  engine_start();
+	test_eval();
+//  engine_start();
   return is_exit_status_bad();
 }

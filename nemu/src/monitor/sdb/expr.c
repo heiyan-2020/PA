@@ -188,6 +188,7 @@ word_t expr(char *e, bool *success) {
 	for(int i = 0; i < nr_token; i ++) {
 		if (tokens[i].type == TK_MUL && (i == 0 || tokens[i - 1].type  == TK_AND || tokens[i - 1].type  == TK_NEQ ||tokens[i - 1].type  == TK_EQ ||tokens[i - 1].type == TK_DIV ||tokens[i - 1].type  == TK_MUL || tokens[i - 1].type  ==  TK_SUB ||tokens[i - 1].type  == TK_PLUS ||tokens[i - 1].type  == TK_LEFT)) {
 		tokens[i].type = TK_DEREF;
+		printf("DEBUG INFO: index = %d\n", i);
 		printf("DEBUG INFO: address is %s\n", tokens[i].str);
 		}
 	}

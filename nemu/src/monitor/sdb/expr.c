@@ -299,7 +299,7 @@ int find_op(int begin, int end) {
 			op_pos = stack[i];
 		}
 	}
-	if (precedence[tokens[op_pos].type] >= 3) {
+	if (precedence[tokens[op_pos].type] >= 2) {
 		return op_pos;
 	}
 	return -1;

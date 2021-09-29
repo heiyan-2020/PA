@@ -227,6 +227,7 @@ uint32_t eval(int begin, int end, bool* success) {
 	
 		return eval(begin + 1, end - 1, success);
 	} else {
+		printf("find_op\n");
 		int op = find_op(begin, end);
 		if (tokens[op].type != TK_DEREF) {
 			printf("LEFT EXPR IS\n");

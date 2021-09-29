@@ -8,9 +8,7 @@
 int precedence[32] = {0, 6, 10, 6, 5, 5, 3, 3, 0};
 
 enum {
-  TK_NOTYPE, TK_PLUS, TK_EQ, TK_SUB, TK_DIV, TK_MUL, TK_LEFT, TK_RIGHT,
-	TK_NUM
-
+  TK_NOTYPE, TK_PLUS, TK_EQ, TK_SUB, TK_DIV, TK_MUL, TK_LEFT, TK_RIGHT, TK_NUM, TK_HEXNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF
 };
 int find_op(int begin, int end);
 bool check_parentheses(int begin, int end);
@@ -32,7 +30,12 @@ static struct rule {
 	{"\\*", TK_MUL},
 	{"/", TK_DIV},
 	{"\\(", TK_LEFT},
-	{"\\)", TK_RIGHT}
+	{"\\)", TK_RIGHT},
+	{"^0x[0-9]+", TK_HEXNUM},
+	{"^\\$[a-z0-9_]+", TK_REG},
+	{"!=", TK_NEQ},
+	{"&&", TK_AND},
+	{"^\\*", TK_DEREF}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -65,21 +68,21 @@ typedef struct token {
 static Token tokens[3200] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
-static void print_test(int begin,int end) {
-	for(int i = begin; i <= end; i++) {
-		switch (tokens[i].type) {
-						case TK_PLUS: printf("+");break;
-						case TK_SUB: printf("-");break;
-						case TK_MUL: printf("*");break;
-						case TK_DIV: printf("/");break;
-						case TK_NUM: printf("%s", tokens[i].str);break;
-						case TK_LEFT: printf("(");break;
-						case TK_RIGHT: printf(")");break;
-						default: break;
-		}
-	}
-	printf("\n");
-}
+//static void print_test(int begin,int end) {
+//	for(int i = begin; i <= end; i++) {
+//		switch (tokens[i].type) {
+//						case TK_PLUS: printf("+");break;
+//						case TK_SUB: printf("-");break;
+//						case TK_MUL: printf("*");break;
+//						case TK_DIV: printf("/");break;
+//						case TK_NUM: printf("%s", tokens[i].str);break;
+//						case TK_LEFT: printf("(");break;
+//						case TK_RIGHT: printf(")");break;
+//						default: break;
+//		}
+//	}
+//	printf("\n");
+//}
 
 
 static bool make_token(char *e) {
@@ -166,6 +169,13 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
+
+	for(int i = 0; i < nr_token; i ++) {
+		if (tokens[i].type == TK_MUL && (i == 0 || tokens[i - 1].type  == TK_AND || tokens[i - 1].type  == TK_NEQ ||tokens[i - 1].type  == TK_EQ ||tokens[i - 1].type == TK_DIV ||tokens[i - 1].type  == TK_MUL || tokens[i - 1].type  ==  TK_SUB ||tokens[i - 1].type  == TK_PLUS ||tokens[i - 1].type  == TK_LEFT)) {
+		tokens[i].type = TK_DEREF;
+		}
+	}
+
 	return (word_t) eval(0, nr_token- 1);
 }
   /* TODO: Insert codes to evaluate the expression. */
@@ -186,17 +196,14 @@ uint32_t eval(int begin, int end) {
 		int op = find_op(begin, end);
 		int lhs = eval(begin, op - 1);
 		int rhs = eval(op + 1, end);
-		printf("left subexpr is: ");
-		print_test(begin, op - 1);
-		printf("the left result is: %d\n", lhs);
-		printf("right subexpr is: ");
-		print_test(op + 1, end);
-		printf("the right resultis %d\n", rhs);
 		switch (tokens[op].type) {
 			case TK_PLUS : return lhs + rhs;
 			case TK_SUB : return lhs - rhs;
 			case TK_MUL : return lhs * rhs;
 			case TK_DIV : return lhs / rhs;
+			case TK_EQ : return lhs == rhs;
+			case TK_NEQ: return lhs != rhs;
+			case TK_AND: return lhs && rhs;
 			default : assert(0);
 		}		
 	}

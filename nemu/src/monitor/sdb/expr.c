@@ -243,6 +243,7 @@ uint32_t eval(int begin, int end, bool* success) {
 			assert(tokens[op].type == TK_DEREF);
 			uint32_t result = 0;
 			paddr_t address;
+			printf("DEBUG INFO: string address = %s\n", tokens[op].str);
 			sscanf(tokens[op].str, "%x", &address);
 			printf("DEBUG INFO: address = %x\n", address);
 			for (int i = 3; i >= 0; i --) {

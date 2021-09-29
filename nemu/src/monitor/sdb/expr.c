@@ -227,8 +227,8 @@ uint32_t eval(int begin, int end, bool* success) {
 	} else {
 		int op = find_op(begin, end);
 		if (tokens[op].type != TK_DEREF) {
-			int lhs = eval(begin, op - 1, success);
-			int rhs = eval(op + 1, end, success);
+			uint32_t lhs = eval(begin, op - 1, success);
+			uint32_t rhs = eval(op + 1, end, success);
 
 			switch (tokens[op].type) {
 				case TK_PLUS : return lhs + rhs;

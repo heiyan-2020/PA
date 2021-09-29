@@ -23,6 +23,7 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
+	{"^0x[0-9]+", TK_HEXNUM},
   {"[0-9]+", TK_NUM},
   {"==", TK_EQ},        // equal
   {"\\+", TK_PLUS},         // plus
@@ -31,7 +32,6 @@ static struct rule {
 	{"/", TK_DIV},
 	{"\\(", TK_LEFT},
 	{"\\)", TK_RIGHT},
-	{"^0x[0-9]+", TK_HEXNUM},
 	{"^\\$[a-z0-9_]+", TK_REG},
 	{"!=", TK_NEQ},
 	{"&&", TK_AND},

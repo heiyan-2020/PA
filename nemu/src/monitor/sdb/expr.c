@@ -68,21 +68,24 @@ typedef struct token {
 static Token tokens[3200] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
-//static void print_test(int begin,int end) {
-//	for(int i = begin; i <= end; i++) {
-//		switch (tokens[i].type) {
-//						case TK_PLUS: printf("+");break;
-//						case TK_SUB: printf("-");break;
-//						case TK_MUL: printf("*");break;
-//						case TK_DIV: printf("/");break;
-//						case TK_NUM: printf("%s", tokens[i].str);break;
-//						case TK_LEFT: printf("(");break;
-//						case TK_RIGHT: printf(")");break;
-//						default: break;
-//		}
-//	}
-//	printf("\n");
-//}
+static void print_test(int begin,int end) {
+	for(int i = begin; i <= end; i++) {
+		switch (tokens[i].type) {
+						case TK_PLUS: printf("+");break;
+						case TK_SUB: printf("-");break;
+						case TK_MUL: printf("*");break;
+						case TK_DIV: printf("/");break;
+						case TK_NUM: printf("%s", tokens[i].str);break;
+						case TK_LEFT: printf("(");break;
+						case TK_RIGHT: printf(")");break;
+						case TK_EQ: printf("==");break;
+						case TK_NEQ: printf("!=");break;
+						case TK_AND: printf("&&");break;
+						default: break;
+		}
+	}
+	printf("\n");
+}
 
 
 static bool make_token(char *e) {
@@ -225,6 +228,10 @@ uint32_t eval(int begin, int end, bool* success) {
 		int op = find_op(begin, end);
 		if (tokens[op].type != TK_DEREF) {
 			int lhs = eval(begin, op - 1, success);
+			printf("LEFT EXPR IS\n");
+			print_test(begin, op - 1);
+			printf("RIGHT EXPR IS\n");
+			print_test(op + 1, end);
 			int rhs = eval(op + 1, end, success);
 			switch (tokens[op].type) {
 				case TK_PLUS : return lhs + rhs;

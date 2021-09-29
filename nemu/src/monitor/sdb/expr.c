@@ -238,6 +238,7 @@ uint32_t eval(int begin, int end, bool* success) {
 				default : assert(0);
 			}		
 		} else {
+			printf("DEBUG INFO\nIt's preparing to return value in memory\b");
 			assert(tokens[op].type == TK_DEREF);
 			uint32_t result = 0;
 			paddr_t address;

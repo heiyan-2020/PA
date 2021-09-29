@@ -159,6 +159,7 @@ static bool make_token(char *e) {
 									strncpy(single_token.str, substr_start + 2, substr_len);
 									single_token.str[substr_len] = '\0';
 									tokens[nr_token++] = single_token;
+									printf("DEBUG INFO: the hexnum is 0x%s\n", single_token.str);
 									break;									
 								}
          				default: break;

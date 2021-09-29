@@ -188,8 +188,6 @@ word_t expr(char *e, bool *success) {
 	for(int i = 0; i < nr_token; i ++) {
 		if (tokens[i].type == TK_MUL && (i == 0 || tokens[i - 1].type  == TK_AND || tokens[i - 1].type  == TK_NEQ ||tokens[i - 1].type  == TK_EQ ||tokens[i - 1].type == TK_DIV ||tokens[i - 1].type  == TK_MUL || tokens[i - 1].type  ==  TK_SUB ||tokens[i - 1].type  == TK_PLUS ||tokens[i - 1].type  == TK_LEFT)) {
 		tokens[i].type = TK_DEREF;
-		printf("DEBUG INFO: index = %d\n", i);
-		printf("DEBUG INFO: address is %s\n", tokens[i].str);
 		}
 	}
 	
@@ -245,8 +243,8 @@ uint32_t eval(int begin, int end, bool* success) {
 			assert(tokens[op].type == TK_DEREF);
 			uint32_t result = 0;
 			paddr_t address;
-			printf("DEBUG INFO: string address = %s\n", tokens[op].str);
-			sscanf(tokens[op].str, "%x", &address);
+			printf("DEBUG INFO: string address = %s\n", tokens[op + 1].str);
+			sscanf(tokens[op + 1].str, "%x", &address);
 			printf("DEBUG INFO: address = %x\n", address);
 			for (int i = 3; i >= 0; i --) {
 				uint8_t bits = *(guest_to_host(address + (3 - i)));

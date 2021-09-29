@@ -222,6 +222,7 @@ uint32_t eval(int begin, int end, bool* success) {
 			return result;
 } else if(check_parentheses(begin, end) == true){
 		if (begin + 1 > end - 1) {
+						printf("done!\n");
 		}
 	
 		return eval(begin + 1, end - 1, success);

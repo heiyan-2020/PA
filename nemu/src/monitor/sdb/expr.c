@@ -311,6 +311,7 @@ int find_op(int begin, int end) {
 		}
 	}
 	if (precedence[tokens[op_pos].type] >= 2) {
+		printf("pos = %d\n", op_pos);
 		return op_pos;
 	}
 	return -1;

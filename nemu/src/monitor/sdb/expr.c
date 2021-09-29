@@ -227,12 +227,13 @@ uint32_t eval(int begin, int end, bool* success) {
 	} else {
 		int op = find_op(begin, end);
 		if (tokens[op].type != TK_DEREF) {
-			int lhs = eval(begin, op - 1, success);
-			int rhs = eval(op + 1, end, success);
 			printf("LEFT EXPR IS\n");
 			print_test(begin, op - 1);
 			printf("RIGHT EXPR IS\n");
 			print_test(op + 1, end);
+			
+			int lhs = eval(begin, op - 1, success);
+			int rhs = eval(op + 1, end, success);
 
 			switch (tokens[op].type) {
 				case TK_PLUS : return lhs + rhs;

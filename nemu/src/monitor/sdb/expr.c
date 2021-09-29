@@ -238,13 +238,15 @@ uint32_t eval(int begin, int end, bool* success) {
 				default : assert(0);
 			}		
 		} else {
-			printf("DEBUG INFO\nIt's preparing to return value in memory\b");
+			printf("DEBUG INFO: It's preparing to return value in memory\n");
 			assert(tokens[op].type == TK_DEREF);
 			uint32_t result = 0;
 			paddr_t address;
 			sscanf(tokens[op].str, "%x", &address);
+			printf("DEBUG INFO: address = %x\n", address);
 			for (int i = 3; i >= 0; i --) {
 				uint8_t bits = *(guest_to_host(address + (3 - i)));
+				printf("DEBUG INFO: the no.%d memory has value of 0x%02x\n",i - 3,bits);
 				uint32_t tmp = (uint32_t) bits;
 				result |= (tmp << (8 * i));
 			}

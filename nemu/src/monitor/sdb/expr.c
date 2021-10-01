@@ -229,6 +229,7 @@ uint32_t eval(int begin, int end, bool* success) {
 		return eval(begin + 1, end - 1, success);
 	} else {
 		int op = find_op(begin, end);
+		printf("hehe\n");
 		if (tokens[op].type == TK_NEG) {
 			return -eval(op + 1, end, success);
 		}

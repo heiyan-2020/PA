@@ -79,6 +79,7 @@ bool delete_wp(int index) {
 			iter->next = tmp;
 			return true;			
 		}
+		iter = iter->next;
 	}
 	}
 	return false;
@@ -92,6 +93,7 @@ void print_wp() {
 		printf("Num\t\tWhat\n");
 		while (iter != NULL) {
 			printf("%d\t\t%s", iter->NO, iter->expression);
+			iter = iter->next;
 		}
 	}
 }

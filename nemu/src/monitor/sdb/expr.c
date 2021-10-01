@@ -315,7 +315,7 @@ int find_op(int begin, int end) {
 		return op_pos;
 	} else if (precedence[tokens[op_pos].type] == 2){
 			op_pos = stack[ptr - 1];
-			for (int i = ptr - 1; i >= 0; i++) {
+			for (int i = ptr - 1; i >= 0; i--) {
 		if (precedence[tokens[stack[i]].type] >= precedence[tokens[op_pos].type]) {
 			op_pos = stack[i];
 		}

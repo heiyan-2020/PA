@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 #endif
 
   /* Start engine. */
-	test_eval();
-//  engine_start();
+//	test_eval();
+  engine_start();
   return is_exit_status_bad();
 }

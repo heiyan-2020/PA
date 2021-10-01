@@ -17,13 +17,17 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 const rtlreg_t rzero = 0;
 rtlreg_t tmp_reg[4];
-
+bool iter_wp();
 void device_update();
 
 #ifdef CONFIG_DEBUG
 static void debug_hook(vaddr_t pc, const char *asmbuf) {
   log_write("%s\n", asmbuf);
   if (g_print_step) { puts(asmbuf); }
+	if (!iter_wp()) {
+		nemu_state.state = NEMU_STOP;
+		printf("watchpoint has been activated!\n");
+	}	
 }
 #endif
 

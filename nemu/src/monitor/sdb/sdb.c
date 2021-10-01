@@ -9,7 +9,9 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
-
+void print_wp();
+bool delete_wp(int index);
+void new_wp(char *str);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -57,6 +59,8 @@ static int cmd_info(char* args) {
 	char *arg = strtok(NULL, " ");
 	if (strcmp(arg, "r") == 0) {
 		isa_reg_display();
+	} else if (strcmp(arg, "w") == 0) {
+		print_wp();
 	}
 	return 0;
 }
@@ -83,6 +87,28 @@ static int cmd_p(char *args) {
 	printf("%u\n", res);
 	return 0;
 }
+
+static int cmd_w(char *args) {
+	bool success = true;
+	if (success) {
+		printf("a watchpoint at %s has been generated!\n", args);
+		new_wp(args);		
+	}
+	return 0;
+}
+
+
+static int cmd_d(char *args) {
+	int index;
+	sscanf(args, "%d", &index);
+	if (delete_wp(index)) {
+		printf("Delete successfully!\n");
+	} else {
+		printf("No such watchpoint.\n");
+	}
+	return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -94,7 +120,9 @@ static struct {
   {"si", "program executes N instructions in a single step", cmd_si},
 	{	"info", "print out state of programm", cmd_info},
 	{"x", "scan memory", cmd_x},
-	{"p", "evaluate and print the expression", cmd_p}
+	{"p", "evaluate and print the expression", cmd_p},
+	{"w", "watch the expression", cmd_w},
+	{"d", "delete the watchpoint", cmd_d}
 };
 
 #define NR_CMD ARRLEN(cmd_table)

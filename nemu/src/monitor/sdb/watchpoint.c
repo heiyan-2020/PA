@@ -92,7 +92,7 @@ void print_wp() {
 	} else {
 		printf("Num\t\tWhat\n");
 		while (iter != NULL) {
-			printf("%d\t\t%s", iter->NO, iter->expression);
+			printf("%d\t\t%s\n", iter->NO, iter->expression);
 			iter = iter->next;
 		}
 	}

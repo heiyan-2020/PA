@@ -5,10 +5,10 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-int precedence[32] = {0, 4, 7, 4, 3, 3, 1, 1, 0, 0, 0, 7, 11, 2};
+int precedence[32] = {0, 4, 7, 4, 3, 3, 1, 1, 0, 0, 0, 7, 11, 2, 2};
 
 enum {
-  TK_NOTYPE, TK_PLUS, TK_EQ, TK_SUB, TK_DIV, TK_MUL, TK_LEFT, TK_RIGHT, TK_NUM, TK_HEXNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF
+  TK_NOTYPE, TK_PLUS, TK_EQ, TK_SUB, TK_DIV, TK_MUL, TK_LEFT, TK_RIGHT, TK_NUM, TK_HEXNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF, TK_NEG
 };
 int find_op(int begin, int end);
 bool check_parentheses(int begin, int end);
@@ -35,7 +35,8 @@ static struct rule {
 	{"^\\$[a-z0-9_]+", TK_REG},
 	{"!=", TK_NEQ},
 	{"&&", TK_AND},
-	{"^\\*", TK_DEREF}
+	{"^\\*", TK_DEREF},
+	{"^-", TK_NEG}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -188,8 +189,10 @@ word_t expr(char *e, bool *success) {
   }
 
 	for(int i = 0; i < nr_token; i ++) {
-		if (tokens[i].type == TK_MUL && (i == 0 || tokens[i - 1].type  == TK_AND || tokens[i - 1].type  == TK_NEQ ||tokens[i - 1].type  == TK_EQ ||tokens[i - 1].type == TK_DIV ||tokens[i - 1].type  == TK_MUL || tokens[i - 1].type  ==  TK_SUB ||tokens[i - 1].type  == TK_PLUS ||tokens[i - 1].type  == TK_LEFT)) {
+		if (tokens[i].type == TK_MUL && (i == 0 || tokens[i - 1].type  == TK_AND || tokens[i - 1].type  == TK_NEQ ||tokens[i - 1].type  == TK_EQ ||tokens[i - 1].type == TK_DIV ||tokens[i - 1].type  == TK_MUL || tokens[i - 1].type  ==  TK_SUB ||tokens[i - 1].type  == TK_PLUS ||tokens[i - 1].type  == TK_LEFT || tokens[i - 1].type == TK_NEG)) {
 		tokens[i].type = TK_DEREF;
+		}else if((tokens[i].type == TK_MUL && (i == 0 || tokens[i - 1].type  == TK_AND || tokens[i - 1].type  == TK_NEQ ||tokens[i - 1].type  == TK_EQ ||tokens[i - 1].type == TK_DIV ||tokens[i - 1].type  == TK_MUL || tokens[i - 1].type  ==  TK_SUB ||tokens[i - 1].type  == TK_PLUS ||tokens[i - 1].type  == TK_LEFT || tokens[i - 1].type == TK_DEREF))) {
+		tokens[i].type = TK_NEG;
 		}
 	}
 	
@@ -226,6 +229,9 @@ uint32_t eval(int begin, int end, bool* success) {
 		return eval(begin + 1, end - 1, success);
 	} else {
 		int op = find_op(begin, end);
+		if (tokens[op].type == TK_NEG) {
+			return -eval(op + 1, end, success);
+		}
 		if (tokens[op].type != TK_DEREF) {
 			uint32_t lhs = eval(begin, op - 1, success);
 			if (tokens[op].type == TK_AND && lhs == 0) {

@@ -230,7 +230,6 @@ uint32_t eval(int begin, int end, bool* success) {
 	} else {
 		int op = find_op(begin, end);
 		if (tokens[op].type == TK_NEG) {
-			printf("op = %d\n", op);
 			return -eval(op + 1, end, success);
 		}
 		if (tokens[op].type != TK_DEREF) {

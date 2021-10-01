@@ -253,7 +253,7 @@ uint32_t eval(int begin, int end, bool* success) {
 			assert(tokens[op].type == TK_DEREF);
 			uint32_t result = 0;
 			paddr_t address;
-			sscanf(tokens[op + 1].str, "%x", &address);
+			address = eval(op + 1, end, success);
 			for (int i = 3; i >= 0; i --) {
 				uint8_t bits = *(guest_to_host(address + (3 - i)));
 				uint32_t tmp = (uint32_t) bits;

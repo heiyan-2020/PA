@@ -25,7 +25,8 @@ run: run-env
 gdb: run-env
 	$(call git_commit, "gdb")
 	gdb -s $(BINARY) --args $(NEMU_EXEC)
-
+count: run-env
+	find . -name "*.c" -o -name "*.h" |xargs cat |wc -l
 clean-tools = $(dir $(shell find ./tools -name "Makefile"))
 $(clean-tools):
 	-@$(MAKE) -s -C $@ clean

@@ -12,7 +12,7 @@ word_t expr(char *a, bool *b);
 void test_eval() {
 	FILE *file = fopen("tools/gen-expr/input", "r"); 
 	assert(file != NULL);
-
+	
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read = 0;

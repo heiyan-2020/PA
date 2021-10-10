@@ -24,10 +24,6 @@ void device_update();
 static void debug_hook(vaddr_t pc, const char *asmbuf) {
   log_write("%s\n", asmbuf);
   if (g_print_step) { puts(asmbuf); }
-	if (!iter_wp()) {
-		nemu_state.state = NEMU_STOP;
-		printf("watchpoint has been activated!\n");
-	}	
 }
 #endif
 

@@ -8,3 +8,8 @@ def_EHelper(addi) {
 	const	sword_t sign_extension = id_src2->imm | tmp;
 	rtl_addi(s, ddest, dsrc1, sign_extension);
 }
+
+
+def_EHelper(auipc) {
+	rtl_li(s, ddest, id_src1->imm + s->pc);
+}

@@ -4,12 +4,15 @@ def_EHelper(lui) {
 
 
 def_EHelper(addi) {
-	sword_t tmp = ((id_src2->imm << 30) >> 31) & 0xFFFFF000;
-	const	sword_t sign_extension = id_src2->imm | tmp;
-	rtl_addi(s, ddest, dsrc1, sign_extension);
+	rtl_addi(s, ddest, dsrc1, id_src2->simm);
 }
 
 
 def_EHelper(auipc) {
 	rtl_li(s, ddest, id_src1->imm + s->pc);
+}
+
+def_EHelper(jal) {
+	rtl_li(s, ddest, s->pc + 4);
+	rtl_li(s, &(s->dnpc), id_src1->simm + s->pc);
 }

@@ -22,3 +22,7 @@ def_EHelper(jalr) {
 	s->dnpc &= 0xFFFFFFFE;
 	rtl_li(s, ddest, s->pc + 4);
 }
+
+def_EHelper(add) {
+	rtl_add(s, ddest, dsrc1, dsrc2);
+}

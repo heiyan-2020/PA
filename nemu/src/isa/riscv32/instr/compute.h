@@ -34,3 +34,11 @@ def_EHelper(sub) {
 def_EHelper(sltiu) {
 	rtl_setrelopi(s, RELOP_LTU, ddest, dsrc1, id_src2->simm);
 }
+
+def_EHelper(beq) {
+	rtl_setrelop(s, RELOP_EQ, &(cpu.gpr[8]._32), dsrc1, dsrc2);
+	if (cpu.gpr[8]._32) {
+		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
+	}	
+}
+

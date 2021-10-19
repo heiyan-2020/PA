@@ -36,15 +36,15 @@ def_EHelper(sltiu) {
 }
 
 def_EHelper(beq) {
-	rtl_setrelop(s, RELOP_EQ, &(cpu.gpr[8]._32), dsrc1, dsrc2);
-	if (cpu.gpr[8]._32) {
+	rtl_setrelop(s, RELOP_EQ, s0, dsrc1, dsrc2);
+	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}	
 }
 
 def_EHelper(bne) {
-	rtl_setrelop(s, RELOP_NE, &(cpu.gpr[8]._32), dsrc1, dsrc2);
-	if (cpu.gpr[8]._32) {
+	rtl_setrelop(s, RELOP_NE, s0, dsrc1, dsrc2);
+	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}	
 }

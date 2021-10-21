@@ -48,3 +48,7 @@ def_EHelper(bne) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}	
 }
+
+def_EHelper(sltu) {
+	rtl_setrelop(s, RELOP_LT, ddest, dsrc1, dsrc2);
+}

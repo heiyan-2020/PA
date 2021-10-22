@@ -56,3 +56,7 @@ def_EHelper(sltu) {
 def_EHelper(myxor) {
 	rtl_xor(s, ddest, dsrc1, dsrc2);
 }
+
+def_EHelper(myor) {
+	rtl_or(s,ddest, dsrc1, dsrc2);
+}

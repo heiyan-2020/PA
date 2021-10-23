@@ -72,3 +72,7 @@ def_EHelper(andi) {
 def_EHelper(sll) {
 	rtl_sll(s, ddest, dsrc1, dsrc2);
 }
+
+def_EHelper(myand) {
+	rtl_and(s, ddest, dsrc1, dsrc2);
+}

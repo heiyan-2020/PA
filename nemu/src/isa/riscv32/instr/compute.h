@@ -60,3 +60,7 @@ def_EHelper(myxor) {
 def_EHelper(myor) {
 	rtl_or(s,ddest, dsrc1, dsrc2);
 }
+
+def_EHelper(srai) {
+	rtl_srai(s, ddest, dsrc1, id_src2->simm);
+}

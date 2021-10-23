@@ -195,7 +195,6 @@ word_t expr(char *e, bool *success) {
 		tokens[i].type = TK_NEG;
 		}
 	}
-	printf("DEBUG INFO:expr()\n");	
 	int result = eval(0, nr_token - 1, success);
 	return result;
 }
@@ -206,7 +205,6 @@ uint32_t eval(int begin, int end, bool* success) {
 		assert(0);	
 	} else if(begin == end) {
 			uint32_t result = 0;
-			printf("DEBUG INFO:begin == end, %d\n", tokens[begin].type);
 			switch (tokens[begin].type){
 							case TK_NUM: {
 														sscanf(tokens[begin].str, "%u", &result);
@@ -217,7 +215,6 @@ uint32_t eval(int begin, int end, bool* success) {
 															break;
 															}
 							case TK_REG: {
-													printf("DEBUG INFO:TK_REG\n");
 													 result = isa_reg_str2val(tokens[begin].str, success);
 													 break;
 													 }

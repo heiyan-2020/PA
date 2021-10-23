@@ -133,7 +133,7 @@ static bool make_token(char *e) {
 									assert(substr_len < 32);
 									if (substr_len < 32) {
 										struct token single_token;	
-										single_token.type = TK_NUM;
+										single_token.type = rules[i].token_type;
 										strncpy(single_token.str, substr_start, substr_len);
 										single_token.str[substr_len] = '\0';
 										tokens[nr_token++] = single_token;

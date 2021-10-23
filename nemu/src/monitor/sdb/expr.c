@@ -216,6 +216,7 @@ uint32_t eval(int begin, int end, bool* success) {
 															break;
 															}
 							case TK_REG: {
+													printf("DEBUG INFO:TK_REG\n");
 													 result = isa_reg_str2val(tokens[begin].str, success);
 													 break;
 													 }

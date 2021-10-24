@@ -103,6 +103,10 @@ def_EHelper(rem) {
 	rtl_divs_r(s, ddest, dsrc1, dsrc2);
 }
 
+def_EHelper(mul) {
+	rtl_mulu_lo(s, ddest, dsrc1, dsrc2);
+}
+
 def_EHelper(slli) {
 	rtl_slli(s, ddest, dsrc1, id_src2->simm);
 }

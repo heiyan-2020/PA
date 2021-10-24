@@ -55,6 +55,7 @@ int sprintf(char *out, const char *fmt, ...) {
 						default: return -1;
 					}	
 				}
+									break;
 				default : *out++ = *(fmt - 1);break;
 			}
 		}

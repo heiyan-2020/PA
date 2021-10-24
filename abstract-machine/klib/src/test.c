@@ -33,6 +33,7 @@ int sprintf(char *out, const char *fmt, ...) {
 							char* tmp_str = convert(d, 10);
 							memcpy(out, tmp_str, strlen(tmp_str));
 							out += strlen(tmp_str);
+							printf("%s\n%s\n%s\n", ptr,fmt, tmp_str);
 							break;
 						}
 						case 's': {
@@ -43,6 +44,7 @@ int sprintf(char *out, const char *fmt, ...) {
 						}
 						default: return -1;
 					}	
+					break;
 				}
 				default : *out++ = *(fmt - 1);break;
 			}
@@ -56,6 +58,6 @@ int sprintf(char *out, const char *fmt, ...) {
 int main() {
 	char str[] = "hello, world";
 	char result[50];
-	sprintf(result, "%s", str);
+	sprintf(result, "%s is my %d string\n", str, 23);
 	printf("%s", result);
 }

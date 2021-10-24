@@ -1,8 +1,7 @@
-#include <am.h>
-#include <klib.h>
-#include <klib-macros.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <string.h>
+#include <stdio.h>
 char * convert(uint32_t num, int base) {
 	static char Table[] = "0123456789ABCDEF";
 	static char buffer[50];
@@ -18,16 +17,6 @@ char * convert(uint32_t num, int base) {
 
 	return ptr;
 }
-#if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
-
-int printf(const char *fmt, ...) {
-  panic("Not implemented");
-}
-
-int vsprintf(char *out, const char *fmt, va_list ap) {
-  panic("Not implemented");
-}
-
 int sprintf(char *out, const char *fmt, ...) {
 		va_list ap;
 		int d;
@@ -64,13 +53,9 @@ int sprintf(char *out, const char *fmt, ...) {
 		out = ptr;
 		return num;
 }
-
-int snprintf(char *out, size_t n, const char *fmt, ...) {
-  panic("Not implemented");
+int main() {
+	char str[] = "hello, world";
+	char result[50];
+	sprintf(result, "%s", str);
+	printf("%s", result);
 }
-
-int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
-  panic("Not implemented");
-}
-
-#endif

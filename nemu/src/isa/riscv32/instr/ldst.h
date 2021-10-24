@@ -14,4 +14,8 @@ def_EHelper(lbu) {
 	rtl_lm(s, ddest, dsrc1, id_src2->imm, 1);
 }
 
+def_EHelper(lh) {
+	rtl_lm(s, ddest, dsrc1, id_src2->imm, 2);
+	rtl_ori(s, ddest, ddest, 0xffff0000);
+}
 

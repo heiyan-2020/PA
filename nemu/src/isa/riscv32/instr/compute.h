@@ -63,6 +63,13 @@ def_EHelper(bltu) {
 	}
 }
 
+def_EHelper(blt) {
+	rtl_setrelop(s, RELOP_LT, s0, dsrc1, dsrc2);
+	if (*s0) {
+		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
+	}
+}
+
 def_EHelper(sltu) {
 	rtl_setrelop(s, RELOP_LTU, ddest, dsrc1, dsrc2);
 }

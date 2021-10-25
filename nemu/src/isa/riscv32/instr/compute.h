@@ -1,3 +1,5 @@
+bool func_call(uint32_t addr, uint32_t site);
+bool func_return(uint32_t site);
 def_EHelper(lui) {
   rtl_li(s, ddest, id_src1->imm);
 }
@@ -13,14 +15,22 @@ def_EHelper(auipc) {
 }
 
 def_EHelper(jal) {
+	//call
 	rtl_li(s, ddest, s->pc + 4);
 	rtl_li(s, &(s->dnpc), id_src1->simm + s->pc);
+	func_call(s->dnpc, s->pc);
 }
 
 def_EHelper(jalr) {
+	//call or return
 	rtl_addi(s, &(s->dnpc), dsrc1, id_src2->simm);
 	s->dnpc &= 0xFFFFFFFE;
 	rtl_li(s, ddest, s->pc + 4);
+	if (func_call(s->dnpc, s->pc)) {
+	
+	} else {
+		func_return(s->pc);
+	}
 }
 
 def_EHelper(add) {
@@ -36,10 +46,12 @@ def_EHelper(sltiu) {
 }
 
 def_EHelper(beq) {
+	//call
 	rtl_setrelop(s, RELOP_EQ, s0, dsrc1, dsrc2);
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}	
+	func_call(s->dnpc, s->pc);
 }
 
 def_EHelper(bne) {
@@ -47,6 +59,8 @@ def_EHelper(bne) {
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}	
+func_call(s->dnpc, s->pc);
+
 }
 
 def_EHelper(bge) {
@@ -54,6 +68,8 @@ def_EHelper(bge) {
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}
+func_call(s->dnpc, s->pc);
+
 }
 
 def_EHelper(bltu) {
@@ -61,6 +77,8 @@ def_EHelper(bltu) {
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}
+func_call(s->dnpc, s->pc);
+
 }
 
 def_EHelper(blt) {
@@ -68,6 +86,8 @@ def_EHelper(blt) {
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}
+func_call(s->dnpc, s->pc);
+
 }
 
 def_EHelper(sltu) {

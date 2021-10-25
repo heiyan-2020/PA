@@ -1,6 +1,8 @@
 #include <isa.h>
 #include <stdio.h>
 #include <string.h>
+#define ELF32_ST_BIND(info) ((info) >> 4)
+#define ELF32_ST_TYPE(info) ((info) & 0xf)
 void print_str_pool();
 extern char* elf_file; 
 Elf32_Ehdr elf_header;
@@ -39,7 +41,7 @@ void init_ftrace() {
 	item_count = fread(symbol_pool, 1, symbol_table.sh_size, ftrace_fp);
 	assert(item_count == symbol_table.sh_size);
 	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i++) {
-		printf("%s\t\t0x%x\t\t%d\t\t%c\n", str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value, (symbol_pool + i)->st_size, (symbol_pool + i)->st_info);
+		printf("%s\t\t0x%08x\t\t%d\t\t0x%02x\t\t0x%02x\n", str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value, (symbol_pool + i)->st_size, ELF32_ST_BIND((symbol_pool + i)->st_info), ELF32_ST_TYPE((symbol_pool + i)->st_info));
 	}
 	fclose(ftrace_fp);
 }

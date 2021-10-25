@@ -39,6 +39,7 @@ void init_ftrace() {
 	assert(item_count == symbol_table.sh_size);
 	printf("DEBUG INFO:the number of items is %d\n", symbol_table.sh_size / symbol_table.sh_entsize);
 	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i += 1) {
+		printf("%d", (symbol_pool + i)->st_name);
 		printf("%s\t0x%x\n", str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value);
 	}
 	fclose(ftrace_fp);

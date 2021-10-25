@@ -56,6 +56,9 @@ void print_str_pool() {
 	while (ptr - str_pool < string_table.sh_size) {
 		printf("len = %d, string = %s\n",len, ptr);
 		ptr += len;
+		while (*ptr == '\0') {
+		ptr++;
+	}
 		len = strlen(ptr);
 	}
 }

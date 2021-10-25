@@ -20,10 +20,19 @@ rtlreg_t tmp_reg[4];
 bool iter_wp();
 void device_update();
 void fetch_decode(Decode *s, vaddr_t pc);
-
+#define BUFFERSIZE 16
+struct {
+	char buffer[BUFFERSIZE][128]; 
+	int header;
+} ring_buf = {
+	.header = 0
+};
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) log_write("%s\n", _this->logbuf);
+#endif
+#ifdef CONFIG_RTRACE_COND
+		sprintf(ring_buf.buffer[(ring_buf.header++) % BUFFERSIZE], "%s\n", _this->logbuf);		
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
@@ -95,6 +104,17 @@ void cpu_exec(uint64_t n) {
   switch (nemu_state.state) {
     case NEMU_END: case NEMU_ABORT:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
+#ifdef CONFIG_RTRACE_COND
+			int bound = 0;
+			if (ring_buf.header >= BUFFERSIZE) {
+				bound = BUFFERSIZE;
+			} else {
+				bound = ring_buf.header;
+			}
+			for (int i = 0; i < bound; i++) {
+				log_write("%s\n", ring_buf.buffer[i]);
+			}
+#endif
       return;
     default: nemu_state.state = NEMU_RUNNING;
   }

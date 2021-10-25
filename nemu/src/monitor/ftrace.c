@@ -5,6 +5,7 @@
 #define ELF32_ST_TYPE(info) ((info) & 0xf)
 void print_str_pool();
 extern char* elf_file; 
+extern char* ftrace_file;
 Elf32_Ehdr elf_header;
 Elf32_Shdr string_table;
 Elf32_Shdr symbol_table;
@@ -63,3 +64,54 @@ void print_str_pool() {
 	}
 }
 
+void print_ftrace(char* log) {
+	FILE* file = fopen(ftrace_file, "a");
+	fputs(log, file);
+	fclose(file);
+}
+
+unsigned char get_type(Elf32_Sym* symbol) {
+	return ELF32_ST_TYPE(symbol->st_info);
+}
+
+bool func_call(uint32_t addr, uint32_t site) {
+	Elf32_Sym* itr = symbol_pool;
+	int count = 0;
+	char log[128];
+	char buffer[128];
+	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
+		if (itr->st_value == addr) {
+			//function call.
+			sprintf(buffer, "[0x%x]\tcall", site);
+			strcat(log, buffer);
+			sprintf(buffer, "[%s@0x%x]\n", str_pool + (itr->st_name), addr);
+			strcat(log, buffer);
+			print_ftrace(log);
+			return true;
+		}
+		itr++;
+		count++;
+	}
+	return false;
+}
+
+bool func_return(uint32_t site) {
+	Elf32_Sym* itr = symbol_pool;
+	int count = 0;
+	char log[128];
+	char buffer[128];
+	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
+			if (site > itr->st_value && site <= itr->st_size) {
+			//function return
+			sprintf(buffer, "[0x%0x]\treturn", site);
+			strcat(log ,buffer);
+			sprintf(buffer, "[%s]\n", str_pool + (itr->st_name));
+			strcat(log, buffer);
+			print_ftrace(log);
+			return true;
+			}
+			itr++;
+			count++;
+		}
+	return false;
+	}

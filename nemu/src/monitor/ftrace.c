@@ -26,7 +26,7 @@ printf("DEBUG INFO: offset of stringtable is %d\n", string_table.sh_name);
 
 	item_count = fread(str_pool, 1, string_table.sh_size, ftrace_fp);
 	assert(item_count == string_table.sh_size);
-	print_str_pool();
+//	print_str_pool();
 	//find Symbol table
 	fseek(ftrace_fp, elf_header.e_shoff, SEEK_SET);
 	do {

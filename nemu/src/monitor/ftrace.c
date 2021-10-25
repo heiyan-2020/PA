@@ -48,13 +48,14 @@ void init_ftrace() {
 }
 
 void print_str_pool() {
+	printf("the size of str_pool is %d\n", string_table.sh_size);
 	char* ptr = str_pool;
 	while (*ptr == '\0') {
 		ptr++;
 	}
 	int len = strlen(ptr);
 	while (ptr - str_pool < string_table.sh_size - 100) {
-		printf("len = %d, string = %s\n",len, ptr);
+		printf("len = %d, string = %s, offset = %ld\n",len, ptr, ptr - str_pool);
 		ptr += len;
 		while (*ptr == '\0') {
 		ptr++;

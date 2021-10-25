@@ -149,6 +149,11 @@ config RTRACE_COND
 	string "Only trace instructions in ring buffer"
 	default "false"
 
+config MTRACE
+	depends on TRACE && TARGET_NATIVE_ELF && ENGINE_INTERPRETER
+	bool "Enable Memory tracer"
+	default n
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"

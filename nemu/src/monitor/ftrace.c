@@ -35,6 +35,7 @@ void init_ftrace() {
 	//load each symbol
 	symbol_pool = (Elf32_Sym*) malloc(symbol_table.sh_size);
 	fseek(ftrace_fp, symbol_table.sh_offset, SEEK_SET);
+	printf("DEBUUG INFO:offset is %d\n", symbol_table.sh_size);
 	item_count = fread(symbol_pool, 1, symbol_table.sh_size, ftrace_fp);
 	assert(item_count == string_table.sh_size);
 	printf("DEBUG INFO:%d\n", item_count);

@@ -28,6 +28,7 @@ void init_ftrace() {
 			item_count = fread(&symbol_table, 40, 1, ftrace_fp);
 			assert(item_count == 1);
 			char* name = str_pool + symbol_table.sh_name;
+			printf("%s\n", name);
 			if (strcmp(name, ".symtab") == 0) {
 				break;
 			}	

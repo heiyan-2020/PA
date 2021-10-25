@@ -26,6 +26,7 @@ void init_ftrace() {
 			item_count = fread(&symbol_table, 40, 1, ftrace_fp);
 			assert(item_count == 1);
 			char* name = str_pool + symbol_table.sh_name;
+			printf("DEBUG INFO:the name of this section table is %s\n", name);
 			if (strcmp(name, ".stmtab") == 0) {
 				break;
 			}	

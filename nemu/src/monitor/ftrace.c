@@ -21,9 +21,6 @@ void init_ftrace() {
 	assert(item_count == 1);
 	str_pool = (char*) malloc(string_table.sh_size);
 	fseek(ftrace_fp, string_table.sh_offset, SEEK_SET);
-	printf("DEBUG INFO: offset of stringtable is %d\n", string_table.sh_name);
-printf("DEBUG INFO: offset of stringtable is %d\n", string_table.sh_name);
-
 	item_count = fread(str_pool, 1, string_table.sh_size, ftrace_fp);
 	assert(item_count == string_table.sh_size);
 //	print_str_pool();

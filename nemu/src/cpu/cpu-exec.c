@@ -105,6 +105,7 @@ void cpu_exec(uint64_t n) {
     case NEMU_END: case NEMU_ABORT:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
 #ifdef CONFIG_RTRACE_COND
+			printf("DEBUG INFO:enter output module.\n");
 			int bound = 0;
 			if (ring_buf.header >= BUFFERSIZE) {
 				bound = BUFFERSIZE;

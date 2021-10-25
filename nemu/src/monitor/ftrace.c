@@ -1,6 +1,7 @@
 #include <isa.h>
 #include <stdio.h>
 #include <string.h>
+void print_str_pool();
 extern char* elf_file; 
 Elf32_Ehdr elf_header;
 Elf32_Shdr string_table;
@@ -22,6 +23,7 @@ void init_ftrace() {
 	fseek(ftrace_fp, string_table.sh_offset, SEEK_SET);
 	item_count = fread(str_pool, 1, string_table.sh_size, ftrace_fp);
 	assert(item_count == string_table.sh_size);
+	print_str_pool();
 	//find Symbol table
 	fseek(ftrace_fp, elf_header.e_shoff, SEEK_SET);
 	do {
@@ -43,4 +45,13 @@ void init_ftrace() {
 		printf("%s\t0x%x\n", str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value);
 	}
 	fclose(ftrace_fp);
+}
+
+void print_str_pool() {
+	int len = strlen(str_pool);
+	char* ptr = str_pool;
+	while (ptr - str_pool < string_table.sh_size) {
+		printf("%s\n", ptr);
+		ptr += len;
+	}
 }

@@ -19,6 +19,7 @@ void init_ftrace() {
 	fseek(ftrace_fp, elf_header.e_shstrndx * elf_header.e_shentsize, SEEK_CUR);
 	item_count = fread(&string_table, 40, 1, ftrace_fp);
 	assert(item_count == 1);
+	printf("DEBUG INFO:This size of str_pool is %d\n", string_table.sh_size);
 	str_pool = (char*) malloc(string_table.sh_size);
 	fseek(ftrace_fp, string_table.sh_offset, SEEK_SET);
 	item_count = fread(str_pool, 1, string_table.sh_size, ftrace_fp);

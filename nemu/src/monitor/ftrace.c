@@ -23,7 +23,6 @@ void init_ftrace() {
 	fseek(ftrace_fp, string_table.sh_offset, SEEK_SET);
 	item_count = fread(str_pool, 1, string_table.sh_size, ftrace_fp);
 	assert(item_count == string_table.sh_size);
-//	print_str_pool();
 	//find Symbol table
 	fseek(ftrace_fp, elf_header.e_shoff, SEEK_SET);
 	do {
@@ -40,9 +39,6 @@ void init_ftrace() {
 	fseek(ftrace_fp, symbol_table.sh_offset, SEEK_SET);
 	item_count = fread(symbol_pool, 1, symbol_table.sh_size, ftrace_fp);
 	assert(item_count == symbol_table.sh_size);
-	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i += 1) {
-		printf("%s\t0x%x\n", str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value);
-	}
 	fclose(ftrace_fp);
 }
 

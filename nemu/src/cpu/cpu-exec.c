@@ -104,18 +104,6 @@ void cpu_exec(uint64_t n) {
   switch (nemu_state.state) {
     case NEMU_END: case NEMU_ABORT:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
-#ifdef CONFIG_RTRACE_COND
-			printf("DEBUG INFO:enter output module.\n");
-			int bound = 0;
-			if (ring_buf.header >= BUFFERSIZE) {
-				bound = BUFFERSIZE;
-			} else {
-				bound = ring_buf.header;
-			}
-			for (int i = 0; i < bound; i++) {
-				log_write("%s\n", ring_buf.buffer[i]);
-			}
-#endif
       return;
     default: nemu_state.state = NEMU_RUNNING;
   }
@@ -144,6 +132,19 @@ void cpu_exec(uint64_t n) {
             ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED))),
           nemu_state.halt_pc);
       // fall through
+		#ifdef CONFIG_RTRACE_COND
+			printf("DEBUG INFO:enter output module.\n");
+			int bound = 0;
+			if (ring_buf.header >= BUFFERSIZE) {
+				bound = BUFFERSIZE;
+			} else {
+				bound = ring_buf.header;
+			}
+			for (int i = 0; i < bound; i++) {
+				log_write("%s\n", ring_buf.buffer[i]);
+			}
+#endif
+
     case NEMU_QUIT: statistic();
   }
 }

@@ -29,7 +29,6 @@ void init_ftrace() {
 			item_count = fread(&symbol_table, 40, 1, ftrace_fp);
 			assert(item_count == 1);
 			char* name = str_pool + symbol_table.sh_name;
-			printf("%s\n", name);
 			if (strcmp(name, ".symtab") == 0) {
 				break;
 			}	
@@ -39,6 +38,9 @@ void init_ftrace() {
 	fseek(ftrace_fp, symbol_table.sh_offset, SEEK_SET);
 	item_count = fread(symbol_pool, 1, symbol_table.sh_size, ftrace_fp);
 	assert(item_count == symbol_table.sh_size);
+	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i++) {
+		printf("%s\t\t0x%x\t\t%d\t\t%c\n", str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value, (symbol_pool + i)->st_size, (symbol_pool + i)->st_info);
+	}
 	fclose(ftrace_fp);
 }
 

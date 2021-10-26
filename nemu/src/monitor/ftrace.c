@@ -51,7 +51,7 @@ void init_ftrace() {
 	}	while (1);
 	fseek(ftrace_fp, str_table.sh_offset, SEEK_SET);
 	str_pool = (char*)malloc(str_table.sh_size);
-	print_str_pool();
+	printf("DEBUG:offset of string pool is 0x%x, size is 0x%x\n", str_table.sh_offset, str_table.sh_size);
 	//load each symbol
 	symbol_pool = (Elf32_Sym*) malloc(symbol_table.sh_size);
 	fseek(ftrace_fp, symbol_table.sh_offset, SEEK_SET);

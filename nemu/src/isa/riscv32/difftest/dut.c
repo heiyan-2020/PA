@@ -6,13 +6,10 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 	for (int i = 0; i < 32; i++) {
 		printf("ref's reg is 0x%x, while dut's is 0x%x\n", ref_r->gpr[i]._32, cpu.gpr[i]._32);
 		if (ref_r->gpr[i]._32 != cpu.gpr[i]._32) {
+			log_write("execute faild with instruction at 0x%x\n", pc);
 			return false;
 		}
 	}
-	printf("ref's pc is 0x%x, while dut's is 0x%x\n", ref_r->pc, pc);
-	if (pc != ref_r->pc) {
-		return false;
-	}	
 	return true;
 }
 

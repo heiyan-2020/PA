@@ -51,6 +51,7 @@ void init_ftrace() {
 	}	while (1);
 	fseek(ftrace_fp, str_table.sh_offset, SEEK_SET);
 	str_pool = (char*)malloc(str_table.sh_size);
+	print_str_pool();
 	//load each symbol
 	symbol_pool = (Elf32_Sym*) malloc(symbol_table.sh_size);
 	fseek(ftrace_fp, symbol_table.sh_offset, SEEK_SET);
@@ -64,21 +65,21 @@ void init_ftrace() {
 	fclose(ftrace_fp);
 }
 
-//void print_str_pool() {
-//	char* ptr = str_pool;
-//	while (*ptr == '\0') {
-//		ptr++;
-//	}
-//	int len = strlen(ptr);
-//	while (ptr - str_pool < string_table.sh_size) {
-//		printf("len = %d, string = %s, offset = %ld\n",len, ptr, ptr - str_pool);
-//		ptr += len;
-//		while (*ptr == '\0') {
-//		ptr++;
-//	}
-//		len = strlen(ptr);
-//	}
-//}
+void print_str_pool() {
+	char* ptr = str_pool;
+	while (*ptr == '\0') {
+		ptr++;
+	}
+	int len = strlen(ptr);
+	while (ptr - str_pool < str_table.sh_size) {
+		printf("len = %d, string = %s, offset = %ld\n",len, ptr, ptr - str_pool);
+		ptr += len;
+		while (*ptr == '\0') {
+		ptr++;
+	}
+		len = strlen(ptr);
+	}
+}
 
 void print_ftrace(char* log) {
 	FILE* file = fopen(ftrace_file, "a");

@@ -87,6 +87,7 @@ bool func_call(uint32_t addr, uint32_t site) {
 			printf("DEBUG PAIR: itr->st_name is %u\n", itr->st_name);
 			sprintf(buffer, "[0x%x]\tcall", site);
 			strcat(log, buffer);
+			printf("DEBUG BUGGG:%s\n", str_pool + (itr->st_name));
 			sprintf(buffer, "[%s@0x%x]\n", str_pool + (itr->st_name), addr);
 			printf("DEBUG PAIR: after calling normal!\n");
 			strcat(log, buffer);

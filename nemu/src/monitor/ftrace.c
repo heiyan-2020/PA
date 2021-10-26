@@ -104,7 +104,7 @@ bool func_call(uint32_t addr, uint32_t site) {
 	Elf32_Sym* itr = symbol_pool;
 	int count = 0;
 	char log[1280] = {'\0'};
-	char tmpBuffer[128];
+	char tmpBuffer[1280];
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
 		if (itr->st_value == addr && get_type(itr) == 0x02) {
 			//function call.

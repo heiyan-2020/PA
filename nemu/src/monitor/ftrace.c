@@ -42,7 +42,6 @@ void init_ftrace() {
 	item_count = fread(symbol_pool, 1, symbol_table.sh_size, ftrace_fp);
 	assert(item_count == symbol_table.sh_size);
 	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i++) {
-		printf("DEBUG BUGGY:%s\n", str_pool + 115);
 		printf("%u\t\t%s\t\t0x%08x\t\t%d\t\t0x%02x\t\t0x%02x\n",(symbol_pool + i)->st_name ,str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value, (symbol_pool + i)->st_size, ELF32_ST_BIND((symbol_pool + i)->st_info), ELF32_ST_TYPE((symbol_pool + i)->st_info));
 	}
 	fclose(ftrace_fp);
@@ -80,7 +79,6 @@ bool func_call(uint32_t addr, uint32_t site) {
 	int count = 0;
 	char log[128] = {'\0'};
 	char tmpBuffer[128];
-	printf("DEBUG INFO: the address of this instr is 0x%x, it will call 0x%x\n",site ,addr);
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
 		if (itr->st_value == addr) {
 			//function call.

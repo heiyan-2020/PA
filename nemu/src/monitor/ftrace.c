@@ -105,7 +105,6 @@ bool func_return(uint32_t site) {
 			//function return
 			sprintf(tmpBuffer, "[0x%0x]\treturn", site);
 			strcat(log ,tmpBuffer);
-			sprintf(tmpBuffer, "[%s]\n", str_pool + (itr->st_name));
 			strcat(log, tmpBuffer);
 			print_ftrace(log);
 			return true;

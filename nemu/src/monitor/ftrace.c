@@ -102,7 +102,7 @@ unsigned char get_type(Elf32_Sym* symbol) {
 bool func_call(uint32_t addr, uint32_t site) {
 	Elf32_Sym* itr = symbol_pool;
 	int count = 0;
-	char log[128] = {'\0'};
+	char log[1280] = {'\0'};
 	char tmpBuffer[128];
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
 		if (itr->st_value == addr && get_type(itr) == 0x02) {

@@ -100,7 +100,6 @@ unsigned char get_type(Elf32_Sym* symbol) {
 }
 
 bool func_call(uint32_t addr, uint32_t site) {
-	printf("DEBUG: preBlanks is %d\n", preBlanks);
 	Elf32_Sym* itr = symbol_pool;
 	int count = 0;
 	char log[1280] = {'\0'};

@@ -43,9 +43,8 @@ void init_ftrace() {
 	fseek(ftrace_fp, elf_header.e_shoff, SEEK_SET);
 	do {
 			item_count = fread(&str_table, 40, 1, ftrace_fp);
-			printf("DEBUG INFO:%d\n", item_count);
 			assert (item_count == 1);
-			char *name = symbol_str_pool + symbol_table.sh_name;
+			char *name = symbol_str_pool + str_table.sh_name;
 			if (strcmp(name, ".strtab") == 0) {
 				break;
 			}

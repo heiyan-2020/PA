@@ -1,3 +1,4 @@
+#ifdef CONFIG_FTRACE
 #include <isa.h>
 #include <stdio.h>
 #include <string.h>
@@ -144,3 +145,4 @@ bool func_return(uint32_t site) {
 		}
 	return false;
 	}
+#endif

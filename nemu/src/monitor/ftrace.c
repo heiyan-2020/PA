@@ -26,6 +26,7 @@ void init_ftrace() {
 	fseek(ftrace_fp, string_table.sh_offset, SEEK_SET);
 	item_count = fread(str_pool, 1, string_table.sh_size, ftrace_fp);
 	assert(item_count == string_table.sh_size);
+	printf("DEBUG INFO:offset of stringtable is 0x%x, size is 0x%x\n", string_table.sh_offset, string_table.sh_size);
 	//find Symbol table
 	fseek(ftrace_fp, elf_header.e_shoff, SEEK_SET);
 	do {
@@ -41,9 +42,9 @@ void init_ftrace() {
 	fseek(ftrace_fp, symbol_table.sh_offset, SEEK_SET);
 	item_count = fread(symbol_pool, 1, symbol_table.sh_size, ftrace_fp);
 	assert(item_count == symbol_table.sh_size);
-	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i++) {
-		printf("%u\t\t%s\t\t0x%08x\t\t%d\t\t0x%02x\t\t0x%02x\n",(symbol_pool + i)->st_name ,str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value, (symbol_pool + i)->st_size, ELF32_ST_BIND((symbol_pool + i)->st_info), ELF32_ST_TYPE((symbol_pool + i)->st_info));
-	}
+//	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i++) {
+//		printf("%u\t\t%s\t\t0x%08x\t\t%d\t\t0x%02x\t\t0x%02x\n",(symbol_pool + i)->st_name ,str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value, (symbol_pool + i)->st_size, ELF32_ST_BIND((symbol_pool + i)->st_info), ELF32_ST_TYPE((symbol_pool + i)->st_info));
+//	}
 	FILE* fp = fopen(ftrace_file, "w");
 	fclose(fp);
 	fclose(ftrace_fp);

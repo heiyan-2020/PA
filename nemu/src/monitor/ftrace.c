@@ -6,6 +6,7 @@
 void print_str_pool();
 extern char* elf_file; 
 extern char* ftrace_file;
+static uint32_t preBlanks = 0;
 Elf32_Ehdr elf_header;
 Elf32_Shdr section_string_table;
 Elf32_Shdr symbol_table;
@@ -82,6 +83,13 @@ void print_str_pool() {
 	}
 }
 
+void print_pre_blanks(char* log) {
+	assert(preBlanks >= 0);
+	for (int i = 0; i < preBlanks; i++) {
+		strcat(log, " ");
+	}
+}
+
 void print_ftrace(char* log) {
 	FILE* file = fopen(ftrace_file, "a");
 	fputs(log, file);
@@ -100,11 +108,11 @@ bool func_call(uint32_t addr, uint32_t site) {
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
 		if (itr->st_value == addr && get_type(itr) == 0x02) {
 			//function call.
-			sprintf(tmpBuffer, "[0x%x]\tcall", site);
+			sprintf(tmpBuffer, "[0x%x] ", site);
 			strcat(log, tmpBuffer);
-			printf("DEBUG:offset is %u\n", itr->st_name);
-			printf("DEBUG INFO:name is %s\n", str_pool + itr->st_name);
-			sprintf(tmpBuffer, "[%s@0x%x]\n",str_pool + itr->st_name , addr);
+			print_pre_blanks(log);
+			preBlanks++;
+			sprintf(tmpBuffer, "call[%s@0x%x]\n",str_pool + itr->st_name , addr);
 			strcat(log, tmpBuffer);
 			print_ftrace(log);
 			return true;
@@ -123,8 +131,12 @@ bool func_return(uint32_t site) {
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
 			if (site > itr->st_value && site <= itr->st_value + itr->st_size && get_type(itr) == 0x02) {
 			//function return
-			sprintf(tmpBuffer, "[0x%0x]\treturn\t[%s]\n", site, str_pool + itr->st_name);
+			sprintf(tmpBuffer, "[0x%0x]", site);
 			strcat(log ,tmpBuffer);
+			print_pre_blanks(log);
+			preBlanks--;
+			sprintf(tmpBuffer, "return  [%s]\n", str_pool + itr->st_name);
+			strcat(log, tmpBuffer);
 			print_ftrace(log);
 			return true;
 			}

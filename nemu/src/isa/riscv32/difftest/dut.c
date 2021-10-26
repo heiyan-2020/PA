@@ -9,6 +9,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 			return false;
 		}
 	}
+	printf("ref's pc is 0x%x, while dut's is 0x%x\n", pc, cpu.pc);
 	if (pc != cpu.pc) {
 		return false;
 	}	

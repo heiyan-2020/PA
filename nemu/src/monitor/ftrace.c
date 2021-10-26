@@ -26,6 +26,7 @@ void init_ftrace() {
 	fseek(ftrace_fp, string_table.sh_offset, SEEK_SET);
 	item_count = fread(str_pool, 1, string_table.sh_size, ftrace_fp);
 	assert(item_count == string_table.sh_size);
+	printf("DEBUG INFO:the size of strpool is %u, each section is %u\n", string_table.sh_size, string_table.sh_entsize);
 	//find Symbol table
 	fseek(ftrace_fp, elf_header.e_shoff, SEEK_SET);
 	do {
@@ -77,7 +78,7 @@ unsigned char get_type(Elf32_Sym* symbol) {
 bool func_call(uint32_t addr, uint32_t site) {
 	Elf32_Sym* itr = symbol_pool;
 	int count = 0;
-	char log[128];
+	char log[128] = {'\0'};
 	char buffer[128];
 	printf("DEBUG INFO: the address of this instr is 0x%x\n", addr);
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {

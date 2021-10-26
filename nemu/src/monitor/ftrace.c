@@ -79,18 +79,17 @@ bool func_call(uint32_t addr, uint32_t site) {
 	Elf32_Sym* itr = symbol_pool;
 	int count = 0;
 	char log[128] = {'\0'};
-	char buffer[128];
+	char tmpBuffer[128];
 	printf("DEBUG INFO: the address of this instr is 0x%x, it will call 0x%x\n",site ,addr);
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
 		if (itr->st_value == addr) {
 			//function call.
 			printf("DEBUG PAIR: itr->st_name is %u\n", itr->st_name);
-			sprintf(buffer, "[0x%x]\tcall", site);
-			strcat(log, buffer);
-			//sprintf(buffer, "[%s@0x%x]\n", str_pool + (itr->st_name), addr);
-			printf("[%s@0x%x]\n", str_pool + (itr->st_name), addr);
+			sprintf(tmpBuffer, "[0x%x]\tcall", site);
+			strcat(log, tmpBuffer);
+			sprintf(tmpBuffer, "[%s@0x%x]\n", str_pool + (itr->st_name), addr);
 			printf("DEBUG PAIR: after calling normal!\n");
-			strcat(log, buffer);
+			strcat(log, tmpBuffer);
 			print_ftrace(log);
 			return true;
 		}
@@ -104,15 +103,15 @@ bool func_return(uint32_t site) {
 	Elf32_Sym* itr = symbol_pool;
 	int count = 0;
 	char log[128];
-	char buffer[128];
+	char tmpBuffer[128];
 printf("DEBUG INFO: the address of this instr is 0x%x\n", site);
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
 			if (site > itr->st_value && site <= itr->st_size) {
 			//function return
-			sprintf(buffer, "[0x%0x]\treturn", site);
-			strcat(log ,buffer);
-			sprintf(buffer, "[%s]\n", str_pool + (itr->st_name));
-			strcat(log, buffer);
+			sprintf(tmpBuffer, "[0x%0x]\treturn", site);
+			strcat(log ,tmpBuffer);
+			sprintf(tmpBuffer, "[%s]\n", str_pool + (itr->st_name));
+			strcat(log, tmpBuffer);
 			print_ftrace(log);
 			return true;
 			}

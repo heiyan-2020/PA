@@ -103,9 +103,8 @@ bool func_return(uint32_t site) {
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
 			if (site > itr->st_value && site <= itr->st_value + itr->st_size) {
 			//function return
-			sprintf(tmpBuffer, "[0x%0x]\treturn", site);
+			sprintf(tmpBuffer, "[0x%0x]\treturn\n", site);
 			strcat(log ,tmpBuffer);
-			strcat(log, tmpBuffer);
 			print_ftrace(log);
 			return true;
 			}

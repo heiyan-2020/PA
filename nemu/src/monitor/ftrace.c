@@ -100,9 +100,8 @@ bool func_return(uint32_t site) {
 	int count = 0;
 	char log[128];
 	char tmpBuffer[128];
-printf("DEBUG INFO: the address of this instr is 0x%x\n", site);
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
-			if (site > itr->st_value && site <= itr->st_size) {
+			if (site > itr->st_value && site <= itr->st_value + itr->st_size) {
 			//function return
 			sprintf(tmpBuffer, "[0x%0x]\treturn", site);
 			strcat(log ,tmpBuffer);

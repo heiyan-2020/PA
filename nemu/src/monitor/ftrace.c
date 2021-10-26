@@ -29,7 +29,6 @@ void init_ftrace() {
 	fseek(ftrace_fp, section_string_table.sh_offset, SEEK_SET);
 	item_count = fread(symbol_str_pool, 1, section_string_table.sh_size, ftrace_fp);
 	assert(item_count == section_string_table.sh_size);
-	printf("DEBUG INFO:offset of stringtable is 0x%x, size is 0x%x\n", section_string_table.sh_offset, section_string_table.sh_size);
 	//find Symbol table
 	fseek(ftrace_fp, elf_header.e_shoff, SEEK_SET);
 	do {

@@ -27,7 +27,6 @@ def_EHelper(jalr) {
 	s->dnpc &= 0xFFFFFFFE;
 	rtl_li(s, ddest, s->pc + 4);
 	if (func_call(s->dnpc, s->pc)) {
-		printf("DEBUG INFO:Success!\n");	
 	} else {
 		func_return(s->pc);
 	}

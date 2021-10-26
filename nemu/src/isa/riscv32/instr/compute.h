@@ -18,7 +18,9 @@ def_EHelper(jal) {
 	//call
 	rtl_li(s, ddest, s->pc + 4);
 	rtl_li(s, &(s->dnpc), id_src1->simm + s->pc);
+#ifdef CONFIG_FTRACE
 	func_call(s->dnpc, s->pc);
+#endif
 }
 
 def_EHelper(jalr) {
@@ -26,10 +28,12 @@ def_EHelper(jalr) {
 	rtl_addi(s, &(s->dnpc), dsrc1, id_src2->simm);
 	s->dnpc &= 0xFFFFFFFE;
 	rtl_li(s, ddest, s->pc + 4);
+#ifdef CONFIG_FTRACE
 	if (func_call(s->dnpc, s->pc)) {
 	} else {
 		func_return(s->pc);
 	}
+#endif
 }
 
 def_EHelper(add) {
@@ -50,7 +54,9 @@ def_EHelper(beq) {
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}	
+#ifdef CONFIG_FTRACE
 	func_call(s->dnpc, s->pc);
+#endif
 }
 
 def_EHelper(bne) {
@@ -58,8 +64,9 @@ def_EHelper(bne) {
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}	
+#ifdef CONFIG_FTRACE
 func_call(s->dnpc, s->pc);
-
+#endif
 }
 
 def_EHelper(bge) {
@@ -67,8 +74,9 @@ def_EHelper(bge) {
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}
+#ifdef CONFIG_FTRACE
 func_call(s->dnpc, s->pc);
-
+#endif
 }
 
 def_EHelper(bltu) {
@@ -76,8 +84,9 @@ def_EHelper(bltu) {
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}
+#ifdef CONFIG_FTRACE
 func_call(s->dnpc, s->pc);
-
+#endif
 }
 
 def_EHelper(blt) {
@@ -85,8 +94,9 @@ def_EHelper(blt) {
 	if (*s0) {
 		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
 	}
+#ifdef CONFIG_FTRACE
 func_call(s->dnpc, s->pc);
-
+#endif
 }
 
 def_EHelper(sltu) {

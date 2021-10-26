@@ -101,6 +101,7 @@ bool func_call(uint32_t addr, uint32_t site) {
 			//function call.
 			sprintf(tmpBuffer, "[0x%x]\tcall", site);
 			strcat(log, tmpBuffer);
+			printf("DEBUG:offset is %u\n", itr->st_name);
 			printf("DEBUG INFO:name is %s\n", str_pool + itr->st_name);
 			sprintf(tmpBuffer, "[%s@0x%x]\n",str_pool + itr->st_name , addr);
 			strcat(log, tmpBuffer);

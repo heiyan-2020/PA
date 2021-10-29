@@ -5,7 +5,8 @@ void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-			printf("%d\n", 1);
+		printf("%d\n", inl(RTC_ADDR));
+		printf("%d\n", inl(RTC_ADDR + 4));
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {

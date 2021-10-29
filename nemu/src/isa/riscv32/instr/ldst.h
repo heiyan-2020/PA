@@ -14,6 +14,12 @@ def_EHelper(lbu) {
 	rtl_lm(s, ddest, dsrc1, id_src2->imm, 1);
 }
 
+def_EHelper(lb) {
+	rtl_lm(s, ddest, dsrc1, id_src2->imm, 1);
+	rtl_slli(s, ddest, ddest, 8);
+	rtl_srai(s, ddest, ddest, 8);
+}
+
 def_EHelper(lh) {
 	rtl_lm(s, ddest, dsrc1, id_src2->imm, 2);
 	rtl_slli(s, ddest, ddest, 16);

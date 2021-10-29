@@ -10,7 +10,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
 		uint64_t result = inl(RTC_ADDR);
 		result <<= 32;
 		result += inl(RTC_ADDR + 4);
-		printf("%ld\n", result);
+		printf("result is %ld\n", result);
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {

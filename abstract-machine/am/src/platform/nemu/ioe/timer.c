@@ -5,7 +5,7 @@ void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-		printf("DEBUG INFO:us is %u\n", uptime->us);
+		printf("DEBUG INFO:us is \n", uptime->us);
 		uptime->us	= inl(RTC_ADDR);
 }
 

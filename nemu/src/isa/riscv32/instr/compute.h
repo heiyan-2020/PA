@@ -79,6 +79,16 @@ func_call(s->dnpc, s->pc);
 #endif
 }
 
+def_EHelper(bgeu) {
+	rtl_setrelop(s, RELOP_GEU, s0, dsrc1, dsrc2);
+	if (*s0) {
+		rtl_li(s, &(s->dnpc), id_dest->simm + s->pc);
+	}
+#ifdef CONFIG_FTRACE
+func_call(s->dnpc, s->pc);
+#endif
+}
+
 def_EHelper(bltu) {
 	rtl_setrelop(s, RELOP_LTU, s0, dsrc1, dsrc2);
 	if (*s0) {

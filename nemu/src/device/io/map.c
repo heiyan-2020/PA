@@ -41,9 +41,6 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
 #ifdef CONFIG_DTRACE
 	log_write("read [%s] at 0x%x\n", map->name, addr);
 #endif
-	if (map == NULL) {
-		printf("DEBUG, addr is 0x%x\n", addr);
-	}
   assert(len >= 1 && len <= 8);
   check_bound(map, addr);
   paddr_t offset = addr - map->low;

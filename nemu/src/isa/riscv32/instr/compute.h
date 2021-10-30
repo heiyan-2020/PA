@@ -158,19 +158,39 @@ def_EHelper(ori) {
 }
 
 def_EHelper(div) {
-	rtl_divs_q(s, ddest, dsrc1, dsrc2);
+	if (!(*dsrc2)) {
+		rtl_li(s, ddest, 0xffffffff);
+	} else if (*dsrc1 == 0x80000000 && *dsrc2 == 0xffffffff) {
+		rtl_li(s, ddest, 0x80000000);
+	} else {
+		rtl_divs_q(s, ddest, dsrc1, dsrc2);
+	}
 }
 
 def_EHelper(divu) {
-	rtl_divu_q(s, ddest, dsrc1, dsrc2);
+	if (!(*dsrc2)) {
+		rtl_li(s, ddest, 0xffffffff);
+	} else {
+		rtl_divu_q(s, ddest, dsrc1, dsrc2);
+	}
 }
 
 def_EHelper(rem) {
-	rtl_divs_r(s, ddest, dsrc1, dsrc2);
+	if (!(*dsrc2)) {
+		rtl_addi(s, ddest, dsrc1, 0);
+	} else if (*dsrc1 == 0x80000000 && *dsrc2 == 0xffffffff) {
+		rtl_li(s, ddest, 0);
+	} else {
+		rtl_divs_r(s, ddest, dsrc1, dsrc2);
+	}
 }
 
 def_EHelper(remu) {
-	rtl_divu_r(s, ddest, dsrc1, dsrc2);
+	if (!(*dsrc2)) {
+		rtl_addi(s, ddest,dsrc1, 0);
+	} else {
+		rtl_divu_q(s, ddest, dsrc1, dsrc2);
+	}
 }
 
 def_EHelper(mul) {

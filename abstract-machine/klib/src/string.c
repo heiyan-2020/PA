@@ -5,6 +5,9 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 size_t strlen(const char *s) {
+		if (s == NULL) {
+			return 0;
+		}
 		const char *itr = s;
 		while (*itr++ != '\0');
 		return itr - s - 1;

@@ -18,7 +18,6 @@ uint8_t* new_space(int size) {
 }
 
 static void check_bound(IOMap *map, paddr_t addr) {
-	printf("DEBUG:device is %s, addr is 0x%x\n", map->name, addr);			
   if (map == NULL) {
     Assert(map != NULL, "address (" FMT_PADDR ") is out of bound at pc = " FMT_WORD, addr, cpu.pc);
   } else {
@@ -42,8 +41,10 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
 #ifdef CONFIG_DTRACE
 	log_write("read [%s] at 0x%x\n", map->name, addr);
 #endif
+	if (map == NULL) {
+		printf("DEBUG, addr is 0x%x\n", addr);
+	}
   assert(len >= 1 && len <= 8);
-	printf("DEBUG2:device is %s, addr is 0x%x\n", map->name, addr);
   check_bound(map, addr);
   paddr_t offset = addr - map->low;
   invoke_callback(map->callback, offset, len, false); // prepare data to read

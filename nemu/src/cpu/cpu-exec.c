@@ -108,7 +108,7 @@ void cpu_exec(uint64_t n) {
     default: nemu_state.state = NEMU_RUNNING;
   }
 
-  uint64_t timer_start = get_time();
+ // uint64_t timer_start = get_time();
 
   Decode s;
   for (;n > 0; n --) {
@@ -119,8 +119,8 @@ void cpu_exec(uint64_t n) {
     IFDEF(CONFIG_DEVICE, device_update());
   }
 
-  uint64_t timer_end = get_time();
-  g_timer += timer_end - timer_start;
+  //uint64_t timer_end = get_time();
+//  g_timer += timer_end - timer_start;
 
   switch (nemu_state.state) {
     case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;

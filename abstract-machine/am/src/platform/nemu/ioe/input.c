@@ -8,5 +8,4 @@ void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
 		uint32_t state = inl(KBD_ADDR);
 		kbd->keydown = state >> 31;
 		kbd->keycode = (int)((state << 1) >> 1);
-		printf("addr = 0x%d,keydown = %d, keycode = %d\n",KBD_ADDR, kbd->keydown, kbd->keycode);
 }

@@ -30,7 +30,7 @@ static Uint32 texture_sync(Uint32 interval, void *param) {
 void __am_gpu_init() {
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
   window = SDL_CreateWindow("Native Application",
-      SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+  SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 #ifdef MODE_800x600
       W, H,
 #else

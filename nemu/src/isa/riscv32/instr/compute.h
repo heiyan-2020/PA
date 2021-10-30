@@ -189,7 +189,7 @@ def_EHelper(remu) {
 	if (!(*dsrc2)) {
 		rtl_addi(s, ddest,dsrc1, 0);
 	} else {
-		rtl_divu_q(s, ddest, dsrc1, dsrc2);
+		rtl_divu_r(s, ddest, dsrc1, dsrc2);
 	}
 }
 

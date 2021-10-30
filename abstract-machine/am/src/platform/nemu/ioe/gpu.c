@@ -24,6 +24,14 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
+	uint32_t* pixel = (uint32_t*) ctl->pixels;
+	int width = (inl(VGACTL_ADDR) >> 16) / 32; 
+	int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
+	for (int j = y; j < y + h; j++) {
+		for (int i = x; i < x + w; i++) {
+			outl(FB_ADDR + i + j * width, *pixel++);
+		}
+	}
 }
 
 void __am_gpu_status(AM_GPU_STATUS_T *status) {

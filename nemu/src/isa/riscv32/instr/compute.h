@@ -201,6 +201,10 @@ def_EHelper(mulh) {
 	rtl_muls_hi(s, ddest, dsrc1, dsrc2);
 }
 
+def_EHelper(mulhu) {
+	rtl_mulu_hi(s, ddest, dsrc1, dsrc2);
+}
+
 def_EHelper(slli) {
 	rtl_slli(s, ddest, dsrc1, id_src2->simm);
 }

@@ -8,6 +8,7 @@ void init_difftest(char *ref_so_file, long img_size, int port);
 void init_device();
 void init_sdb();
 void init_disasm(const char *triple);
+
 void init_ftrace();
 
 static void welcome() {
@@ -147,9 +148,9 @@ void am_init_monitor() {
   init_isa();
   load_img();
   IFDEF(CONFIG_DEVICE, init_device());
-//#ifdef CONFIG_FTRACE
-//	init_ftrace();
-//#endif
+#ifdef CONFIG_FTRACE
+	init_ftrace();
+#endif
   welcome();
 }
 #endif

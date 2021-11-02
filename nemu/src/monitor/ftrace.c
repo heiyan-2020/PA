@@ -1,7 +1,7 @@
-#ifdef CONFIG_FTRACE
 #include <isa.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef CONFIG_FTRACE
 #define ELF32_ST_BIND(info) ((info) >> 4)
 #define ELF32_ST_TYPE(info) ((info) & 0xf)
 void print_str_pool();
@@ -62,8 +62,8 @@ void init_ftrace() {
 //	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i++) {
 //		printf("%u\t\t%s\t\t0x%08x\t\t%d\t\t0x%02x\t\t0x%02x\n",(symbol_pool + i)->st_name ,str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value, (symbol_pool + i)->st_size, ELF32_ST_BIND((symbol_pool + i)->st_info), ELF32_ST_TYPE((symbol_pool + i)->st_info));
 //	}
-	FILE* fp = fopen(ftrace_file, "w");
-	fclose(fp);
+//	FILE* fp = fopen(ftrace_file, "w");
+//	fclose(fp);
 	fclose(ftrace_fp);
 }
 
@@ -114,7 +114,8 @@ bool func_call(uint32_t addr, uint32_t site) {
 			preBlanks++;
 			sprintf(tmpBuffer, "call[%s@0x%x]\n",str_pool + itr->st_name , addr);
 			strcat(log, tmpBuffer);
-			print_ftrace(log);
+//			log_write("%s", log);
+			//print_ftrace(log);
 			return true;
 		}
 		itr++;
@@ -137,7 +138,8 @@ bool func_return(uint32_t site) {
 			preBlanks--;
 			sprintf(tmpBuffer, "return  [%s]\n", str_pool + itr->st_name);
 			strcat(log, tmpBuffer);
-			print_ftrace(log);
+//			log_write("%s", log);
+			//print_ftrace(log);
 			return true;
 			}
 			itr++;

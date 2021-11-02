@@ -48,6 +48,10 @@ def_EHelper(sltiu) {
 	rtl_setrelopi(s, RELOP_LTU, ddest, dsrc1, id_src2->simm);
 }
 
+def_EHelper(slti) {
+	rtl_setrelopi(s, RELOP_LT, ddest, dsrc1, id_src2->simm);
+}
+
 def_EHelper(beq) {
 	//call
 	rtl_setrelop(s, RELOP_EQ, s0, dsrc1, dsrc2);

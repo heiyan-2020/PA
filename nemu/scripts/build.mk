@@ -33,9 +33,10 @@ $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c -o $@ $<
 	$(call call_fixdep, $(@:.o=.d), $@)
-#	@$(CC) $(CFLAGS) -E $@ $< | \
-#	grep -ve '^#' | \
-#	clang-format - > $(basename $@).i
+	@$(CC) $(CFLAGS) -E $@ $< | \
+	grep -ve '^#' | \
+	clang-format - > $(basename $@).i
+	find /home/heiyan/ics2021/nemu -maxdepth 1 |grep '\.d$$'|xargs rm
 $(OBJ_DIR)/%.o: %.cc
 	@echo + CXX $<
 	@mkdir -p $(dir $@)

@@ -62,8 +62,8 @@ void init_ftrace() {
 //	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i++) {
 //		printf("%u\t\t%s\t\t0x%08x\t\t%d\t\t0x%02x\t\t0x%02x\n",(symbol_pool + i)->st_name ,str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value, (symbol_pool + i)->st_size, ELF32_ST_BIND((symbol_pool + i)->st_info), ELF32_ST_TYPE((symbol_pool + i)->st_info));
 //	}
-//	FILE* fp = fopen(ftrace_file, "w");
-//	fclose(fp);
+	FILE* fp = fopen(ftrace_file, "w");
+	fclose(fp);
 	fclose(ftrace_fp);
 }
 
@@ -110,12 +110,12 @@ bool func_call(uint32_t addr, uint32_t site) {
 			//function call.
 			sprintf(tmpBuffer, "[0x%x] ", site);
 			strcat(log, tmpBuffer);
-			print_pre_blanks(log);
+//			print_pre_blanks(log);
 			preBlanks++;
 			sprintf(tmpBuffer, "call[%s@0x%x]\n",str_pool + itr->st_name , addr);
 			strcat(log, tmpBuffer);
-//			log_write("%s", log);
-			//print_ftrace(log);
+			log_write("%s", log);
+			print_ftrace(log);
 			return true;
 		}
 		itr++;
@@ -127,19 +127,19 @@ bool func_call(uint32_t addr, uint32_t site) {
 bool func_return(uint32_t site) {
 	Elf32_Sym* itr = symbol_pool;
 	int count = 0;
-	char log[1280];
+	char log[1280] = {'\0'};
 	char tmpBuffer[1280];
 	while (count < symbol_table.sh_size / symbol_table.sh_entsize) {
 			if (site > itr->st_value && site <= itr->st_value + itr->st_size && get_type(itr) == 0x02) {
 			//function return
 			sprintf(tmpBuffer, "[0x%0x]", site);
 			strcat(log ,tmpBuffer);
-			print_pre_blanks(log);
+//			print_pre_blanks(log);
 			preBlanks--;
 			sprintf(tmpBuffer, "return  [%s]\n", str_pool + itr->st_name);
 			strcat(log, tmpBuffer);
-//			log_write("%s", log);
-			//print_ftrace(log);
+			log_write("%s", log);
+			print_ftrace(log);
 			return true;
 			}
 			itr++;

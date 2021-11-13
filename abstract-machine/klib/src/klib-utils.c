@@ -37,6 +37,7 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 							s = va_arg(ap, char*);
 							printf("length is %d\n", strlen(s));
 							memcpy(out, s, strlen(s));
+							printf("back!\n");
 							out += strlen(s);
 							break;					
 						}

@@ -73,6 +73,7 @@ int memcmp(const void *s1, const void *s2, size_t n) {
 		const unsigned char* p2 = s2;
 
 		while (n-- > 0) {
+			printf("%d\n", n);
 			if (*p1++ != *p2++) {
 				return *(p1 - 1) - *(p2 - 1);
 			}

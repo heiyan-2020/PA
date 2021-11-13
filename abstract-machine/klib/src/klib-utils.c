@@ -29,7 +29,6 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 						case 'd': {
 							d = va_arg(ap, int);
 							char* tmp_str = convert(d, 10);
-							printf("Debug info: out is 0x%x, tmp_str is 0x%x\n", out, tmp_str);
 							memcpy(out, tmp_str, strlen(tmp_str));
 							out += strlen(tmp_str);
 							break;

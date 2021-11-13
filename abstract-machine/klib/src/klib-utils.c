@@ -36,7 +36,7 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 						}
 						case 's': {
 							s = va_arg(ap, char*);
-							printf("0x%x, 0x%x\n", out, s);
+							printf("0x%u, 0x%u\n", out, s);
 							memcpy(out, s, strlen(s));
 							out += strlen(s);
 							break;					

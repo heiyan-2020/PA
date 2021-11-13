@@ -32,7 +32,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   if (ITRACE_COND) log_write("%s\n", _this->logbuf);
 #endif
 #ifdef CONFIG_RTRACE_COND
-	if (RTRACE_COND)		sprintf(ring_buf.buffer[(ring_buf.header++) % BUFFERSIZE], "%s\n", _this->logbuf);		
+	sprintf(ring_buf.buffer[(ring_buf.header++) % BUFFERSIZE], "%s\n", _this->logbuf);		
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
@@ -132,7 +132,7 @@ void cpu_exec(uint64_t n) {
             ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED))),
           nemu_state.halt_pc);
       // fall through
-		#ifdef CONFIG_RTRACE_COND
+#ifdef CONFIG_RTRACE_COND
 			printf("DEBUG INFO:enter output module.\n");
 			int bound = 0;
 			if (ring_buf.header >= BUFFERSIZE) {

@@ -29,6 +29,7 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 						case 'd': {
 							d = va_arg(ap, int);
 							char* tmp_str = convert(d, 10);
+							printf("before!\n");
 							memcpy(out, tmp_str, strlen(tmp_str));
 							printf("back!!\n");
 							out += strlen(tmp_str);

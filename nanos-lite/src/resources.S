@@ -5,7 +5,7 @@ ramdisk_start:
 ramdisk_end:
 
 .section .rodata
-.global logo
+.globl logo
 logo:
 .incbin "resources/logo.txt"
 .byte 0

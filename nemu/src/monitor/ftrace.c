@@ -63,8 +63,8 @@ void init_ftrace() {
 //	for(int i = 0; i < symbol_table.sh_size / symbol_table.sh_entsize; i++) {
 //		printf("%u\t\t%s\t\t0x%08x\t\t%d\t\t0x%02x\t\t0x%02x\n",(symbol_pool + i)->st_name ,str_pool + (symbol_pool + i)->st_name, (symbol_pool + i)->st_value, (symbol_pool + i)->st_size, ELF32_ST_BIND((symbol_pool + i)->st_info), ELF32_ST_TYPE((symbol_pool + i)->st_info));
 //	}
-	FILE* fp = fopen(ftrace_file, "w");
-	fclose(fp);
+//	FILE* fp = fopen(ftrace_file, "w");
+//	fclose(fp);
 	fclose(ftrace_fp);
 }
 

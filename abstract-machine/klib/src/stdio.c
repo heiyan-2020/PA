@@ -9,7 +9,7 @@
 int printf(const char *fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
-	char buffer[256];
+	char buffer[25600];
 	print_template(buffer, fmt, ap);
 	char *ptr = buffer;
 	while (*ptr != '\0') {

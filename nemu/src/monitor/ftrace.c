@@ -115,7 +115,7 @@ bool func_call(uint32_t addr, uint32_t site) {
 			sprintf(tmpBuffer, "call[%s@0x%x]\n",str_pool + itr->st_name , addr);
 			strcat(log, tmpBuffer);
 			log_write("%s", log);
-			print_ftrace(log);
+//			print_ftrace(log);
 			return true;
 		}
 		itr++;
@@ -139,7 +139,7 @@ bool func_return(uint32_t site) {
 			sprintf(tmpBuffer, "return  [%s]\n", str_pool + itr->st_name);
 			strcat(log, tmpBuffer);
 			log_write("%s", log);
-			print_ftrace(log);
+//			print_ftrace(log);
 			return true;
 			}
 			itr++;

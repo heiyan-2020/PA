@@ -17,6 +17,7 @@ char* symbol_str_pool;
 Elf32_Sym* symbol_pool;
 void init_ftrace() {
 	FILE* ftrace_fp = fopen(elf_file, "r");
+	assert(ftrace_fp != NULL);
 	int item_count = 0;
 	//read in elf header.
 	item_count = fread(&elf_header, 52, 1, ftrace_fp);

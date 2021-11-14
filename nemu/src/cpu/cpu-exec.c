@@ -133,7 +133,6 @@ void cpu_exec(uint64_t n) {
           nemu_state.halt_pc);
       // fall through
 #ifdef CONFIG_RTRACE_COND
-			printf("DEBUG INFO:enter output module.\n");
 			int bound = 0;
 			if (ring_buf.header >= BUFFERSIZE) {
 				bound = BUFFERSIZE;

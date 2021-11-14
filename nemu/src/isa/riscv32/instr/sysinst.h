@@ -14,3 +14,12 @@ def_EHelper(csrrw) {
 	}
 	rtl_addi(s, system_reg, dsrc1, 0);
 }
+
+def_EHelper(csrrs) {
+	rtlreg_t* system_reg;
+	switch (id_src2->imm) {
+		case MTVEC: system_reg = &cpu.mtvec;break;
+		default: assert(0);
+	}
+	rtl_addi(s, ddest, system_reg, 0);
+}

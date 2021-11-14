@@ -33,6 +33,13 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 							out += strlen(tmp_str);
 							break;
 						}
+						case 'x': {
+							d = va_arg(ap, int);
+							char* tmp_str = convert(d, 16);
+							memcpy(out, tmp_str, strlen(tmp_str));
+							out += strlen(tmp_str);
+							break;					
+						}
 						case 's': {
 							s = va_arg(ap, char*);
 							memcpy(out, s, strlen(s));

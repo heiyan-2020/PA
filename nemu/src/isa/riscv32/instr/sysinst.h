@@ -31,3 +31,7 @@ def_EHelper(csrrs) {
 	}
 	rtl_addi(s, ddest, system_reg, 0);
 }
+
+def_EHelper(mret) {
+	rtl_addi(s, &(s->dnpc), &(cpu.mepc), 0);	
+}

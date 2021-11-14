@@ -3,7 +3,6 @@
 #include "../local-include/reg.h"
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-	printf("Debug info: dut_pc is 0x%x, nemu_pc is 0x%x\n", ref_r->pc, cpu.pc);
 	if (ref_r->pc != cpu.pc) {
 		log_write("Difftest info: execute faild with instruction at 0x%x\n", pc);
 		return false;

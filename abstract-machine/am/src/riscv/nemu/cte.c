@@ -5,11 +5,6 @@
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
-	printf("Debug info:	Before print context.\n");
-	for (int i = 0; i < 32; i++) {
-		printf("%d:%d\n",i, c->gpr[i]);
-	}
-	printf("mcause is %d\n", c->mcause);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {

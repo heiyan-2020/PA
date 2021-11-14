@@ -1,5 +1,5 @@
 def_EHelper(ecall) {
-	rtl_li(s, &(s->dnpc), isa_raise_intr(1, cpu.mtvec));
+	rtl_li(s, &(s->dnpc), isa_raise_intr(11, cpu.mtvec));
 }
 #define MTVEC 0x00000305
 #define MCAUSE 0x00000342

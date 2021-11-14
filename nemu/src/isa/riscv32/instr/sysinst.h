@@ -1,4 +1,3 @@
-
 def_EHelper(ecall) {
 	rtl_li(s, &(s->dnpc), isa_raise_intr(1, cpu.mtvec));
 }

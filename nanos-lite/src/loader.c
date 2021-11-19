@@ -33,7 +33,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			memset(vaddr + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);			
 		}
 	}
-  return 0;
+  return (uintptr_t)entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

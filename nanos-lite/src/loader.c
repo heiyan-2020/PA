@@ -32,6 +32,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			memset(vaddr + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);			
 		}
 	}
+	printf("0x%x\n", _start);
   return _start;
 }
 

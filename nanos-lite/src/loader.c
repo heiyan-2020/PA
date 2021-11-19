@@ -14,6 +14,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	//read the elf_header.
 	ramdisk_read(elf_header, 0, sizeof(Elf_Ehdr));
 	//verify file type.
+	printf("0x%x\n", *(uint32_t *)elf_header->e_ident);	
 	assert(*(uint32_t *)elf_header->e_ident == 0x7f454C46);
 	//read the program_header.
 	Elf_Phdr prog_header[1];

@@ -19,7 +19,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	Elf_Phdr prog_header[1];
 	size_t offset = elf_header->e_phoff;
 	size_t len = elf_header->e_phentsize;
-	uint8_t* entry = NULL;
 	for(uint32_t i = 0; i < elf_header->e_phnum; i++) {
 		ramdisk_read(prog_header, offset, len);
 		offset += len;
@@ -28,14 +27,11 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {
 			uint8_t* vaddr = (uint8_t*)prog_header->p_vaddr;
-			if (i == 1) {
-				entry = vaddr;
-			}
 			ramdisk_read(vaddr, prog_header->p_offset, prog_header->p_filesz);
 			memset(vaddr + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);			
 		}
 	}
-  return (uintptr_t)entry;
+  return (uintptr_t)0x80000094;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

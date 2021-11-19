@@ -28,7 +28,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {
 			uint8_t* vaddr = (uint8_t*)prog_header->p_vaddr;
-			if (i == 2) {
+			if (i == 1) {
 				entry = vaddr;
 			}
 			ramdisk_read(vaddr, prog_header->p_offset, prog_header->p_filesz);

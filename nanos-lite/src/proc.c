@@ -18,14 +18,14 @@ void hello_fun(void *arg) {
     yield();
   }
 }
-
+void naive_uload(PCB*, const char*);
 void init_proc() {
   switch_boot_pcb();
 
   Log("Initializing processes...");
 
   // load program here
-
+	naive_uload(NULL, NULL);
 }
 
 Context* schedule(Context *prev) {

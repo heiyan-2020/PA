@@ -11,7 +11,6 @@
 static Elf_Ehdr elf_header[1];
 static Elf_Phdr prog_header[1];
 size_t ramdisk_read(void*, size_t, size_t);
-extern void  _start(void);
 static uintptr_t loader(PCB *pcb, const char *filename) {
 	//read the elf_header.
 	ramdisk_read(elf_header, 0, sizeof(Elf_Ehdr));
@@ -32,8 +31,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			memset(vaddr + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);			
 		}
 	}
-	printf("0x%x\n", _start);
-  return (uintptr_t)_start;
+  return (uintptr_t)elf_header->e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

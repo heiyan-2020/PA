@@ -19,13 +19,16 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	Elf_Phdr prog_header[1];
 	size_t offset = elf_header->e_phoff;
 	size_t len = elf_header->e_phentsize;
+	uint8_t* entry = NULL;
 	for(uint32_t i = 0; i < elf_header->e_phnum; i++) {
 		ramdisk_read(prog_header, offset, len);
 		offset += len;
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {
 			uint8_t* vaddr = (uint8_t*)prog_header->p_vaddr;
-			printf("Debug info: vaddr is 0x%x\n", vaddr);
+			if (entry == NULL) {
+				entry = vaddr;
+			}
 			ramdisk_read(vaddr, prog_header->p_offset, prog_header->p_filesz);
 			memset(vaddr + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);			
 		}

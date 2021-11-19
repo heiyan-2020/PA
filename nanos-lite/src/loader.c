@@ -8,15 +8,16 @@
 # define Elf_Ehdr Elf32_Ehdr
 # define Elf_Phdr Elf32_Phdr
 #endif
+static Elf_Ehdr elf_header[1];
+static Elf_Phdr prog_header[1];
 size_t ramdisk_read(void*, size_t, size_t);
+extern uintptr_t _start;
 static uintptr_t loader(PCB *pcb, const char *filename) {
-	Elf_Ehdr elf_header[1];
 	//read the elf_header.
 	ramdisk_read(elf_header, 0, sizeof(Elf_Ehdr));
 	//verify file type.
 	assert(*(uint32_t *)elf_header->e_ident == 0x464C457F);
 	//read the program_header.
-	Elf_Phdr prog_header[1];
 	size_t offset = elf_header->e_phoff;
 	size_t len = elf_header->e_phentsize;
 	for(uint32_t i = 0; i < elf_header->e_phnum; i++) {
@@ -31,7 +32,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			memset(vaddr + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);			
 		}
 	}
-  return (uintptr_t)0x80000094;
+  return _start;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

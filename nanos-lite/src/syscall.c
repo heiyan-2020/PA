@@ -6,7 +6,10 @@ void sys_yield(Context *c) {
 	c->GPRx = 0;
 }
 
-void sys_exit();
+void sys_exit(Context* c) {
+	halt(c->GPR2);
+	c->GPRx = 0;
+}
 
 void do_syscall(Context *c) {
   uintptr_t a[4];

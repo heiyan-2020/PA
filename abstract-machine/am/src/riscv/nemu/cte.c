@@ -8,7 +8,7 @@ Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
-			case 0xb: ev.event = EVENT_YIELD;	break;
+			case 0xb: ev.event = c->gpr[17];	break;
       default: ev.event = EVENT_ERROR; break;
     }
 

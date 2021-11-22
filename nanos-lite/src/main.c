@@ -6,7 +6,7 @@ void init_ramdisk(void);
 void init_irq(void);
 void init_fs(void);
 void init_proc(void);
-
+void init_log(const char*);
 int main() {
   extern const char logo[];
   printf("%s", logo);
@@ -18,6 +18,10 @@ int main() {
   init_device();
 
   init_ramdisk();
+
+#ifdef STRACE
+	init_log("../build/nanos-log.txt");
+#endif
 
 #ifdef HAS_CTE
   init_irq();

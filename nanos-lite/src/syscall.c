@@ -15,12 +15,12 @@ void sys_write(Context* c) {
 	int fd = c->GPR2;
 	const char* buf = (char*)c->GPR3;
 	size_t count = c->GPR4;
+	c->GPRx = count;
 	if (fd == 1 || fd == 2) {
 		for (int i = 0; i < count; i++) {
 			putch(buf[i]);
 		}	
 	}
-	c->GPRx = count;
 	//Attention!I have not handled situation that the number of wtitten bytes less than count.
 }
 

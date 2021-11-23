@@ -1,1 +1,1 @@
-//#define STRACE "y"
+#define STRACE "y"

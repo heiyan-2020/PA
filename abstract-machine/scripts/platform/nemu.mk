@@ -23,8 +23,8 @@ image: $(IMAGE).elf
 	@$(OBJCOPY) -S --set-section-flags .bss=alloc,contents -O binary $(IMAGE).elf $(IMAGE).bin
 
 run: image
-	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) run ARGS="$(NEMUFLAGS)" IMG=$(IMAGE).bin 2> $(shell dirname $(IMAGE).elf)/nanos-log.txt
-#	@grep -e '\[STRACE\]' tmp.txt > $(shell dirname $(IMAGE).elf)/nanos-log.txt
+	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) run ARGS="$(NEMUFLAGS)" IMG=$(IMAGE).bin
+#	@grep -e '^\[STRACE\]' tmp.txt > $(shell dirname $(IMAGE).elf)/nanos-log.txt
 #	@rm tmp.txt
 
 gdb: image

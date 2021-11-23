@@ -22,8 +22,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	for(uint32_t i = 0; i < elf_header->e_phnum; i++) {
 		ramdisk_read(prog_header, offset, len);
 		offset += len;
-		printf("--------------------\np_type is 0x%x, p_offset is 0x%x, p_vaddr is 0x%x, p_filesz is 0x%x, p_memsz is 0x%x\n", prog_header->p_type, prog_header->p_offset, prog_header->p_vaddr, prog_header->p_filesz, prog_header->p_memsz);
-
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {
 			uint8_t* vaddr = (uint8_t*)prog_header->p_vaddr;

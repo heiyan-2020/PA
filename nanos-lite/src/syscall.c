@@ -16,7 +16,7 @@ void do_syscall(Context *c) {
   a[0] = c->GPR1;
 
   switch (a[0]) {
-		case SYS_exit: sys_exit(c);log_write("[STRACE]\tcalled[SYS_exit], \treturned 0x%x\n", c->GPRx);break;
+		case SYS_exit:log_write("[STRACE]\tcalled[SYS_exit], \treturned 0x%x\n", c->GPRx);sys_exit(c);break;
 		case SYS_yield: sys_yield(c);log_write("[STRACE]\tcalled[SYS_yield], \treturned 0x%x\n", c->GPRx);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }

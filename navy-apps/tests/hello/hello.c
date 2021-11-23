@@ -10,7 +10,7 @@ int main() {
     if (j == 10000) {
       printf("Hello World from Navy-apps for the %dth time!\n", i ++);
 			printf("fuck\n");
-      j = 0;
+      break;
     }
   }
   return 0;

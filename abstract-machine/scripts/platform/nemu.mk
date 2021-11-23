@@ -24,7 +24,7 @@ image: $(IMAGE).elf
 
 run: image
 	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) run ARGS="$(NEMUFLAGS)" IMG=$(IMAGE).bin 2> tmp.txt 
-	grep tmp.txt '^(\[STRACE\])' > nanos-log.txt
+	grep '^(\[STRACE\])' tmp.txt > nanos-log.txt
 	rm tmp.txt
 
 gdb: image

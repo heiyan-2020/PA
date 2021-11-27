@@ -53,16 +53,15 @@ int fs_open(const char* filepath, int flags, int mode) {
 size_t fs_read(int fd, void* buf, size_t len) {
 	//haven't handle exception.
 	assert(0 <= fd && fd <= sizeof(file_table) / sizeof(Finfo));
-	Finfo currentFile = file_table[fd];		
-	printf("current open_offset is 0x%x\n", currentFile.open_offset);
-	if (currentFile.open_offset + len < currentFile.size) {
-		ramdisk_read(buf, currentFile.disk_offset + currentFile.open_offset, len);
-		currentFile.open_offset += len;
+	Finfo* currentFile = &file_table[fd];		
+	if (currentFile->open_offset + len < currentFile->size) {
+		ramdisk_read(buf, currentFile->disk_offset + currentFile->open_offset, len);
+		currentFile->open_offset += len;
 		return len;
 	} else {
-		ramdisk_read(buf, currentFile.disk_offset + currentFile.open_offset, currentFile.size - currentFile.open_offset);
-		currentFile.open_offset = currentFile.size;
-		return currentFile.size - currentFile.open_offset;
+		ramdisk_read(buf, currentFile->disk_offset + currentFile->open_offset, currentFile->size - currentFile->open_offset);
+		currentFile->open_offset = currentFile->size;
+		return currentFile->size - currentFile->open_offset;
 	}
 }
 
@@ -73,37 +72,37 @@ int fs_close(int fd) {
 size_t fs_write(int fd, const void* buf, size_t len) {
 		//haven't handle exception.
 	assert(0 <= fd && fd <= sizeof(file_table) / sizeof(Finfo));
-	Finfo currentFile = file_table[fd];		
+	Finfo* currentFile = &file_table[fd];		
 	//handle special cases;
 //	if (fd == FD_STDOUT || fd == FD_STDERR) {
 //			for (int i = 0; i < len; i++) {
 //				putch(buf[i]);
 //			}
 //	}
-	if (currentFile.open_offset + len < currentFile.size) {
-		ramdisk_write(buf, currentFile.disk_offset + currentFile.open_offset, len);
-		currentFile.open_offset += len;
+	if (currentFile->open_offset + len < currentFile->size) {
+		ramdisk_write(buf, currentFile->disk_offset + currentFile->open_offset, len);
+		currentFile->open_offset += len;
 		return len;
 	} else {
-		ramdisk_write(buf, currentFile.disk_offset + currentFile.open_offset, currentFile.size - currentFile.open_offset);
-		currentFile.open_offset = currentFile.size;
-		return currentFile.size - currentFile.open_offset;
+		ramdisk_write(buf, currentFile->disk_offset + currentFile->open_offset, currentFile->size - currentFile->open_offset);
+		currentFile->open_offset = currentFile->size;
+		return currentFile->size - currentFile->open_offset;
 	}
 }
 
 size_t fs_lseek(int fd, size_t offset, int whence) {
 	assert(0 <= fd && fd <= sizeof(file_table) / sizeof(Finfo));
-	Finfo currentFile = file_table[fd];
+	Finfo* currentFile = &file_table[fd];
 	switch (whence) {
 		case SEEK_SET: {
-											assert(offset < currentFile.size);
-											currentFile.open_offset = offset;
+											assert(offset < currentFile->size);
+											currentFile->open_offset = offset;
 											return offset;	
 									 }
 		case SEEK_CUR: {
-									 		assert(offset + currentFile.open_offset < currentFile.size);
-											currentFile.open_offset = offset + currentFile.open_offset;
-											return currentFile.open_offset;
+									 		assert(offset + currentFile->open_offset < currentFile->size);
+											currentFile->open_offset = offset + currentFile->open_offset;
+											return currentFile->open_offset;
 									 
 									 }
 		default: assert(0);

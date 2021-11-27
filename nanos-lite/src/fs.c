@@ -62,7 +62,8 @@ size_t fs_read(int fd, void* buf, size_t len) {
 		ramdisk_read(buf, currentFile->disk_offset + currentFile->open_offset, currentFile->size - currentFile->open_offset);
 		currentFile->open_offset = currentFile->size;
 		printf("%s\n", (char*)buf);
-		return currentFile->size - currentFile->open_offset;
+//		return currentFile->size - currentFile->open_offset;
+	return 0;
 	}
 }
 

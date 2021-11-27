@@ -53,18 +53,15 @@ size_t fs_read(int fd, void* buf, size_t len) {
 	//haven't handle exception.
 	assert(0 <= fd && fd <= sizeof(file_table) / sizeof(Finfo));
 	Finfo* currentFile = &file_table[fd];		
-	printf("file curPos is on %d\n", currentFile->open_offset);
 	if (currentFile->open_offset + len < currentFile->size) {
 		ramdisk_read(buf, currentFile->disk_offset + currentFile->open_offset, len);
 		currentFile->open_offset += len;
-		printf("%s\n", (char*)buf);
 		return len;
 	} else {
 		ramdisk_read(buf, currentFile->disk_offset + currentFile->open_offset, currentFile->size - currentFile->open_offset);
+		size_t oldValue = currentFile->open_offset;
 		currentFile->open_offset = currentFile->size;
-		printf("%s\n", (char*)buf);
-//		return currentFile->size - currentFile->open_offset;
-	return 0;
+		return currentFile->size - oldValue;
 	}
 }
 

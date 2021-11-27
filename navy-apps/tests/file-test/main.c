@@ -9,9 +9,9 @@ int main() {
   long size = ftell(fp);
   assert(size == 5000);
 
-  fseek(fp, 2500, SEEK_SET);
+  fseek(fp, 0, SEEK_SET);
   int i, n;
-  for (i = 500; i < 1000; i ++) {
+  for (i = 0; i < 1000; i ++) {
     fscanf(fp, "%d", &n);
 		printf("n = %d, i = %d\n", n, i);
 //    assert(n == i + 1);

@@ -44,6 +44,10 @@ void sys_open(Context* c) {
 	c->GPRx = fs_open(filepath, flags, mode);
 }
 
+void sys_close(Context* c) {
+	c->GPRx = 0;
+}
+
 void sys_lseek(Context* c) {
 	int fd = c->GPR2;
 	size_t offset = c->GPR3;
@@ -77,6 +81,7 @@ void do_syscall(Context *c) {
 		case SYS_open: sys_open(c);break;
 		case SYS_read: sys_read(c);break;
 		case SYS_lseek: sys_lseek(c);break;
+		case SYS_close: sys_close(c);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }

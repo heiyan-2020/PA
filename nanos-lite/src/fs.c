@@ -94,7 +94,7 @@ size_t fs_lseek(int fd, size_t offset, int whence) {
 											return offset;	
 									 }
 		case SEEK_CUR: {
-									 		assert(offset + currentFile->open_offset < currentFile->size);
+									 		assert(offset + currentFile->open_offset <= currentFile->size);
 											currentFile->open_offset = offset + currentFile->open_offset;
 											return currentFile->open_offset;
 									 

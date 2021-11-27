@@ -24,7 +24,7 @@ image: $(IMAGE).elf
 
 run: image
 	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) run ARGS="$(NEMUFLAGS)" IMG=$(IMAGE).bin 2> $(shell dirname $(IMAGE).elf)/nanos-out.txt
-	@grep -e '\[STRACE\]' $(shell dirname $(IMAGE).elf)/nanos-out.txt > $(shell dirname $(IMAGE).elf)/nanos-log.txt
+#	@grep -e '\[STRACE\]' $(shell dirname $(IMAGE).elf)/nanos-out.txt > $(shell dirname $(IMAGE).elf)/nanos-log.txt
 
 gdb: image
 	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) gdb ARGS="$(NEMUFLAGS)" IMG=$(IMAGE).bin

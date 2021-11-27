@@ -9,7 +9,7 @@ int main() {
   long size = ftell(fp);
   assert(size == 5000);
 
-  fseek(fp, 5000 - 1024, SEEK_SET);
+  fseek(fp, 5000 - 1025, SEEK_SET);
   int i, n;
   for (i = 0; i < 1000; i ++) {
     fscanf(fp, "%d", &n);

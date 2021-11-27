@@ -1,6 +1,6 @@
 #ifndef __SYSCALL_H__
 #define __SYSCALL_H__
-#include <strace.h>
+#define STRACE y
 
 #ifdef STRACE
 #define FOREACH(CALL)  \

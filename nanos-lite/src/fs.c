@@ -106,6 +106,7 @@ size_t fs_lseek(int fd, size_t offset, int whence) {
 									 }
 		case SEEK_END: {
 									 		assert(offset == 0);
+											currentFile->open_offset = currentFile->size;
 											return currentFile->open_offset;
 									 }
 		default: assert(0);

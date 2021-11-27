@@ -67,7 +67,7 @@ void do_syscall(Context *c) {
 	if (a[0] < 0 || a[0] > 19) {
 		panic("Illegal Syscall ID = %d\n", a[0]);
 	}
-	printf("[STRACE]\tcalled %s, with arguments\t0x%x\t0x%x\t0x%x,returned 0x%x\n", CALL_STRING[a[0]], c->GPR2, c->GPR3, c->GPR4, c->GPRx);
+	printf("[STRACE]\tcalled %s, with arguments\t0x%x\t0x%x\t0x%x,returned 0x%x\n", SYS_STRING[a[0]], c->GPR2, c->GPR3, c->GPR4, c->GPRx);
 #endif
   switch (a[0]) {
 		case SYS_exit:sys_exit(c);break;

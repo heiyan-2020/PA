@@ -1,27 +1,38 @@
 #ifndef __SYSCALL_H__
 #define __SYSCALL_H__
+#include <strace.h>
 
-enum {
-  SYS_exit,
-  SYS_yield,
-  SYS_open,
-  SYS_read,
-  SYS_write,
-  SYS_kill,
-  SYS_getpid,
-  SYS_close,
-  SYS_lseek,
-  SYS_brk,
-  SYS_fstat,
-  SYS_time,
-  SYS_signal,
-  SYS_execve,
-  SYS_fork,
-  SYS_link,
-  SYS_unlink,
-  SYS_wait,
-  SYS_times,
-  SYS_gettimeofday
+#ifdef STRACE
+#define FOREACH(CALL)  \
+  CALL(SYS_exit)  \
+  CALL(SYS_yield)  \
+  CALL(SYS_open)  \
+  CALL(SYS_read)  \
+  CALL(SYS_write)  \
+  CALL(SYS_kill)  \
+  CALL(SYS_getpid)  \
+  CALL(SYS_close)  \
+  CALL(SYS_lseek)  \
+  CALL(SYS_brk)  \
+  CALL(SYS_fstat)  \
+  CALL(SYS_time)  \
+  CALL(SYS_signal)  \
+  CALL(SYS_execve)  \
+  CALL(SYS_fork)  \
+  CALL(SYS_link)  \
+  CALL(SYS_unlink)  \
+  CALL(SYS_wait)  \
+  CALL(SYS_times)  \
+  CALL(SYS_gettimeofday)  \
+
+#define GENERATE_ENUM(ENUM) ENUM,
+#define GENERATE_STRING(STRING) #STRING,
+enum SYS_CALL{
+	FOREACH(GENERATE_ENUM)
 };
 
+static const char* SYS_STRING[] = {
+	FOREACH(GENERATE_STRING)
+};
+#endif
 #endif

@@ -54,6 +54,7 @@ size_t fs_read(int fd, void* buf, size_t len) {
 	//haven't handle exception.
 	assert(0 <= fd && fd <= sizeof(file_table) / sizeof(Finfo));
 	Finfo currentFile = file_table[fd];		
+	printf("current open_offset is 0x%x\n", currentFile.open_offset);
 	if (currentFile.open_offset + len < currentFile.size) {
 		ramdisk_read(buf, currentFile.disk_offset + currentFile.open_offset, len);
 		currentFile.open_offset += len;

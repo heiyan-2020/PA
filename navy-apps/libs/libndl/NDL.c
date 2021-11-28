@@ -15,8 +15,8 @@ uint32_t NDL_GetTicks() {
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  int fd = _open("/dev/events", 0, 0);
-	return _read(fd, buf, len);
+  int fd = open("/dev/events", 0, 0);
+	return read(fd, buf, len);
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
@@ -37,9 +37,9 @@ void NDL_OpenCanvas(int *w, int *h) {
     }
     close(fbctl);
   } else {
-		int fd = _open("/proc/dispinfo");
+		int fd = open("/proc/dispinfo");
 		char tmpBuf[64];
-		int bytes = _read(fd, (void*)tmpBuf, 64);
+		int bytes = read(fd, (void*)tmpBuf, 64);
 		sscanf(tmpBuf, "WIDTH : %d\nHEIGHT: %d\n", &screen_w, &screen_h);
 		if (*w == 0 && *h == 0) {
 			canvas_w = screen_w;
@@ -56,13 +56,13 @@ void NDL_OpenCanvas(int *w, int *h) {
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 		int real_x = canvas_x + x;
 	 	int real_y = canvas_y + y;
-		int fd = _open("/dev/fb", 0, 0);
-		_lseek(fd, (real_y * screen_w + real_x) * 4, SEEK_SET);
+		int fd = open("/dev/fb", 0, 0);
+		lseek(fd, (real_y * screen_w + real_x) * 4, SEEK_SET);
 		for (int i = 0; i < h; i++) {
-			_write(fd, pixels, w*4);
+			write(fd, pixels, w*4);
 			pixels += w;
 			real_y += 1;
-			_lseek(fd, (real_y * screen_w + real_x) * 4, SEEK_SET);
+			lseek(fd, (real_y * screen_w + real_x) * 4, SEEK_SET);
 		}	
 }
 

@@ -9,6 +9,7 @@ int main() {
 		gettimeofday(tv, NULL);
 		if (tv->tv_sec - preTime >= 0.5) {
 			printf("past 0.5 seconds\n");
+		}
 			count++;
 			if (count == 10) {
 				break;
@@ -16,4 +17,3 @@ int main() {
 			preTime = tv->tv_sec;
 		}
 	}
-}

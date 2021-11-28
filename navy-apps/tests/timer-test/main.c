@@ -7,6 +7,7 @@ int main() {
 	time_t preTime = 0;
 	while (1) {
 		gettimeofday(tv, NULL);
+		printf("sec is 0x%x\n", tv->tv_sec);
 		if (tv->tv_sec - preTime >= 0.5) {
 			printf("past 0.5 seconds\n");
 			count ++;

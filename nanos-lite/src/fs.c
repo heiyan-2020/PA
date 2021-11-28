@@ -50,6 +50,7 @@ size_t ramdisk_read(void*, size_t, size_t);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len); 
 int fs_open(const char* filepath, int flags, int mode) {
 	//find certain filepath
+	printf("%s\n", filepath);
 	size_t limit = sizeof(file_table);
 	size_t sizeOfFinfo = sizeof(Finfo);
 	for (int i = 0; i < limit / sizeOfFinfo; i ++) {

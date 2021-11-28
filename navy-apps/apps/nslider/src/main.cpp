@@ -23,10 +23,12 @@ void render() {
   if (slide) {
     SDL_FreeSurface(slide);
   }
+	printf("free success\n");
   char fname[256];
 	sprintf(fname, path);
   //sprintf(fname, path, cur);
   slide = SDL_LoadBMP(fname);
+	printf("load success\n");
   assert(slide);
 	printf("will update\n");
   SDL_UpdateRect(slide, 0, 0, 0, 0);
@@ -51,7 +53,6 @@ int main() {
   SDL_Surface *screen = SDL_SetVideoMode(W, H, 32, SDL_HWSURFACE);
 
   int rep = 0, g = 0;
-	printf("main\n");
   render();
 
   while (1) {

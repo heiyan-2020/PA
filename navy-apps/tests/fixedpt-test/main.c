@@ -13,4 +13,6 @@ int main() {
 	fixedpt d = fixedpt_rconst(-1.7);
 	c = fixedpt_floor(d) + fixedpt_ceil(a);
 	assert(fixedpt_rconst(c) == 0);
+	c = fixedpt_toint(fixedpt_divi(b, 2));
+	assert(c == 5);
 }

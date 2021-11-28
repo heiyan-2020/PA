@@ -42,7 +42,6 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
 	log_write("read [%s] at 0x%x\n", map->name, addr);
 #endif
   assert(len >= 1 && len <= 8);
-	printf("Debug info: addr is 0x%x\n", addr);
   check_bound(map, addr);
   paddr_t offset = addr - map->low;
   invoke_callback(map->callback, offset, len, false); // prepare data to read

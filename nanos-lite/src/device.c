@@ -66,7 +66,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
 	int current_w = (offset / 4) % (screen_w);
 
 	int remain = len - ((screen_w) - (current_w)) * 4;
-	if (remain >= 0) {
+	if (remain <  0) {
 		printf("first offset = %d, current_h = %d, current_w = %d\n", offset, current_h, current_w);
 		io_write(AM_GPU_FBDRAW, current_w, current_h, (void*)buf, (len / 4), 1, true);
 		return len;

@@ -12,7 +12,7 @@ typedef struct {
   WriteFn write;
 } Finfo;
 
-enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_SERIAL, FD_EVENT,FD_INFO, FD_FB};
+enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_SERIAL, FD_EVENT,FD_INFO,FD_FB};
 size_t invalid_read(void *buf, size_t offset, size_t len) {
   panic("should not reach here");
   return 0;
@@ -26,6 +26,7 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 size_t serial_write(const void *buf, size_t offset, size_t len);
 size_t events_read(void *buf, size_t offset, size_t len);
 size_t dispinfo_read(void *buf, size_t offset, size_t len); 
+size_t fb_write(const void *buf, size_t offset, size_t len);
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, 0,invalid_read, invalid_write},
@@ -34,11 +35,15 @@ static Finfo file_table[] __attribute__((used)) = {
 	[FD_SERIAL] = {"serial", 0, 0, 0, invalid_read, serial_write},
 	[FD_EVENT] = {"/dev/events", 0, 0, 0, events_read, invalid_write},
 	[FD_INFO] = {"/proc/dispinfo", 0, 0, 0, dispinfo_read, invalid_write},
+	[FD_FB] = {"/dev/fb", 0, 0, 0, invalid_read, fb_write},
 #include "files.h"
 };
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+	int w = io_read(AM_GPU_CONFIG).width;
+	int h = io_read(AM_GPU_CONFIG).height;
+	file_table[FD_FB].size = w * h * 4;
 }
 
 size_t ramdisk_read(void*, size_t, size_t);
@@ -71,7 +76,9 @@ size_t fs_read(int fd, void* buf, size_t len) {
 			return currentFile->size - oldValue;
 		}
 	} else {
-		return currentFile->read(buf,currentFile->open_offset,len);
+		size_t amount = currentFile->read(buf,currentFile->open_offset,len);
+		currentFile->open_offset += amount;
+		return amount;
 	}
 }
 
@@ -94,7 +101,9 @@ size_t fs_write(int fd, const void* buf, size_t len) {
 			return currentFile->size - currentFile->open_offset;
 		}
 	} else {
-		return currentFile->write(buf, currentFile->open_offset, len);
+		size_t amount = currentFile->write(buf,currentFile->open_offset,len);
+		currentFile->open_offset += amount;
+		return amount;
 	}
 }
 size_t fs_lseek(int fd, size_t offset, int whence) {

@@ -39,7 +39,6 @@ void NDL_OpenCanvas(int *w, int *h) {
 		int fd = _open("/proc/dispinfo");
 		char tmpBuf[64];
 		int bytes = _read(fd, (void*)tmpBuf, 64);
-		assert(bytes > 0);
 		sscanf(tmpBuf, "WIDTH: %d\nHEIGHT: %d\n", w, h);
 	}
 }

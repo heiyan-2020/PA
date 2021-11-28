@@ -29,11 +29,11 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	int bytesReadIn = 0;
   bool keydown = io_read(AM_INPUT_KEYBRD).keydown;
 	int keycode = io_read(AM_INPUT_KEYBRD).keycode;
-	printf("keycode is %d\n", keycode);
 	if (keycode == AM_KEY_NONE) {
 		return 0;
 	}
 	if (keydown) {
+					printf("down\n");
 		bytesReadIn = sprintf(buffer, "kd %s\n", keyname[keycode]);
 	} else {
 		bytesReadIn = sprintf(buffer, "ku %s\n", keyname[keycode]);

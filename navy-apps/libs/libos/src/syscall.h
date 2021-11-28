@@ -1,8 +1,7 @@
 #ifndef __SYSCALL_H__
 #define __SYSCALL_H__
-#define STRACE y
+//#define STRACE y
 
-#ifdef STRACE
 #define FOREACH(CALL)  \
   CALL(SYS_exit)  \
   CALL(SYS_yield)  \
@@ -30,7 +29,7 @@
 enum SYS_CALL{
 	FOREACH(GENERATE_ENUM)
 };
-
+#ifdef STRACE
 static const char* SYS_STRING[] = {
 	FOREACH(GENERATE_STRING)
 };

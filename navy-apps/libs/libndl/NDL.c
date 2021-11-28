@@ -84,7 +84,8 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
-	gettimeofday(current, NULL);
+	int w = 0, h = 0;
+	NDL_OpenCanvas(&w, &h);
   return 0;
 }
 

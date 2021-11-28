@@ -17,6 +17,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//make sure rect of s specified by x,y,w,h is updated.
 	//if x = y = w = h = 0, update all 
 	if (x == 0 && y == 0 && w == 0 && h == 0) {
+		printf("w = %d, h = %d\n", w, h);
 		NDL_DrawRect(s->pixels, 0, 0, s->w, s->h);
 	} else {
 		NDL_DrawRect(s->pixels, x, y, w, h);

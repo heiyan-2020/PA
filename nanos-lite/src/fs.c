@@ -46,6 +46,7 @@ int fs_open(const char* filepath, int flags, int mode) {
 	size_t limit = sizeof(file_table);
 	size_t sizeOfFinfo = sizeof(Finfo);
 	for (int i = 0; i < limit / sizeOfFinfo; i ++) {
+		printf("filepath is %s, table[i] is %s\n", filepath, file_table[i]);
 		if (strcmp(file_table[i].name, filepath) == 0) {
 				return i;
 		}

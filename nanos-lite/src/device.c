@@ -49,6 +49,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 		int screen_w = io_read(AM_GPU_CONFIG).width;
 		int screen_h = io_read(AM_GPU_CONFIG).height;
+		printf("screen_w  = %d, screen_h = %d\n", screen_w, screen_h);
 		char buffer[64];
 		int bytesReadIn = sprintf(buffer, "WIDTH : %d\nHEIGHT: %d\n", screen_w, screen_h);
 		if (bytesReadIn <= len) {

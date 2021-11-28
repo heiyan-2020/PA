@@ -1,7 +1,6 @@
 #include <NDL.h>
 
 int SDL_Init(uint32_t flags) {
-printf("Not implemented SDL_Init\n");
   return NDL_Init(flags);
 }
 

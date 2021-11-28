@@ -24,9 +24,11 @@ void render() {
     SDL_FreeSurface(slide);
   }
   char fname[256];
-  sprintf(fname, path, cur);
+	sprintf(fname, path);
+  //sprintf(fname, path, cur);
   slide = SDL_LoadBMP(fname);
   assert(slide);
+	printf("will update\n");
   SDL_UpdateRect(slide, 0, 0, 0, 0);
 }
 

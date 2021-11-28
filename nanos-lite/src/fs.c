@@ -12,7 +12,7 @@ typedef struct {
   WriteFn write;
 } Finfo;
 
-enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_SERIAL, FD_FB};
+enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_SERIAL, FD_EVENT,FD_FB};
 size_t invalid_read(void *buf, size_t offset, size_t len) {
   panic("should not reach here");
   return 0;
@@ -24,12 +24,14 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 }
 
 size_t serial_write(const void *buf, size_t offset, size_t len);
+size_t events_read(void *buf, size_t offset, size_t len);
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, 0,invalid_read, invalid_write},
   [FD_STDOUT] = {"stdout", 0, 0, 0, invalid_read, invalid_write},
   [FD_STDERR] = {"stderr", 0, 0, 0, invalid_read, invalid_write},
 	[FD_SERIAL] = {"serial", 0, 0, 0, invalid_read, serial_write},
+	[FD_EVENT] = {"/dev/events", 0, 0, 0, events_read, invalid_write},
 #include "files.h"
 };
 

@@ -70,6 +70,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
 		io_write(AM_GPU_FBDRAW, current_w, current_h, (void*)buf, (len / 4), 1, true);
 		return len;
 	} else {
+		printf("shouldn't be reaching here\n");
+		printf("offset = 0x%x\n", offset);
 		io_write(AM_GPU_FBDRAW, current_w, current_h, (void*)buf, (screen_w - current_w), 1, true);
 		return (screen_w - current_w) * 4;
 	}

@@ -35,7 +35,13 @@ void NDL_OpenCanvas(int *w, int *h) {
       if (strcmp(buf, "mmap ok") == 0) break;
     }
     close(fbctl);
-  }
+  } else {
+		int fd = _open("/proc/dispinfo");
+		char tmpBuf[64];
+		int bytes = _read(fd, (void*)tmpBuf, 64);
+		assert(bytes > 0);
+		sscanf(tmpBuf, "WIDTH: %d\nHEIGHT: %d\n", w, h);
+	}
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {

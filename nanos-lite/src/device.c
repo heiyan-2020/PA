@@ -33,7 +33,6 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		return 0;
 	}
 	if (keydown) {
-					printf("down\n");
 		bytesReadIn = sprintf(buffer, "kd %s\n", keyname[keycode]);
 	} else {
 		bytesReadIn = sprintf(buffer, "ku %s\n", keyname[keycode]);
@@ -48,7 +47,17 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  return 0;
+		int screen_w = io_read(AM_GPU_CONFIG).width;
+		int screen_h = io_read(AM_GPU_CONFIG).height;
+		char buffer[64];
+		int bytesReadIn = sprintf(buffer, "WIDTH : %d\nHEIGHT: %d\n", screen_w, screen_h);
+		if (bytesReadIn <= len) {
+			memcpy(buf, buffer, bytesReadIn);
+			return bytesReadIn;
+		} else {
+			memcpy(buf, buffer, len);
+			return len;
+		}
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {

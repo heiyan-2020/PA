@@ -1,5 +1,6 @@
 #include <time.h>
 #include <stdio.h>
+#include <assert.h>
 
 int main() {
 	int count = 0;

@@ -65,6 +65,7 @@ SDL_Surface* SDL_CreateRGBSurface(uint32_t flags, int width, int height, int dep
 
   s->w = width;
   s->h = height;
+	printf("s->w=%d, s->h=%d\n", s->w, s->h);
   s->pitch = width * depth / 8;
   assert(s->pitch == width * s->format->BytesPerPixel);
 
@@ -100,9 +101,7 @@ void SDL_FreeSurface(SDL_Surface *s) {
 }
 
 SDL_Surface* SDL_SetVideoMode(int width, int height, int bpp, uint32_t flags) {
-	printf("width=%d, height=%d\n", width, height);
   if (flags & SDL_HWSURFACE) NDL_OpenCanvas(&width, &height);
-	printf("width=%d, height=%d\n", width, height);
   return SDL_CreateRGBSurface(flags, width, height, bpp,
       DEFAULT_RMASK, DEFAULT_GMASK, DEFAULT_BMASK, DEFAULT_AMASK);
 }

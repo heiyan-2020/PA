@@ -60,7 +60,7 @@ int main() {
 			printf("sym=%d, SDLK_1=%d\n", e.key.keysym.sym, SDLK_1);
       switch(e.key.keysym.sym) {
         case SDLK_0: rep = rep * 10 + 0; break;
-        case SDLK_1: ("SDLK_1\n");rep = rep * 10 + 1; break;
+        case SDLK_1: printf("SDLK_1\n");rep = rep * 10 + 1; break;
         case SDLK_2: rep = rep * 10 + 2; break;
         case SDLK_3: rep = rep * 10 + 3; break;
         case SDLK_4: rep = rep * 10 + 4; break;

@@ -41,6 +41,7 @@ int SDL_WaitEvent(SDL_Event *event) {
 														.sym = find_keycode(buf)
 												 }
 					};	
+					printf("buf is %s, keycode is %d\n", buf, (int)wrapEvent.keysym.sym);
 				if (event->type == wrapEvent.type) {
 					event->key = wrapEvent;
 					return 0; 

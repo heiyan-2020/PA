@@ -34,9 +34,11 @@ BDF_Font::BDF_Font(const char *fname) {
     sscanf(buf, "%s ", cmd);
     if (strcmp(cmd, "STARTFONT") == 0) {
       valid_file = true;
+			printf("VALID!!!!!!!!!!!!!\n");
     }
     if (strcmp(cmd, "FONTBOUNDINGBOX") == 0) {
       sscanf(buf, "%*s %d %d %d %d", &w, &h, &w1, &h1);
+			printf("%d, %d\n", w, h);
     }
     if (strcmp(cmd, "STARTCHAR") == 0) {
       sscanf(buf, "%*s %x", &ch);

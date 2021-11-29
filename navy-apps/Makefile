@@ -47,7 +47,7 @@ ARCHIVE  = $(WORK_DIR)/build/$(NAME)-$(ISA).a
 
 ### Add default libraries for ISA != native
 ifneq ($(ISA), native)
-LIBS += libc libos libfixedptc
+LIBS += libc libos libfixedptc 
 CFLAGS += -U_FORTIFY_SOURCE  # fix compile error in Newlib on ubuntu
 else
 WL = -Wl,
@@ -69,6 +69,7 @@ endif
 OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
 LIBS     := $(sort $(LIBS)) # lazy evaluation ("=") causes infinite recursions
 LINKAGE   = $(OBJS) $(foreach l,$(LIBS),$(NAVY_HOME)/libs/$(l)/build/$(l)-$(ISA).a)
+#LINKAGE 	+= $(NAVY_HOME)/libs/pprintf/build/pprintf-riscv32.a
 
 ## 3. General Compilation Flags
 

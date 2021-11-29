@@ -47,6 +47,7 @@ int SDL_WaitEvent(SDL_Event *event) {
 					event->key = wrapEvent;
 					return 0; 
 			}
+				printf("No event.\n");
 		} 
 	}
 			return 1;

@@ -36,10 +36,34 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
+		uint8_t one = (uint8_t) ((color | 0xff000000) >> 24);
+		uint8_t two = (uint8_t) ((color | 0x00ff0000) >> 16);
+		uint8_t three = (uint8_t) ((color | 0x0000ff00) >> 8);
+		uint8_t four = (uint8_t) (color | 0x000000ff);
+
 		if (dstrect == NULL) {
-			memset(dst->pixels, color, dst->w * dst->h * 4);
+			int total_pixels = dst->w * dst->h;
+			uint8_t* pixel = dst->pixels;
+			for (int i = 0; i < total_pixels; i++) {
+				*pixel++ = one;
+				*pixel++ = two;
+				*pixel++ = three;
+				*pixel++ = four;
+			}
 		} else {
-			memset(dst->pixels + (dstrect->y * dst->w * 4 + dstrect->x * 4), color, dstrect->w * dstrect->h * 4);
+			int total_pixels = dstrect->w * dstrect->h;
+			int count_line = 0;
+			uint8_t* pixel = dst->pixels + (dstrect->y * dst->w * 4 + dstrect->x * 4);
+			while (count_line < dstrect->h) {
+				for (int i = 0; i < dstrect->w; i++) {
+					*pixel++ = one;
+					*pixel++ = two;
+					*pixel++ = three;
+					*pixel++ = four;
+				}
+				pixel += dstrect->x * 4;
+				count_line++;
+			}
 		}
 }
 

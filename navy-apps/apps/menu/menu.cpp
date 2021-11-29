@@ -68,11 +68,9 @@ static void clear_display(void) {
 }
 
 int main(int argc, char *argv[], char *envp[]) {
-
-		printf("i_max = %d\n", i_max);
   SDL_Init(0);
   screen = SDL_SetVideoMode(0, 0, 32, SDL_HWSURFACE);
-	printf("screen: x = %d, y = %d, w = %d, h = %d\n", screen->x, screen->y, screen->w, screen->h);
+	printf("screen: w = %d, h = %d\n", screen->w, screen->h);
 
   font = new BDF_Font(font_fname);
   logo_sf = SDL_LoadBMP("/share/pictures/projectn.bmp");

@@ -44,6 +44,8 @@ void NDL_OpenCanvas(int *w, int *h) {
 		if (*w == 0 && *h == 0) {
 			canvas_w = screen_w;
 			canvas_h = screen_h;
+			*w = screen_w;
+			*h = screen_h;
 		} else {
 				canvas_w = *w;
 				canvas_h = *h;	

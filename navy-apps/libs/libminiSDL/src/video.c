@@ -7,18 +7,40 @@
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+	uint16_t w, h, src_x, src_y, dst_x, dst_y;
+	if (srcrect == NULL) {
+		w = src->w;
+		h = src->h;
+		src_x = 0;
+		src_y = 0;
+	} else {
+		w = srcrect->w;
+		h = srcrect->h;
+		src_x = srcrect->x;
+		src_y = srcrect->y;
+	}
+
+	if (dstrect == NULL) {
+		dst_x = 0;
+		dst_y = 0;
+	} else {
+		dst_x = dstrect->x;
+		dst_y = dstrect->y;
+	}
+
+	memcpy(dst->pixels + (dst_x * dst_y * 4), src->pixels + (src_x * src_y * 4), w * h * 4);
+	dstrect->w = w;
+	dstrect->h = h;
+	dstrect->x = dst_x;
+	dstrect->y = dst_y;
+	return 0;	
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
-		uint32_t pixels[dst->w * dst->h];
 		if (dstrect == NULL) {
-			memset(pixels, color, dst->w * dst->h);
-			dst->pixels = (uint8_t*) pixels;
-			SDL_UpdateRect(DST, 0, 0, 0, 0);
+			memset(dst->pixels, color, dst->w * dst->h * 4);
 		} else {
-			memset(pixels, color, dstrect->w, dstrect->h);
-			dst->pixels = (uint8_t*) pixels;
-			SDL_UpdateRect(dst, dstrect->x, dstrect->y, dstrect->w, dstrect->h);
+			memset(dst->pixels + (dstrect->x * dstrect->y * 4), color, dstrect->w * dstrect->h * 4);
 		}
 }
 

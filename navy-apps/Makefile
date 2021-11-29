@@ -57,7 +57,7 @@ ARCHIVE  = $(WORK_DIR)/build/$(NAME)-$(ISA).a
 ### Add default libraries for ISA != native
 
 ifneq ($(ISA), native)
-LIBS += libc libos libfixedptc 
+LIBS += libc libos libfixedptc pprintf
 CFLAGS += -U_FORTIFY_SOURCE  # fix compile error in Newlib on ubuntu
 else
 WL = -Wl,

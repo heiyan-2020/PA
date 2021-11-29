@@ -15,9 +15,7 @@ printf("Not implemented SDL_RemoveTimer\n");
 }
 
 uint32_t SDL_GetTicks() {
-
-printf("Not implemented SDL_GetTicks\n");
-  return 0;
+	return NDL_GetTicks();
 }
 
 void SDL_Delay(uint32_t ms) {

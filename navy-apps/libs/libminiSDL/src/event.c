@@ -5,10 +5,10 @@
 #include <stdio.h>
 
 #define keyname(k) #k,
-
-static const char *keyname[] = {
-  "NONE",
-  _KEYS(keyname)
+static uint8_t find_keycode(char* buf);
+static const char* keys[256] = {
+	[SDLK_NONE] = "NONE",
+	_KEYS(keyname)
 };
 
 int SDL_PushEvent(SDL_Event *ev) {
@@ -16,15 +16,22 @@ printf("Not implemented SDL_PushEvent\n");
   return 0;
 }
 
-int SDL_PollEvent(SDL_Event *ev) {
-			printf("Not implemented SDL_PollEvent\n");
-  return 0;
+int SDL_PollEvent(SDL_Event *event) {
+	char buf[64];
+	if (!NDL_PollEvent(buf, sizeof(buf))) {
+		return 0;
+	}	else {
+		SDL_KeyboardEvent	wrapEvent  = {
+						.type = buf[1] == 'd' ? SDL_KEYDOWN : SDL_KEYUP,
+						.keysym = {
+														.sym = find_keycode(buf)
+												 }
+					};	
+					event->type = wrapEvent.type;
+					event->key = wrapEvent;
+					return 1; 
+	}
 }
-
-static const char* keys[256] = {
-	[SDLK_NONE] = "NONE",
-	_KEYS(keyname)
-};
 
 static uint8_t find_keycode(char* buf) {
 	//strong assume that SDL keycode is exactly same as AM keycode. So, if bug appears, Don't forget to check this.

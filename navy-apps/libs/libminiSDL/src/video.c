@@ -27,7 +27,15 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		dst_x = dstrect->x;
 		dst_y = dstrect->y;
 	}
-	memcpy(dst->pixels + (dst_y * dst->w * 4 + dst_x * 4), src->pixels + (src_y * src->w * 4 + src_x * 4), w * h * 4);
+	int count_line = 0;
+	uint8_t* dst_pixel = dst->pixels + (dst_y * dst->w * 4 + dst_x * 4);
+	uint8_t* src_pixel = src->pixels + (src_y * src->w * 4 + src_x * 4);
+	while (count_line < h) {
+			memcpy(dst_pixel, src_pixel, w*4);
+			dst_pixel += dst->w * 4;
+			src_pixel += src->w * 4;
+			count_line++;
+	}
 	dstrect->w = w;
 	dstrect->h = h;
 	dstrect->x = dst_x;
@@ -36,10 +44,10 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
-		uint8_t one = (uint8_t) ((color | 0xff000000) >> 24);
-		uint8_t two = (uint8_t) ((color | 0x00ff0000) >> 16);
-		uint8_t three = (uint8_t) ((color | 0x0000ff00) >> 8);
-		uint8_t four = (uint8_t) (color | 0x000000ff);
+		uint8_t one = (uint8_t) ((color & 0xff000000) >> 24);
+		uint8_t two = (uint8_t) ((color & 0x00ff0000) >> 16);
+		uint8_t three = (uint8_t) ((color & 0x0000ff00) >> 8);
+		uint8_t four = (uint8_t) (color & 0x000000ff);
 
 		if (dstrect == NULL) {
 			int total_pixels = dst->w * dst->h;
@@ -55,13 +63,14 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 			int count_line = 0;
 			uint8_t* pixel = dst->pixels + (dstrect->y * dst->w * 4 + dstrect->x * 4);
 			while (count_line < dstrect->h) {
+					uint8_t tmp = pixel;
 				for (int i = 0; i < dstrect->w; i++) {
 					*pixel++ = one;
 					*pixel++ = two;
 					*pixel++ = three;
 					*pixel++ = four;
 				}
-				pixel += dstrect->x * 4;
+				pixel = tmp + dst->w * 4;
 				count_line++;
 			}
 		}

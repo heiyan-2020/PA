@@ -33,9 +33,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		return 0;
 	}
 	if (keydown) {
-		bytesReadIn = sprintf(buffer, "kd %s\n", keyname[keycode]);
+		bytesReadIn = sprintf(buffer, "kd %s, keycode=%d\n", keyname[keycode], keycode);
 	} else {
-		bytesReadIn = sprintf(buffer, "ku %s\n", keyname[keycode]);
+		bytesReadIn = sprintf(buffer, "ku %s, keycode=%d\n", keyname[keycode], keycode);
 	}
 	if (bytesReadIn <= len) {
 		memcpy(buf, buffer, bytesReadIn);

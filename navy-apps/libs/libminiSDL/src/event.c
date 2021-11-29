@@ -24,7 +24,6 @@ static uint8_t find_keycode(char* buf) {
 	char trash2[16];
 	int keycode;
 	sscanf(buf, "%s %s keycode=%d\n", trash1, trash2, &keycode);
-	printf("keycode=%d\n", keycode);
 	return (uint8_t) keycode;
 }
 
@@ -42,7 +41,6 @@ int SDL_WaitEvent(SDL_Event *event) {
 														.sym = find_keycode(buf)
 												 }
 					};	
-					printf("buf is %s, keycode is %d\n", buf, (int)wrapEvent.keysym.sym);
 					event->type = wrapEvent.type;
 					event->key = wrapEvent;
 					return 0; 

@@ -1,5 +1,8 @@
 #include <NDL.h>
 #include <SDL.h>
+#include <assert.h>
+#include <string.h>
+#include <stdio.h>
 
 #define keyname(k) #k,
 
@@ -18,13 +21,26 @@ int SDL_PollEvent(SDL_Event *ev) {
   return 0;
 }
 
+static const char* keys[256] = {
+	[SDLK_NONE] = "NONE",
+	_KEYS(keyname)
+};
+
 static uint8_t find_keycode(char* buf) {
 	//strong assume that SDL keycode is exactly same as AM keycode. So, if bug appears, Don't forget to check this.
-	char trash1[16];
-	char trash2[16];
-	int keycode;
-	sscanf(buf, "%s %s keycode=%d\n", trash1, trash2, &keycode);
-	return (uint8_t) keycode;
+//	char trash1[16];
+//	char trash2[16];
+//	int keycode;
+//	sscanf(buf, "%s %s keycode=%d\n", trash1, trash2, &keycode);
+	char trash[16];
+	char _keyname[16];
+	sscanf(buf, "%s %s\n", trash, _keyname);
+	for (int i = 0; i < 256; i++) {
+		if (strcmp(keys[i], _keyname) == 0) {
+			return (uint8_t) i;
+		}
+	}	
+	assert(0);
 }
 
 int SDL_WaitEvent(SDL_Event *event) {

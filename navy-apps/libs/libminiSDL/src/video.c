@@ -17,7 +17,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//make sure rect of s specified by x,y,w,h is updated.
 	//if x = y = w = h = 0, update all 
 	if (x == 0 && y == 0 && w == 0 && h == 0) {
-					printf("SDL:screen_w=%d, screen_h=%d\n", s->w, s->h);
 		NDL_DrawRect(s->pixels, 0, 0, s->w, s->h);
 	} else {
 		NDL_DrawRect(s->pixels, x, y, w, h);
@@ -101,7 +100,9 @@ void SDL_FreeSurface(SDL_Surface *s) {
 }
 
 SDL_Surface* SDL_SetVideoMode(int width, int height, int bpp, uint32_t flags) {
+	printf("width=%d, height=%d\n", width, height);
   if (flags & SDL_HWSURFACE) NDL_OpenCanvas(&width, &height);
+	printf("width=%d, height=%d\n", width, height);
   return SDL_CreateRGBSurface(flags, width, height, bpp,
       DEFAULT_RMASK, DEFAULT_GMASK, DEFAULT_BMASK, DEFAULT_AMASK);
 }

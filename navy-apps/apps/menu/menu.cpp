@@ -137,7 +137,6 @@ static void draw_str(BDF_Font *font, int x, int y, char *str, uint32_t fp, uint3
 static void draw_text_row(char *s, int r) {
   r += 3;
   puts(s);
-	printf("text_row font's w = %d\n", font->w);
   draw_str(font, 0, r * font->h, s, 0x123456, 0xffffff);
 }
 
@@ -146,6 +145,7 @@ static void display_menu(int n) {
   SDL_Rect rect = { .x = screen->w - logo_sf->w, .y = 0 };
   SDL_BlitSurface(logo_sf, NULL, screen, &rect);
   printf("Available applications:\n");
+	printf("display font's w = %d\n", font->w);
   char buf[80];
   int i;
   for (i = 0; i <= n; i ++) {

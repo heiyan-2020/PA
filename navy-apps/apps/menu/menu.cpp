@@ -72,10 +72,11 @@ int main(int argc, char *argv[], char *envp[]) {
   screen = SDL_SetVideoMode(0, 0, 32, SDL_HWSURFACE);
 
   font = new BDF_Font(font_fname);
-	printf("new font's w = %d\n", font->w);
   logo_sf = SDL_LoadBMP("/share/pictures/projectn.bmp");
+	printf("after logo font's w = %d\n", font->w);
   assert(logo_sf);
   set_i_max();
+	printf("after set I-max font's w = %d\n", font->w);
 
   while (1) {
 		printf("i_max = %d\n", i_max);

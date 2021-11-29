@@ -27,7 +27,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		dst_x = dstrect->x;
 		dst_y = dstrect->y;
 	}
-	memcpy(dst->pixels + (dst_y * dst->w * 4 + dst_x), src->pixels + (src_y * src->w * 4 + src_x), w * h * 4);
+	memcpy(dst->pixels + (dst_y * dst->w * 4 + dst_x * 4), src->pixels + (src_y * src->w * 4 + src_x * 4), w * h * 4);
 	dstrect->w = w;
 	dstrect->h = h;
 	dstrect->x = dst_x;
@@ -37,9 +37,9 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 		if (dstrect == NULL) {
-			memset(dst->pixels, color, dst->w * dst->h);
+			memset(dst->pixels, color, dst->w * dst->h * 4);
 		} else {
-			memset(dst->pixels + (dstrect->y * dst->w * 4 + dstrect->x), color, dstrect->w * dstrect->h);
+			memset(dst->pixels + (dstrect->y * dst->w * 4 + dstrect->x * 4), color, dstrect->w * dstrect->h * 4);
 		}
 }
 

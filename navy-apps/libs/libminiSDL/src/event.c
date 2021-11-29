@@ -51,7 +51,6 @@ int SDL_WaitEvent(SDL_Event *event) {
 			char buf[64];
 			while (1) {
 				if (NDL_PollEvent(buf, sizeof(buf))) {
-					printf("an event\n");
 					SDL_KeyboardEvent	wrapEvent  = {
 						.type = buf[1] == 'd' ? SDL_KEYDOWN : SDL_KEYUP,
 						.keysym = {

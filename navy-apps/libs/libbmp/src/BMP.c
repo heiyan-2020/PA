@@ -23,7 +23,7 @@ void* BMP_Load(const char *filename, int *width, int *height) {
 	printf("filename=%s\n", filename);
   FILE *fp = fopen(filename, "r");
   if (!fp) return NULL;
-
+	printf("not NULL\n");
   struct BitmapHeader hdr;
   assert(sizeof(hdr) == 54);
   assert(1 == fread(&hdr, sizeof(struct BitmapHeader), 1, fp));

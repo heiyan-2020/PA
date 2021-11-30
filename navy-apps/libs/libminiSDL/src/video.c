@@ -3,10 +3,13 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+	uint8_t factor = dst->format->BytesPerPixel;
+	uint8_t bits = dst->format->BitsPerPixel;
 	uint16_t w, h, src_x, src_y, dst_x, dst_y;
 	if (srcrect == NULL) {
 		w = src->w;
@@ -27,17 +30,13 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		dst_x = dstrect->x;
 		dst_y = dstrect->y;
 	}
-//	w = src_x + w > src->w ? src->w - src_x : w;
-//	h = src_y + h > src->h ? src->h - src_y : h;
-//	w = dst_x + w > dst->w ? dst->w - dst_x : w;
-//	h = dst_y + h > dst->h ? dst->h - dst_y : h;
 	int count_line = 0;
-	uint8_t* dst_pixel = dst->pixels + (dst_y * dst->w * 4 + dst_x * 4);
-	uint8_t* src_pixel = src->pixels + (src_y * src->w * 4 + src_x * 4);
+	uint8_t* dst_pixel = dst->pixels + (dst_y * dst->w * factor + dst_x * factor);
+	uint8_t* src_pixel = src->pixels + (src_y * src->w * factor + src_x * factor);
 	while (count_line < h) {
-		memcpy(dst_pixel, src_pixel, w*4);
-		dst_pixel += dst->w * 4;
-		src_pixel += src->w * 4;
+		memcpy(dst_pixel, src_pixel, w*factor);
+		dst_pixel += dst->w * factor;
+		src_pixel += src->w * factor;
 		count_line++;
 	}
 	if (dstrect != NULL) {
@@ -48,49 +47,71 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	}
 	return 0;	
 }
-
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
-		uint8_t one = (uint8_t) ((color & 0xff000000) >> 24);
-		uint8_t two = (uint8_t) ((color & 0x00ff0000) >> 16);
-		uint8_t three = (uint8_t) ((color & 0x0000ff00) >> 8);
-		uint8_t four = (uint8_t) (color & 0x000000ff);
-
+		uint8_t factor = dst->format->BytesPerPixel;
 		if (dstrect == NULL) {
 			int total_pixels = dst->w * dst->h;
 			uint8_t* pixel = dst->pixels;
 			for (int i = 0; i < total_pixels; i++) {
-				*pixel++ = one;
-				*pixel++ = two;
-				*pixel++ = three;
-				*pixel++ = four;
+				memcpy(pixel, &color, factor);
+				pixel += factor;
 			}
 		} else {
 			int total_pixels = dstrect->w * dstrect->h;
 			int count_line = 0;
-			uint8_t* pixel = dst->pixels + (dstrect->y * dst->w * 4 + dstrect->x * 4);
+			uint8_t* pixel = dst->pixels + (dstrect->y * dst->w * factor + dstrect->x * factor);
 			while (count_line < dstrect->h) {
-					uint8_t tmp = pixel;
+					uint8_t* tmp = pixel;
 				for (int i = 0; i < dstrect->w; i++) {
-					*pixel++ = one;
-					*pixel++ = two;
-					*pixel++ = three;
-					*pixel++ = four;
+					memcpy(pixel, &color, factor);
+					pixel += factor;
 				}
-				pixel = tmp + dst->w * 4;
+				pixel = tmp + dst->w * factor;
 				count_line++;
 			}
 		}
 }
 
+static inline uint32_t reverseBits(uint32_t x) {
+	uint32_t _23 = (x & 0xff000000) >> 24;
+	uint32_t _15 = (x & 0x00ff0000) >> 16;
+	uint32_t _7 = (x & 0x0000FF00) >> 8;
+	uint32_t _0 = x & 0x000000ff;
+	return _23 << 24 | _0 << 16 | _7 << 8 | _15; 
+}
+
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//make sure rect of s specified by x,y,w,h is updated.
 	//if x = y = w = h = 0, update all 
-	NDL_OpenCanvas(&(s->w), &(s->h));
 	if (x == 0 && y == 0 && w == 0 && h == 0) {
-		NDL_DrawRect(s->pixels, 0, 0, s->w, s->h);
-	} else {
-		NDL_DrawRect(s->pixels, x, y, w, h);
+		w = s->w;
+		h = s->h;
 	}
+	uint8_t factor = s->format->BytesPerPixel;
+	NDL_OpenCanvas(&(s->w), &(s->h));
+	uint32_t real_pixels[w * h];
+	if (factor == 1) {
+		int count = 0;
+		for (int j = y; j < y + h; j++) {
+			for (int i = x; i < x + w; i++) {
+			uint32_t col =	s->format->palette->colors[s->pixels[j * s->w + i]].val;
+			real_pixels[count++] = reverseBits(col);
+			}
+		}
+		assert(count == w * h);
+	} else {
+		int count_line = 0;
+		uint32_t* dst_pixel = real_pixels;
+		uint32_t* pixel = s->pixels + (y * s->w + x);
+		while (count_line < h) {
+			memcpy(dst_pixel, pixel, w * factor);
+			count_line++;
+			dst_pixel += w;
+			pixel += s->w;
+		}
+		assert(count_line == h);
+	}
+	NDL_DrawRect(real_pixels, x, y, w, h);
 }
 
 

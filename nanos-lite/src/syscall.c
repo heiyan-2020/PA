@@ -72,6 +72,7 @@ void sys_gettimeofday(Context* c) {
 	} else {
 		tv->tv_usec = io_read(AM_TIMER_UPTIME).us;
 		tv->tv_sec = (time_t) (tv->tv_usec / 1000000);
+		printf("usec = %d\n",tv->tv_usec);
 		c->GPRx = 0;
 	}
 }

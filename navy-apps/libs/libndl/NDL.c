@@ -10,8 +10,8 @@ static int screen_w = 0, screen_h = 0;
 static struct timeval current[1];
 static int canvas_x = 0, canvas_y = 0, canvas_w = 0, canvas_h = 0;
 uint32_t NDL_GetTicks() {
-  gettimeofday(current, NULL);
-	return current->tv_sec * 1000;
+ 	 gettimeofday(current, NULL);
+	return current->tv_sec * 1000 + current->tv_usec / 1000;
 }
 
 int NDL_PollEvent(char *buf, int len) {
@@ -69,13 +69,24 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 		int real_x = canvas_x + x;
 	 	int real_y = canvas_y + y;
 		int fd = open("/dev/fb", 0, 0);
-		lseek(fd, (real_y * screen_w + real_x) * 4, SEEK_SET);
+		int update_size = (screen_h - real_y) * screen_w;
+		lseek(fd, (real_y * screen_w) * 4, SEEK_SET);
+		uint32_t buf[update_size];
+		read(fd, buf, update_size * 4);
+		uint32_t* pt = buf + real_x;
 		for (int i = 0; i < h; i++) {
-			write(fd, pixels, w*4);
+			memcpy(pt, pixels, w * 4);
 			pixels += w;
-			real_y += 1;
-			lseek(fd, (real_y * screen_w + real_x) * 4, SEEK_SET);
-		}	
+			pt += screen_w;
+		}
+		lseek(fd, (real_y * screen_w) * 4, SEEK_SET);
+		write(fd, buf, update_size * 4);
+//		for (int i = 0; i < h; i++) {
+//			write(fd, pixels, w*4);
+//			pixels += w;
+//			real_y += 1;
+//			lseek(fd, (real_y * screen_w + real_x) * 4, SEEK_SET);
+//		}	
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {

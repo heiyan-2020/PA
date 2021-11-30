@@ -3,13 +3,16 @@
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define keyname(k) #k,
+#define MAX_PENDING_EVENTS 256
 static uint8_t find_keycode(char* buf);
 static const char* keys[256] = {
 	[SDLK_NONE] = "NONE",
 	_KEYS(keyname)
 };
+static uint8_t key_state[256];
 
 int SDL_PushEvent(SDL_Event *ev) {
 printf("Not implemented SDL_PushEvent\n");
@@ -18,6 +21,7 @@ printf("Not implemented SDL_PushEvent\n");
 
 int SDL_PollEvent(SDL_Event *event) {
 	char buf[64];
+	assert(event != NULL);
 	if (!NDL_PollEvent(buf, sizeof(buf))) {
 		return 0;
 	}	else {
@@ -29,6 +33,7 @@ int SDL_PollEvent(SDL_Event *event) {
 					};	
 					event->type = wrapEvent.type;
 					event->key = wrapEvent;
+					key_state[wrapEvent.keysym.sym] = wrapEvent.type == SDL_KEYDOWN ? 1 : 0;
 					return 1; 
 	}
 }
@@ -66,6 +71,7 @@ int SDL_WaitEvent(SDL_Event *event) {
 					};	
 					event->type = wrapEvent.type;
 					event->key = wrapEvent;
+					key_state[wrapEvent.keysym.sym] = wrapEvent.type == SDL_KEYDOWN ? 1 : 0;
 					return 0; 
 			}
 		} 
@@ -79,10 +85,10 @@ printf("Not implemented SDL_PeepEvents\n");
 }
 
 uint8_t* SDL_GetKeyState(int *numkeys) {
-	uint8_t states[*numkeys];
 	SDL_Event ev[1];
-	while (SDL_PollEvent(ev)) {
-		states[ev->key.keysym.sym] = ev->type == 0 ? 1 : 0;		
-	}	
-	return states;
+	int i = 0;
+	if (numkeys != NULL) {
+		*numkeys = 256;
+	}
+	return key_state;
 }

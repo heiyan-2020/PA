@@ -88,9 +88,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		h = s->h;
 	}
 	uint8_t factor = s->format->BytesPerPixel;
-	printf("before NDL_OpenCanvas\n");
 	NDL_OpenCanvas(&(s->w), &(s->h));
-	printf("after NDL_OpenCanvas\n");
 	uint32_t real_pixels[w * h];
 	if (factor == 1) {
 		int count = 0;
@@ -106,18 +104,15 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		uint32_t* dst_pixel = real_pixels;
 		uint32_t* pixel = s->pixels + (y * s->w + x);
 		while (count_line < h) {
-			printf("before memcpy\n");
+				printf("dst_pixel = 0x%x, pixel = 0x%x\n", dst_pixel, pixel);
 			memcpy(dst_pixel, pixel, w * factor);
-			printf("after memcpy\n");
 			count_line++;
 			dst_pixel += w;
 			pixel += s->w;
 		}
 		assert(count_line == h);
 	}
-	printf("before NDL_DrawRect\n");
 	NDL_DrawRect(real_pixels, x, y, w, h);
-	printf("after NDL_DrawRect\n");
 }
 
 

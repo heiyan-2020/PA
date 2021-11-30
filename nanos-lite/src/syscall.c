@@ -86,7 +86,6 @@ void do_syscall(Context *c) {
 	}
 	printf("[STRACE]\tcalled %s, with arguments\t0x%x\t0x%x\t0x%x,returned 0x%x\n", SYS_STRING[a[0]], c->GPR2, c->GPR3, c->GPR4, c->GPRx);
 #endif
-	printf("before switch\n");
   switch (a[0]) {
 		case SYS_exit:sys_exit(c);break;
 		case SYS_yield: sys_yield(c);break;
@@ -99,5 +98,4 @@ void do_syscall(Context *c) {
 		case SYS_gettimeofday: sys_gettimeofday(c);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
-  printf("after switch\n");
 }

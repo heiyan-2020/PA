@@ -64,13 +64,16 @@ int _write(int fd, void *buf, size_t count) {
 }
 extern char _end;
 void *_sbrk(intptr_t increment) {
+		printf("before execute\n");
 	static uintptr_t program_break = (uintptr_t)&_end;	
 	uintptr_t preBreak;
 	if (_syscall_(SYS_brk, increment, 0, 0) == 0) {
 		preBreak = program_break;
 		program_break += increment;
+		printf("return1\n");
 		return (void*)preBreak;
 	}
+	printf("return2\n");
 	return (void*)-1;
 }
 

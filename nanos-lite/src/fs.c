@@ -109,21 +109,18 @@ size_t fs_write(int fd, const void* buf, size_t len) {
 size_t fs_lseek(int fd, size_t offset, int whence) {
 	assert(0 <= fd && fd <= sizeof(file_table) / sizeof(Finfo));
 	Finfo* currentFile = &file_table[fd];
+	uint32_t old = currentFile->open_offset;
 	switch (whence) {
 		case SEEK_SET: {
-							   printf("offset = %d, size = %d\n", offset, currentFile->size);
-											assert(offset <= currentFile->size);
-											currentFile->open_offset = offset;
-											return offset;	
+											currentFile->open_offset = offset > currentFile->size ? currentFile->size : offset;
+											return currentFile->open_offset;	
 									 }
 		case SEEK_CUR: {
-									 		assert(offset + currentFile->open_offset <= currentFile->size);
-											currentFile->open_offset = offset + currentFile->open_offset;
-											return currentFile->open_offset;
+											currentFile->open_offset = offset + currentFile->open_offset > currentFile->size ? currentFile->size : offset + currentFile->open_offset;
+											return currentFile->open_offset - old;
 									 
 									 }
 		case SEEK_END: {
-									 		assert(offset == 0);
 											currentFile->open_offset = currentFile->size;
 											return currentFile->open_offset;
 									 }

@@ -61,7 +61,6 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-	printf("in\n");
 	int screen_w = io_read(AM_GPU_CONFIG).width;
 	int current_h = (offset / 4) / screen_w;
 	int current_w = (offset / 4) % (screen_w);
@@ -69,11 +68,9 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
 	int remain = len - ((screen_w) - (current_w)) * 4;
 	if (remain <  0) {
 		io_write(AM_GPU_FBDRAW, current_w, current_h, (void*)buf, (len / 4), 1, true);
-		printf("out 1\n");
 		return len;
 	} else {
 		io_write(AM_GPU_FBDRAW, current_w, current_h, (void*)buf, (screen_w - current_w), 1, true);
-		printf("out 2\n");
 		return (screen_w - current_w) * 4;
 	}
 }

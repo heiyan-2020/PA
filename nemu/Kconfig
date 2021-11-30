@@ -145,7 +145,7 @@ config ITRACE_COND
   default "true"
 
 config RTRACE_COND
-	depends on ITRACE
+	depends on TRACE
 	string "Only trace instructions in ring buffer"
 	default "false"
 

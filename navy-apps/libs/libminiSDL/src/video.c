@@ -106,6 +106,8 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		while (count_line < h) {
 				printf("dst_pixel = 0x%x, pixel = 0x%x\n", dst_pixel, pixel);
 			memcpy(dst_pixel, pixel, w * factor);
+	printf("after memcpy:dst_pixel = 0x%x, pixel = 0x%x\n", dst_pixel, pixel);
+
 			count_line++;
 			dst_pixel += w;
 			pixel += s->w;

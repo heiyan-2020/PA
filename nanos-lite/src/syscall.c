@@ -98,6 +98,6 @@ void do_syscall(Context *c) {
 		case SYS_close: sys_close(c);break;
 		case SYS_gettimeofday: sys_gettimeofday(c);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
-	printf("after switch\n");
   }
+  printf("after switch\n");
 }

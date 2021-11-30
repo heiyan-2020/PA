@@ -5,7 +5,6 @@
 #include <stdlib.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
-	printf("entry\n");
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
 	uint16_t w, h, src_x, src_y, dst_x, dst_y;
@@ -28,15 +27,21 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		dst_x = dstrect->x;
 		dst_y = dstrect->y;
 	}
+//	w = src_x + w > src->w ? src->w - src_x : w;
+//	h = src_y + h > src->h ? src->h - src_y : h;
+//	w = dst_x + w > dst->w ? dst->w - dst_x : w;
+//	h = dst_y + h > dst->h ? dst->h - dst_y : h;
 	int count_line = 0;
 	uint8_t* dst_pixel = dst->pixels + (dst_y * dst->w * 4 + dst_x * 4);
 	uint8_t* src_pixel = src->pixels + (src_y * src->w * 4 + src_x * 4);
-	while (count_line < h) {
-			memcpy(dst_pixel, src_pixel, w*4);
-			dst_pixel += dst->w * 4;
-			src_pixel += src->w * 4;
-			count_line++;
+	while (count_line < h - 100) {
+		printf("count_line = %d\n", count_line);
+		memcpy(dst_pixel, src_pixel, w*4);
+		dst_pixel += dst->w * 4;
+		src_pixel += src->w * 4;
+		count_line++;
 	}
+	memcpy(dst_pixel, src_pixel, w*4);
 	dstrect->w = w;
 	dstrect->h = h;
 	dstrect->x = dst_x;

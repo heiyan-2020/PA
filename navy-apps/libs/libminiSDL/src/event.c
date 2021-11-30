@@ -79,6 +79,10 @@ printf("Not implemented SDL_PeepEvents\n");
 }
 
 uint8_t* SDL_GetKeyState(int *numkeys) {
-printf("Not implemented SDL_GetKeyState\n");
-  return NULL;
+	uint8_t states[*numkeys];
+	SDL_Event ev[1];
+	while (SDL_PollEvent(ev)) {
+		states[ev->key.keysym.sym] = ev->type == 0 ? 1 : 0;		
+	}	
+	return states;
 }

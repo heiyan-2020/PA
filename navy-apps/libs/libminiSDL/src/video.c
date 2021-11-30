@@ -34,19 +34,18 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	int count_line = 0;
 	uint8_t* dst_pixel = dst->pixels + (dst_y * dst->w * 4 + dst_x * 4);
 	uint8_t* src_pixel = src->pixels + (src_y * src->w * 4 + src_x * 4);
-	while (count_line < h - 100) {
-		printf("count_line = %d\n", count_line);
-		printf("src_pixel = 0x%x, dst_pixel = 0x%x\n", src_pixel, dst_pixel);
+	while (count_line < h) {
 		memcpy(dst_pixel, src_pixel, w*4);
 		dst_pixel += dst->w * 4;
 		src_pixel += src->w * 4;
 		count_line++;
 	}
-	memcpy(dst_pixel, src_pixel, w*4);
-	dstrect->w = w;
-	dstrect->h = h;
-	dstrect->x = dst_x;
-	dstrect->y = dst_y;
+	if (dstrect != NULL) {
+		dstrect->w = w;
+		dstrect->h = h;
+		dstrect->x = dst_x;
+		dstrect->y = dst_y;
+	}
 	return 0;	
 }
 

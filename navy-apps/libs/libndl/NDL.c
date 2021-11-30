@@ -75,7 +75,9 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 		read(fd, buf, update_size * 4);
 		uint32_t* pt = buf + real_x;
 		for (int i = 0; i < h; i++) {
+				printf("before memcpy\n");
 			memcpy(pt, pixels, w * 4);
+			printf("after memcpy\n");
 			pixels += w;
 			pt += screen_w;
 		}

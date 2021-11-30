@@ -28,6 +28,9 @@ char *strcat(char *dst, const char *src) {
 }
 
 int strcmp(const char *s1, const char *s2) {
+		if (s1 == NULL || s2 == NULL) {
+			return 0;
+		}
 		const unsigned char *t1 =(const unsigned char*) s1;
 		const unsigned char *t2 =(const unsigned char*) s2;
 		unsigned char c1, c2;

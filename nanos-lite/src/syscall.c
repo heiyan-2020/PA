@@ -70,9 +70,9 @@ void sys_gettimeofday(Context* c) {
 	if (tv == NULL) {
 			c->GPRx = -1;
 	} else {
-		tv->tv_usec = io_read(AM_TIMER_UPTIME).us;
-		tv->tv_sec = (time_t) (tv->tv_usec / 1000000);
-		printf("usec = %d\n",tv->tv_usec);
+		time_t usec = io_read(AM_TIMER_UPTIME).us;
+		tv->tv_sec = usec / 1000000;
+		tv->tv_usec = usec - tv->tv_usec;
 		c->GPRx = 0;
 	}
 }

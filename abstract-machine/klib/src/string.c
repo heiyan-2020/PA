@@ -60,11 +60,13 @@ void *memmove(void *dst, const void *src, size_t n) {
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
+		printf("before\n");
 		char *d =(char *) out;
 		const char *s =(char *) in;
 		while (n-- > 0) {
 			*d++ = *s++;
 		}
+		printf("after\n");
 		return out;
 }
 

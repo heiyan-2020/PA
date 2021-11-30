@@ -81,6 +81,7 @@ static inline uint32_t reverseBits(uint32_t x) {
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
+		printf("int update\n");
 	//make sure rect of s specified by x,y,w,h is updated.
 	//if x = y = w = h = 0, update all 
 	if (x == 0 && y == 0 && w == 0 && h == 0) {
@@ -111,6 +112,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		}
 		assert(count_line == h);
 	}
+	printf("out\n");
 	NDL_DrawRect(real_pixels, x, y, w, h);
 }
 

@@ -61,6 +61,7 @@ int fs_open(const char* filepath, int flags, int mode) {
 }
 
 size_t fs_read(int fd, void* buf, size_t len) {
+	printf("fd=%d\n", fd);
 	//haven't handle exception.
 	assert(0 <= fd && fd <= sizeof(file_table) / sizeof(Finfo));
 	Finfo* currentFile = &file_table[fd];		

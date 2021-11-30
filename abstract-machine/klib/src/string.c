@@ -60,7 +60,6 @@ void *memmove(void *dst, const void *src, size_t n) {
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
-		printf("nemu's memcpy\n");
 		char *d =(char *) out;
 		const char *s =(char *) in;
 		while (n-- > 0) {

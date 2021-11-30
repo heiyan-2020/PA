@@ -2,7 +2,7 @@
 #include <sdl-video.h>
 #include <assert.h>
 #include <string.h>
-//#include <stdlib.h>
+#include <stdlib.h>
 #include <time.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {

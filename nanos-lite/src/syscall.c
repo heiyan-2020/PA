@@ -97,8 +97,10 @@ void do_syscall(Context *c) {
 		case SYS_close: sys_close(c);break;
 		case SYS_gettimeofday: {
 									   printf("before 0x%x\n", c);
+									   printf("%d\n", c->GPR2);
 								sys_gettimeofday(c);
 								printf("after 0x%x\n", c);
+								printf("%d\n", c->GPR2);
 								break;
 							   }
     default: panic("Unhandled syscall ID = %d", a[0]);

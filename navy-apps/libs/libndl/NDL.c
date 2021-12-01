@@ -11,7 +11,6 @@ static struct timeval current[1];
 static int canvas_x = 0, canvas_y = 0, canvas_w = 0, canvas_h = 0;
 uint32_t NDL_GetTicks() {
  	 gettimeofday(current, NULL);
-	 printf("usec=%ld\n", current->tv_usec);
 	return current->tv_sec * 1000 + current->tv_usec / 1000;
 }
 

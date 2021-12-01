@@ -67,9 +67,6 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 								  switch(*fmt++) {
 								  	case 'd': {
 							l = va_arg(ap, long);
-							if (l == 214748364000L) {
-								return NULL;
-							}
 							char* tmp_str = convert_64(l, 10);
 							memcpy(out, tmp_str, strlen(tmp_str));
 							out += strlen(tmp_str);

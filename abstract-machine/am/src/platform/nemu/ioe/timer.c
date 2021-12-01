@@ -9,7 +9,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
 		result <<= 32;
 		result |= inl(RTC_ADDR);
 		uptime->us = result;
-		printf("us = %ld\n", 214748364000L);
+		printf("us = %ld\n", result);
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {

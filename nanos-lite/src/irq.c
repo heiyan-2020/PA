@@ -1,6 +1,8 @@
 #include <common.h>
 void do_syscall(Context*);
+extern uint32_t _stack_top;
 static Context* do_event(Event e, Context* c) {
+		printf("0x%x\n", &_stack_top);
   switch (e.event) {
 		case EVENT_YIELD: 
 				{	printf("yield succuss!\n"); 

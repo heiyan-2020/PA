@@ -67,7 +67,6 @@ void sys_brk(Context* c) {
 
 void sys_gettimeofday(Context* c) {
 	struct timeval* tv = (struct timeval*)c->GPR2;
-	printf("p %d\n", tv->tv_usec);
 	if (tv == NULL) {
 			c->GPRx = -1;
 	} else {
@@ -97,9 +96,9 @@ void do_syscall(Context *c) {
 		case SYS_lseek: sys_lseek(c);break;
 		case SYS_close: sys_close(c);break;
 		case SYS_gettimeofday: {
+									   printf("before 0x%x\n", c);
 								sys_gettimeofday(c);
-								struct timeval* tv = (struct timeval*) c->GPR2;
-							printf("sys usec = %d\n", tv->tv_usec);
+								printf("after 0x%x\n", c);
 								break;
 							   }
     default: panic("Unhandled syscall ID = %d", a[0]);

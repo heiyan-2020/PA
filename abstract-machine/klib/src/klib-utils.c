@@ -35,7 +35,7 @@ char * convert_64(uint64_t num, int base) {
 //abstract the repetitive code of print family func.
 char* print_template(char* out, const char* fmt, va_list ap) {
 		int d;
-		long l;
+		uint64_t l;
 		char *s;
 		char *ptr = out;
 		while (*fmt) {
@@ -66,7 +66,7 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 						case 'l': {
 								  switch(*fmt++) {
 								  	case 'd': {
-							l = va_arg(ap, long);
+							l = va_arg(ap, uint64_t);
 							char* tmp_str = convert_64(l, 10);
 							memcpy(out, tmp_str, strlen(tmp_str));
 							out += strlen(tmp_str);

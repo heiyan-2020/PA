@@ -1,7 +1,7 @@
 //convert int/uint number to string accroding to base.
 #include <stdarg.h>
 #include <klib.h>
-char * convert(uint64_t num, int base) {
+char * convert(uint32_t num, int base) {
 	static char Table[] = "0123456789ABCDEF";
 	static char buffer[50];
 	char* ptr;

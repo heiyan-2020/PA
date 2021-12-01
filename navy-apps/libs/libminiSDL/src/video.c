@@ -88,7 +88,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		h = s->h;
 	}
 	uint8_t factor = s->format->BytesPerPixel;
-	printf("factor addr = 0x%x\n", &factor);
 	NDL_OpenCanvas(&(s->w), &(s->h));
 	uint32_t* real_pixels = (uint32_t*)malloc(w * h * sizeof(uint32_t));
 	if (factor == 1) {

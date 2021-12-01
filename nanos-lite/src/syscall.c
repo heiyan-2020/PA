@@ -98,7 +98,6 @@ void do_syscall(Context *c) {
 		case SYS_close: sys_close(c);break;
 		case SYS_gettimeofday: {
 								sys_gettimeofday(c, a[1]);
-								printf("%ld\n", ((struct timeval*)a[1])->tv_usec);
 								break;
 							   }
     default: panic("Unhandled syscall ID = %d", a[0]);

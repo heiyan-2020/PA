@@ -1,7 +1,7 @@
 //convert int/uint number to string accroding to base.
 #include <stdarg.h>
 #include <klib.h>
-char * convert(uint32_t num, int base) {
+char * convert(uint64_t num, int base) {
 	static char Table[] = "0123456789ABCDEF";
 	static char buffer[50];
 	char* ptr;
@@ -46,6 +46,21 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 							out += strlen(s);
 							break;					
 						}
+						case 'l': {
+								  switch(*fmt++) {
+								  	case 'd': {
+							d = va_arg(ap, long);
+							char* tmp_str = convert(d, 10);
+							memcpy(out, tmp_str, strlen(tmp_str));
+							out += strlen(tmp_str);
+							break;
+											  }
+									default : {
+											  return NULL;
+											  }
+								  }
+								  break;
+								  }
 						default: return NULL;
 					}	
 				}

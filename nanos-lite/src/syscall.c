@@ -65,8 +65,8 @@ void sys_brk(Context* c) {
 	c->GPRx = 0;
 }
 
-void sys_gettimeofday(Context* c) {
-	struct timeval* tv = (struct timeval*)c->GPR2;
+void sys_gettimeofday(Context* c, uintptr_t _GPR2) {
+	struct timeval* tv = (struct timeval*)_GPR2;
 	if (tv == NULL) {
 			c->GPRx = -1;
 	} else {
@@ -80,6 +80,7 @@ void sys_gettimeofday(Context* c) {
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
+  a[1] = c->GPR2;
 #ifdef STRACE
 	if (a[0] < 0 || a[0] > 19) {
 		panic("Illegal Syscall ID = %d\n", a[0]);
@@ -96,11 +97,7 @@ void do_syscall(Context *c) {
 		case SYS_lseek: sys_lseek(c);break;
 		case SYS_close: sys_close(c);break;
 		case SYS_gettimeofday: {
-									   printf("before 0x%x\n", c);
-									   printf("%d\n", c->GPR2);
-								sys_gettimeofday(c);
-								printf("after 0x%x\n", c);
-								printf("%d\n", c->GPR2);
+								sys_gettimeofday(c, a[1]);
 								break;
 							   }
     default: panic("Unhandled syscall ID = %d", a[0]);

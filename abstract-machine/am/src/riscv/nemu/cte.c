@@ -5,6 +5,8 @@
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
+	uint32_t stack_test [1];
+			printf("stack_test is at 0x%x\n", stack_test);
 	void* heap_test = malloc(256);
 			printf("heap_test is at 0x%x\n", heap_test);
   if (user_handler) {

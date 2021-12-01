@@ -98,6 +98,7 @@ void do_syscall(Context *c) {
 		case SYS_close: sys_close(c);break;
 		case SYS_gettimeofday: {
 								sys_gettimeofday(c, a[1]);
+								printf("nanos at 0x%x\n", a[1]);
 								break;
 							   }
     default: panic("Unhandled syscall ID = %d", a[0]);

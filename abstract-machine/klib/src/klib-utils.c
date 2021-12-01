@@ -64,6 +64,7 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 							break;					
 						}
 						case 'l': {
+										  return NULL;
 								  switch(*fmt++) {
 								  	case 'd': {
 							l = va_arg(ap, long);

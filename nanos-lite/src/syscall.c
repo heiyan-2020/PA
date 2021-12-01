@@ -70,7 +70,6 @@ void sys_gettimeofday(Context* c, uintptr_t _GPR2) {
 	if (tv == NULL) {
 			c->GPRx = -1;
 	} else {
-			printf("%d\n",sizeof(time_t));
 		time_t usec = io_read(AM_TIMER_UPTIME).us;
 		tv->tv_sec = usec / 1000000;
 		tv->tv_usec = usec - tv->tv_sec * 1000000;
@@ -99,6 +98,7 @@ void do_syscall(Context *c) {
 		case SYS_close: sys_close(c);break;
 		case SYS_gettimeofday: {
 								sys_gettimeofday(c, a[1]);
+								printf("%ld\n", ((struct timeval*)a[1])->tv_usec);
 								break;
 							   }
     default: panic("Unhandled syscall ID = %d", a[0]);

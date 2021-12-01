@@ -71,7 +71,7 @@ void sys_gettimeofday(Context* c) {
 			c->GPRx = -1;
 	} else {
 		time_t usec = io_read(AM_TIMER_UPTIME).us;
-		printf("us = %x\n", usec);
+		printf("us = %ld\n", usec);
 		tv->tv_sec = usec / 1000000;
 		tv->tv_usec = usec - tv->tv_sec * 1000000;
 		printf("%d\n", tv->tv_usec);

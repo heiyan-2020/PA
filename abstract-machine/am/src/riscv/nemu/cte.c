@@ -5,7 +5,8 @@
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
-		printf("user_handler = 0x%x\n", &user_handler);
+	void* heap_test = malloc(256);
+			printf("heap_test is at 0x%x\n", heap_test);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {

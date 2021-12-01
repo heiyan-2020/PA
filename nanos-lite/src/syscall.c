@@ -97,7 +97,7 @@ void do_syscall(Context *c) {
 		case SYS_close: sys_close(c);break;
 		case SYS_gettimeofday: {
 								sys_gettimeofday(c);
-								printf("sys usec = %d\n", ((struct timeval*)(c->GPR2))->tv_usec);
+				//				printf("sys usec = %d\n", ((struct timeval*)(c->GPR2))->tv_usec);
 								break;
 							   }
     default: panic("Unhandled syscall ID = %d", a[0]);

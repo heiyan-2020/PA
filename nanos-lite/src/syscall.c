@@ -72,9 +72,9 @@ void sys_gettimeofday(Context* c, uintptr_t _GPR2) {
 	} else {
 			printf("tv = 0x%x\n", tv);
 		time_t usec = io_read(AM_TIMER_UPTIME).us;
-		printf("usec = %d\n", usec);
+		printf("usec = %ld\n", usec);
 		tv->tv_sec = usec / 1000000;
-		printf("tv->tv_sec = %d\n", tv->tv_sec);
+		printf("tv->tv_sec = %ld\n", tv->tv_sec);
 		tv->tv_usec = usec - tv->tv_sec * 1000000;
 		c->GPRx = 0;
 	}

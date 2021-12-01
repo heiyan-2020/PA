@@ -67,6 +67,7 @@ void sys_brk(Context* c) {
 
 void sys_gettimeofday(Context* c) {
 	struct timeval* tv = (struct timeval*)c->GPR2;
+	printf("p %d\n", tv->tv_usec);
 	if (tv == NULL) {
 			c->GPRx = -1;
 	} else {

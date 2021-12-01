@@ -71,8 +71,8 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 		int fd = open("/dev/fb", 0, 0);
 		int update_size = (screen_h - real_y) * screen_w;
 		lseek(fd, (real_y * screen_w) * 4, SEEK_SET);
-		uint32_t buf[update_size];
-		read(fd, buf, update_size * 4);
+		uint32_t* buf = (uint32_t*)malloc(update_size);
+//		read(fd, buf, update_size * 4);
 		uint32_t* pt = buf + real_x;
 		for (int i = 0; i < h; i++) {
 			memcpy(pt, pixels, w * 4);

@@ -70,16 +70,19 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 	 	int real_y = canvas_y + y;
 		int fd = open("/dev/fb", 0, 0);
 		int update_size = (screen_h - real_y) * screen_w;
-		lseek(fd, (real_y * screen_w) * 4, SEEK_SET);
-		uint32_t* buf = (uint32_t*)malloc(update_size * sizeof(uint32_t));
-		uint32_t* pt = buf + real_x;
+		lseek(fd, (real_y * screen_w + real_x) * 4, SEEK_SET);
+//		uint32_t* pt = buf + real_x;
+
 		for (int i = 0; i < h; i++) {
-			memcpy(pt, pixels, w * 4);
+//			memcpy(pt, pixels, w * 4);
+			write(fd, pixels, w * 4);
 			pixels += w;
-			pt += screen_w;
+			real_y++;
+			lseek(fd, (real_y * screen_w + real_x) * 4, SEEK_SET);
+//			pt += screen_w;
 		}
-		lseek(fd, (real_y * screen_w) * 4, SEEK_SET);
-		write(fd, buf, update_size * 4);
+//		lseek(fd, (real_y * screen_w) * 4, SEEK_SET);
+//		write(fd, buf, update_size * 4);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {

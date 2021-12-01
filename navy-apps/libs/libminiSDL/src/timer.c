@@ -23,6 +23,7 @@ void SDL_Delay(uint32_t ms) {
 	uint32_t current = NDL_GetTicks();
 	//ms = ms >= 10 ? ms : 10;
 	while (current - begin < ms) {
+		printf("begin = %d, current = %d\n", begin, current);
 		current = NDL_GetTicks();
 	}
 }

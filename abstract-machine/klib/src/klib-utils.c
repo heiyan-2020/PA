@@ -64,11 +64,10 @@ char* print_template(char* out, const char* fmt, va_list ap) {
 							break;					
 						}
 						case 'l': {
-										  return NULL;
 								  switch(*fmt++) {
 								  	case 'd': {
 							l = va_arg(ap, long);
-							char* tmp_str = convert_64(l, 10);
+							char* tmp_str = convert_64(l, 16);
 							memcpy(out, tmp_str, strlen(tmp_str));
 							out += strlen(tmp_str);
 							break;

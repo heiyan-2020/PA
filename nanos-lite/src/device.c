@@ -27,8 +27,9 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 size_t events_read(void *buf, size_t offset, size_t len) {
 	char buffer[32];
 	int bytesReadIn = 0;
-  bool keydown = io_read(AM_INPUT_KEYBRD).keydown;
-	int keycode = io_read(AM_INPUT_KEYBRD).keycode;
+	AM_INPUT_KEYBRD_T kbd = io_read(AM_INPUT_KEYBRD);	
+  bool keydown = kbd.keydown;
+	int keycode = kbd.keycode;
 	if (keycode == AM_KEY_NONE) {
 		return 0;
 	}

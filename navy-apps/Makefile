@@ -116,10 +116,10 @@ ASFLAGS  +=  $(CFLAGS)
 $(DST_DIR)/%.o: %.c
 	@mkdir -p $(dir $@) && echo + CC $<
 	@$(CC) -std=gnu11 $(CFLAGS) -c -o $@ $(realpath $<)
-	@$(CC) $(CFLAGS) -E $@ $< | \
-	grep -ve '^#' | \
-	clang-format - > $(basename $@).i
-
+#	@$(CC) $(CFLAGS) -E $@ $< | \
+#	grep -ve '^#' | \
+#	clang-format - > $(basename $@).i
+#
 
 ### Rule (compile): a single `.cc` -> `.o` (g++)
 

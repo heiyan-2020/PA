@@ -41,7 +41,6 @@
 #endif
 
 intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2) {
-				printf("innnnnnnnnnnnnn\n");
   register intptr_t _gpr1 asm (GPR1) = type;
   register intptr_t _gpr2 asm (GPR2) = a0;
   register intptr_t _gpr3 asm (GPR3) = a1;
@@ -88,6 +87,7 @@ off_t _lseek(int fd, off_t offset, int whence) {
 }
 
 int _gettimeofday(struct timeval *tv, struct timezone *tz) {
+				printf("hreererere\n");
 	int ret =   _syscall_(SYS_gettimeofday, tv, tz, 0);
 	return ret;
 }

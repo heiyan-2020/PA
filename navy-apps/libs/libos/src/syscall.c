@@ -69,9 +69,9 @@ void *_sbrk(intptr_t increment) {
 	if (_syscall_(SYS_brk, increment, 0, 0) == 0) {
 		preBreak = program_break;
 		program_break += increment;
-		char buf[64];
-		fprintf(buf, "increment = %d, sbrk = 0x%x\n", increment, program_break);
-		_write(1, buf, 64);
+//		char buf[64];
+//		fprintf(buf, "increment = %d, sbrk = 0x%x\n", increment, program_break);
+//		_write(1, buf, 64);
 		return (void*)preBreak;
 	}
 	return (void*)-1;

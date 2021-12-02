@@ -112,6 +112,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		assert(count_line == h);
 	}
 	NDL_DrawRect(real_pixels, x, y, w, h);
+	free(real_pixels);
 }
 
 

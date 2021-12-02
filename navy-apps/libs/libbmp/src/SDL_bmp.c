@@ -3,7 +3,6 @@
 #include <assert.h>
 
 SDL_Surface* SDL_LoadBMP(const char *filename) {
-				printf("load\n");
   int w, h;
   void *pixels = BMP_Load(filename, &w, &h);
 	printf("filename is %s\n", filename);

@@ -69,9 +69,7 @@ void *_sbrk(intptr_t increment) {
 	if (_syscall_(SYS_brk, increment, 0, 0) == 0) {
 		preBreak = program_break;
 		program_break += increment;
-		char buf[64];
-		sprintf(buf, "ret = 0x%x\n", preBreak);
-		_write(1, buf, 64);
+		assert(preBreak < 0x87000000);
 		return (void*)preBreak;
 	}
 	return (void*)-1;

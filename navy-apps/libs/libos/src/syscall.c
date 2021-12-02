@@ -70,7 +70,7 @@ void *_sbrk(intptr_t increment) {
 		preBreak = program_break;
 		program_break += increment;
 		char buf[64];
-		fprintf(buf, "increment = %d\n", increment);
+		fprintf(buf, "preBreak = %x\n", preBreak);
 		_write(1, buf, 64);
 		return (void*)preBreak;
 	}

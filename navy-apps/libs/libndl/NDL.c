@@ -10,8 +10,11 @@ static int screen_w = 0, screen_h = 0;
 static struct timeval current[1];
 static int canvas_x = 0, canvas_y = 0, canvas_w = 0, canvas_h = 0;
 uint32_t NDL_GetTicks() {
- 	 gettimeofday(current, NULL);
-	return current->tv_sec * 1000 + current->tv_usec / 1000;
+ 	gettimeofday(current, NULL);
+	uint32_t* pt = current;
+	time_t sec = *(pt);
+	time_t usec = *(pt + 2);
+	return sec * 1000 + usec / 1000;
 }
 
 int NDL_PollEvent(char *buf, int len) {

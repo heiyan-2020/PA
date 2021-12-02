@@ -48,8 +48,8 @@ intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2) {
   register intptr_t ret asm (GPRx);
   asm volatile (SYSCALL : "=r" (ret) : "r"(_gpr1), "r"(_gpr2), "r"(_gpr3), "r"(_gpr4));
 	if (type == 19) {
-					printf("a1 = 0x%x\n", a1);
-		//printf("a0->tv_usec = %ld\n", ((struct timeval*)a1) -> tv_usec);
+					printf("a1 = 0x%x\n", a0);
+		printf("a0->tv_usec = %ld\n", ((struct timeval*)a0) -> tv_usec);
 	}
   return ret;
 }

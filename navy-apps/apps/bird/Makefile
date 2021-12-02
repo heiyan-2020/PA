@@ -6,7 +6,7 @@ endif
 NAME = bird
 SRCS = $(shell find $(REPO_PATH)/src/ -name "*.cpp")
 INC_PATH = $(REPO_PATH)/include
-LIBS += libminiSDL libSDL_image libfixedptc pprintf
+LIBS += libminiSDL libSDL_image libfixedptc
 include $(NAVY_HOME)/Makefile
 
 install: install-file

@@ -23,11 +23,12 @@ static void sh_prompt() {
 }
 
 static int cmd_echo(char* str) {
-	sh_printf("%s\n", str);
+	sh_printf("%s", str);
 	return 0;
 }
 
 static int cmd_run(char* path) {
+	printf("path = %s\n", path);
 	execve(path, NULL, NULL);
 	return 0;
 }

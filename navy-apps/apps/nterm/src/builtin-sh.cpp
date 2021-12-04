@@ -31,8 +31,7 @@ static int cmd_run(char* path) {
 	char* pt = path + strlen(path);
 	while (*pt != '\n') pt--;
 	*pt = '\0';
-	printf("path = %s\n", path);
-	execve(path, NULL, NULL);
+	execvp(path, NULL);
 	return 0;
 }
 
@@ -60,14 +59,13 @@ static void sh_handle_cmd(char *_cmd) {
 			}
 		}
 		if (i == NR_CMD) {
-				if (cmd[0] == '/') {
-					cmd_run(cmd);
-				}
+			cmd_run(cmd);
+			}
 		}
 	}
-}
 
 void builtin_sh_run() {
+	setenv("PATH", "/bin", 0);
   sh_banner();
   sh_prompt();
 

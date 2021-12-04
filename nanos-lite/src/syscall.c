@@ -2,6 +2,8 @@
 #include <fs.h>
 #include <sys/time.h>
 #include "syscall.h"
+#include <proc.h>
+void naive_uload(PCB*, const char*);
 void sys_yield(Context *c) {
 	yield();
 	c->GPRx = 0;
@@ -65,6 +67,12 @@ void sys_brk(Context* c) {
 	c->GPRx = 0;
 }
 
+void sys_execve(Context* c) {
+	const char* pathname = (const char*)c->GPR2;
+	naive_uload(NULL, pathname);
+	assert(0);
+}
+
 void sys_gettimeofday(Context* c, uintptr_t _GPR2) {
 	struct timeval* tv = (struct timeval*)_GPR2;
 	if (tv == NULL) {
@@ -100,6 +108,7 @@ void do_syscall(Context *c) {
 								sys_gettimeofday(c, a[1]);
 								break;
 							   }
+		case SYS_execve: sys_execve(c);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }

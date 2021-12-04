@@ -42,10 +42,10 @@ static struct {
 };
 static const int NR_CMD = sizeof(cmd_table) / sizeof(cmd_table[0]);
 static void sh_handle_cmd(char *_cmd) {
+	char* str_end = _cmd + strlen(_cmd);
 	char *cmd = strtok(_cmd, " ");
 	if (cmd != NULL) {
 		char *args = cmd + strlen(_cmd) + 1;
-		char* str_end = _cmd + strlen(_cmd);
 		if (args >= str_end) {
 			args = NULL;
 		}

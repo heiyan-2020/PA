@@ -4,13 +4,18 @@
 #include "syscall.h"
 #include <proc.h>
 void naive_uload(PCB*, const char*);
+
+int sys_execve(const char* pathname, char* const argv[], char* const envp[]) {
+	naive_uload(NULL, pathname);
+	assert(0);
+}
 void sys_yield(Context *c) {
 	yield();
 	c->GPRx = 0;
 }
 
 void sys_exit(Context* c) {
-	halt(c->GPR2);
+	sys_execve("/bin/menu", NULL, NULL);
 	c->GPRx = c->GPR2 & 0xFF;
 }
 
@@ -67,12 +72,6 @@ void sys_brk(Context* c) {
 	c->GPRx = 0;
 }
 
-void sys_execve(Context* c) {
-	const char* pathname = (const char*)c->GPR2;
-	naive_uload(NULL, pathname);
-	assert(0);
-}
-
 void sys_gettimeofday(Context* c, uintptr_t _GPR2) {
 	struct timeval* tv = (struct timeval*)_GPR2;
 	if (tv == NULL) {
@@ -108,7 +107,7 @@ void do_syscall(Context *c) {
 								sys_gettimeofday(c, a[1]);
 								break;
 							   }
-		case SYS_execve: sys_execve(c);break;
+		case SYS_execve: c->GPRx = sys_execve((const char*)c->GPR2, (char** const )c->GPR3, (char** const)c->GPR4);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }

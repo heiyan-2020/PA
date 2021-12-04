@@ -28,6 +28,9 @@ static int cmd_echo(char* str) {
 }
 
 static int cmd_run(char* path) {
+	char* pt = path + strlen(path);
+	while (*pt != '\n') pt--;
+	*pt = '\0';
 	printf("path = %s\n", path);
 	execve(path, NULL, NULL);
 	return 0;

@@ -64,7 +64,8 @@ void context_uload(PCB* proc, const char* pathname, int argc, char* const argv[]
 void naive_uload(PCB*, const char*);
 void init_proc() {
 	context_kload(&pcb[0], hello_fun, "first!!!");
-	context_uload(&pcb[1], "/bin/pal", 0, NULL, NULL);
+	char* const argv[] = {"--skip"};
+	context_uload(&pcb[1], "/bin/pal", 1, argv, NULL);
 //	context_kload(&pcb[1], hello_fun, "second!!!");
   switch_boot_pcb();
 

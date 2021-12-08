@@ -27,9 +27,12 @@ struct {
 } ring_buf = {
 	.header = 0
 };
-static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
+static void trace_and_difftest(Decode *_this, vaddr_t dnpc, int n) {
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) log_write("%s\n", _this->logbuf);
+	if (n == 1) {
+		printf("%s\n", _this->logbuf);		
+	}
 #endif
 #ifdef CONFIG_RTRACE_COND
 	sprintf(ring_buf.buffer[(ring_buf.header++) % BUFFERSIZE], "%s\n", _this->logbuf);		
@@ -114,7 +117,7 @@ void cpu_exec(uint64_t n) {
   for (;n > 0; n --) {
     fetch_decode_exec_updatepc(&s);
     g_nr_guest_instr ++;
-    trace_and_difftest(&s, cpu.pc);
+    trace_and_difftest(&s, cpu.pc, n);
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }

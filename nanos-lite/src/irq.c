@@ -8,13 +8,13 @@ static Context* do_event(Event e, Context* c) {
 		case EVENT_YIELD: 
 				{
 					printf("yield succuss!\n"); 
-					c->mepc += 4;
-					return schedule(c);
+//					c->mepc += 4;
+	//				return schedule(c);
 					break;
 				}
 		case EVENT_SYSCALL:{ 
 						do_syscall(c); 
-						c->mepc += 4;
+		//				c->mepc += 4;
 						break;
 						  }
     default: panic("Unhandled event ID = %d", e.event);

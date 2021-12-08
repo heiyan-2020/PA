@@ -18,16 +18,28 @@ void hello_fun(void *arg) {
     yield();
   }
 }
+
+void context_kload(PCB* proc, void (*entry)(void *), void* arg) {
+	Area stackArea = {
+		.start = proc->stack, 
+		.end = proc->stack + STACK_SIZE
+	};
+	proc->cp = kcontext(stackArea, entry, arg);	
+}
+
 void naive_uload(PCB*, const char*);
 void init_proc() {
+	context_kload(&pcb[0], hello_fun, NULL);
   switch_boot_pcb();
 
   Log("Initializing processes...");
 
   // load program here
-	naive_uload(NULL, "/bin/nterm");
+	naive_uload(NULL, "/bin/dummy");
 }
 
 Context* schedule(Context *prev) {
-  return NULL;
+	current->cp = prev;
+	current = &pcb[0];
+	return current->cp;
 }

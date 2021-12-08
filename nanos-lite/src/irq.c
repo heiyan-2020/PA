@@ -1,12 +1,15 @@
 #include <common.h>
+Context* schedule(Context *prev);
 void do_syscall(Context*);
 extern uint32_t _stack_top;
 extern uint32_t _stack_pointer;
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
 		case EVENT_YIELD: 
-				{	printf("yield succuss!\n"); 
+				{
+					printf("yield succuss!\n"); 
 					c->mepc += 4;
+					return schedule(c);
 					break;
 				}
 		case EVENT_SYSCALL:{ 

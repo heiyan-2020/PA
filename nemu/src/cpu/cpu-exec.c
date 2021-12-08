@@ -37,10 +37,10 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 
-//	if (!iter_wp()) {
-//		nemu_state.state = NEMU_STOP;
-//		printf("watchpoint has been activated!\n");
-//	}	
+	if (!iter_wp()) {
+		nemu_state.state = NEMU_STOP;
+		printf("watchpoint has been activated!\n");
+	}	
 }
 
 #include <isa-exec.h>

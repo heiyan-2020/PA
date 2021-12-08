@@ -36,8 +36,8 @@ void context_uload(PCB* proc, const char* pathname, int argc, char* const argv[]
 	void* entry = (void*)loader(pcb, pathname);
 	proc->cp = ucontext(NULL, stackArea, entry);	
 	proc->cp->GPRx = (uint32_t)heap.end;
-	printf("0x%x\n", heap.end);
 	*(int*)heap.end = argc;
+
 	char** argv_start = (char**)heap.end + 1;
 	char** argv_end = (char**)argv_start + argc;
 	*(argv_end++) = NULL;
@@ -51,6 +51,9 @@ void context_uload(PCB* proc, const char* pathname, int argc, char* const argv[]
 		strcpy(string_area, argv[i]);
 		argv_start[i] = string_area;
 		string_area += strlen(string_area);
+	}
+	while (1) {
+		printf("%s\n", *argv_start);
 	}
 	int i = 0;
 	while (envp != NULL && envp[i] != NULL){

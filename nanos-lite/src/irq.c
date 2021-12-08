@@ -9,7 +9,7 @@ static Context* do_event(Event e, Context* c) {
 				{
 					printf("yield succuss!\n"); 
 //					c->mepc += 4;
-	//				return schedule(c);
+					return schedule(c);
 					break;
 				}
 		case EVENT_SYSCALL:{ 

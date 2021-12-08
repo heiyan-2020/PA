@@ -26,17 +26,28 @@ void context_kload(PCB* proc, void (*entry)(void *), void* arg) {
 	};
 	proc->cp = kcontext(stackArea, entry, arg);	
 }
+uintptr_t loader(PCB *pcb, const char *filename);
 
+void context_uload(PCB* proc, const char* pathname) {
+	Area stackArea = {
+		.start = proc->stack, 
+		.end = proc->stack + STACK_SIZE
+	};
+	void* entry = (void*)loader(pcb, pathname);
+	proc->cp = ucontext(NULL, stackArea, entry);	
+	proc->cp->GPRx = (uint32_t)heap.end;
+}
 void naive_uload(PCB*, const char*);
 void init_proc() {
 	context_kload(&pcb[0], hello_fun, "first!!!");
-	context_kload(&pcb[1], hello_fun, "second!!!");
+	context_uload(&pcb[1], "/bin/pal");
+//	context_kload(&pcb[1], hello_fun, "second!!!");
   switch_boot_pcb();
 
   Log("Initializing processes...");
 
   // load program here
-	naive_uload(NULL, "/bin/dummy");
+	//naive_uload(NULL, "/bin/dummy");
 }
 
 Context* schedule(Context *prev) {

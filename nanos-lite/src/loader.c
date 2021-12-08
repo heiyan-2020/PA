@@ -12,7 +12,7 @@
 static Elf_Ehdr elf_header[1];
 static Elf_Phdr prog_header[1];
 size_t ramdisk_read(void*, size_t, size_t);
-static uintptr_t loader(PCB *pcb, const char *filename) {
+uintptr_t loader(PCB *pcb, const char *filename) {
 	//read the elf_header.
 	int fd = fs_open(filename, 0, 0);	
 	fs_read(fd, elf_header, sizeof(Elf_Ehdr));

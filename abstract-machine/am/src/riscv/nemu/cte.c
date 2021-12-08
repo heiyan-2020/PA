@@ -39,8 +39,8 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	Context* newContext = (Context*) malloc(sizeof(Context));
+	printf("Addr of Context = 0x%x\n", newContext);
 	newContext->mepc = (uintptr_t)entry;
-	printf("entry = 0x%x\n", entry);
   return newContext;
 }
 

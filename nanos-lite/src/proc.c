@@ -49,9 +49,6 @@ void context_uload(PCB* proc, const char* pathname, int argc, char* const argv[]
 	char* string_area = (char*) envp_end;
 	for (int i = 0; i < argc; i++) {
 		memcpy(string_area, argv[i], strlen(argv[i]) + 1);
-		while (1) {
-		printf("argv[0] = %s\nargv_start = %s\n", argv[0], string_area);
-		}
 		argv_start[i] = string_area + 1;
 		string_area += strlen(string_area);
 	}

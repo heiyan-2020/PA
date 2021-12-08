@@ -4,6 +4,6 @@
 
 _start:
   mv s0, zero
-	mv sp, a0
+#	mv sp, a0
   la sp, _stack_pointer
   jal _trm_init

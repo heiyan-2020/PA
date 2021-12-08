@@ -35,12 +35,13 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	};
 	void* entry = (void*)loader(pcb, pathname);
 	proc->cp = ucontext(NULL, stackArea, entry);	
-	proc->cp->GPRx = (uint32_t)heap.end;
+	void* stack_space = new_page(8);
+	proc->cp->GPRx = (uint32_t)stack_space;
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
 	printf("argc = %d\n", argc);
-	*(int*)heap.end = argc;
-	char** argv_start = (char**)heap.end + 1;
+	*(int*)stack_space = argc;
+	char** argv_start = (char**)stack_space + 1;
 	char** argv_end = (char**)argv_start + argc;
 	*(argv_end++) = NULL;
 
@@ -66,16 +67,16 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 }
 void naive_uload(PCB*, const char*);
 void init_proc() {
-	context_kload(&pcb[0], hello_fun, "first!!!");
-	char* const argv[] = {"--skip", NULL};
-	context_uload(&pcb[1], "/bin/pal", argv, NULL);
+//	context_kload(&pcb[0], hello_fun, "first!!!");
+//	char* const argv[] = {"--skip", NULL};
+//	context_uload(&pcb[1], "/bin/pal", argv, NULL);
 //	context_kload(&pcb[1], hello_fun, "second!!!");
   switch_boot_pcb();
 
   Log("Initializing processes...");
 
   // load program here
-	//naive_uload(NULL, "/bin/dummy");
+	naive_uload(NULL, "/bin/exec-test");
 }
 
 Context* schedule(Context *prev) {

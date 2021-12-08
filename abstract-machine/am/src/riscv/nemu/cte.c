@@ -40,7 +40,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 #define a0 10
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-	Context* newContext = (Context*) malloc(sizeof(Context));
+	Context* newContext = kstack.end - sizeof(Context);
 	newContext->mepc = (uintptr_t)entry;
 	newContext->mstatus = 0x1800;
 	//support arguments passing.

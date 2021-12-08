@@ -38,11 +38,13 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
   return true;
 }
-
+#define a0 10
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	Context* newContext = (Context*) malloc(sizeof(Context));
 	newContext->mepc = (uintptr_t)entry;
 	newContext->mstatus = 0x1800;
+	//support arguments passing.
+	newContext->gpr[a0] = (uint32_t)arg;
   return newContext;
 }
 

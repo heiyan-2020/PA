@@ -42,6 +42,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	Context* newContext = (Context*) malloc(sizeof(Context));
 	newContext->mepc = (uintptr_t)entry;
+	newContext->mstatus = 0x1800;
   return newContext;
 }
 

@@ -10,6 +10,7 @@ static Context* do_event(Event e, Context* c) {
 					printf("yield succuss!\n"); 
 //					c->mepc += 4;
 					Context* ret = schedule(c);
+					printf("0x%x\n", ret);
 					return ret;
 					break;
 				}

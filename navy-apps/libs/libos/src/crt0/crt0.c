@@ -5,7 +5,8 @@
 int main(int argc, char *argv[], char *envp[]);
 extern char **environ;
 void call_main(uintptr_t *args) {
-	int argc = *((int*) argc)++;
+	int argc = *((int*) args);
+	args = (char**) args + 1;
 	char** const argv = (char**) args;
 	char** const envp = ((char**) args)	+ argc + 1;
   environ = envp;

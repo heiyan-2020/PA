@@ -28,7 +28,7 @@ void context_kload(PCB* proc, void (*entry)(void *), void* arg) {
 }
 uintptr_t loader(PCB *pcb, const char *filename);
 
-void context_uload(PCB* proc, const char* pathname, int argc, char* const argv[], char* const envp[]) {
+void context_uload(PCB* proc, const char* pathname, char* const argv[], char* const envp[]) {
 	Area stackArea = {
 		.start = proc->stack, 
 		.end = proc->stack + STACK_SIZE
@@ -36,11 +36,14 @@ void context_uload(PCB* proc, const char* pathname, int argc, char* const argv[]
 	void* entry = (void*)loader(pcb, pathname);
 	proc->cp = ucontext(NULL, stackArea, entry);	
 	proc->cp->GPRx = (uint32_t)heap.end;
-	*(int*)heap.end = argc;
+	size_t argc = 0; 
+	while (argv != NULL && argv[argc] != NULL) {argc++;}
 
+	*(int*)heap.end = argc;
 	char** argv_start = (char**)heap.end + 1;
 	char** argv_end = (char**)argv_start + argc;
 	*(argv_end++) = NULL;
+
 	size_t envc = 0;
 	while (envp != NULL && envp[envc] != NULL) {envc++;}
 	char** envp_start = argv_end;
@@ -65,7 +68,7 @@ void naive_uload(PCB*, const char*);
 void init_proc() {
 	context_kload(&pcb[0], hello_fun, "first!!!");
 	char* const argv[] = {"--skip"};
-	context_uload(&pcb[1], "/bin/pal", 1, argv, NULL);
+	context_uload(&pcb[1], "/bin/pal", argv, NULL);
 //	context_kload(&pcb[1], hello_fun, "second!!!");
   switch_boot_pcb();
 

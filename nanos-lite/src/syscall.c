@@ -10,6 +10,7 @@ void switch_boot_pcb();
 int sys_execve(const char* pathname, char* const argv[], char* const envp[]) {
 	context_uload(current, pathname, argv, envp);
 	switch_boot_pcb();
+	printf("ok\n");
 	yield();	
 	assert(0);
 }

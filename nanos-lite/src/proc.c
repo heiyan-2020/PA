@@ -40,7 +40,6 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
 	printf("argv[0] = %s\n", argv[0]);
-	printf("argv[1] = %s\n", argv[1]);
 	assert(argc == 1);
 	*(int*)stack_space = argc;
 	char** argv_start = (char**)stack_space + 1;

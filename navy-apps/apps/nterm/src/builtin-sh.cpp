@@ -34,8 +34,12 @@ static int cmd_run(char* path, char* args) {
 	char** argv = (char**) malloc(16 * sizeof(char*));
 	argv[0] = path;
 	for (int i = 0; i < 16; i++) {
-		argv[i + 1] = strtok(NULL, " ");
-		if (argv[i + 1] == NULL) {
+		char* arg = strtok(NULL, " ");
+		pt = arg + strlen(arg);
+		while (*pt != '\n') pt--;
+		*pt = '\0';
+		argv[i + 1] = arg;
+		if (arg == NULL) {
 			break;
 		}
 	}

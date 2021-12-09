@@ -40,7 +40,7 @@ static int cmd_run(char* path, char* args) {
 		}
 	}
 	int i = 0;
-	while (argv[i] != NULL) printf("%s\n", argv[i++]);
+	printf("argv = 0x%x\n", argv);
 	execvp(path, argv);
 	return 0;
 }

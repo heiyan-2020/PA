@@ -8,6 +8,10 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 void switch_boot_pcb();
 
 int sys_execve(const char* pathname, char* const argv[], char* const envp[]) {
+	int fd = fs_open(pathname, 0, 0);
+	if (fd < 0) {
+		return -2;
+	}
 	context_uload(current, pathname, argv, envp);
 	switch_boot_pcb();
 	yield();	

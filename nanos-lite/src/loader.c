@@ -15,6 +15,7 @@ size_t ramdisk_read(void*, size_t, size_t);
 uintptr_t loader(PCB *pcb, const char *filename) {
 	//read the elf_header.
 	int fd = fs_open(filename, 0, 0);	
+	assert(fd > 0);
 	fs_read(fd, elf_header, sizeof(Elf_Ehdr));
 	//verify file type.
 	assert(*(uint32_t *)elf_header->e_ident == 0x464C457F);

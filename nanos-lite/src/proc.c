@@ -32,7 +32,6 @@ void context_kload(PCB* proc, void (*entry)(void *), void* arg) {
 uintptr_t loader(PCB *pcb, const char *filename);
 
 void context_uload(PCB* proc, const char* pathname, char* const argv[], char* const envp[]) {
-				printf("pathname is %s\n", pathname);
 	Area stackArea = {
 		.start = proc->stack, 
 		.end = proc->stack + STACK_SIZE

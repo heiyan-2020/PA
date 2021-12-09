@@ -58,7 +58,8 @@ int fs_open(const char* filepath, int flags, int mode) {
 				return i;
 		}
 	}
-	assert(0);
+	//if not exists, return -2 as errono.
+	return -2;
 }
 
 size_t fs_read(int fd, void* buf, size_t len) {

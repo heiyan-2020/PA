@@ -8,6 +8,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 void switch_boot_pcb();
 
 int sys_execve(const char* pathname, char* const argv[], char* const envp[]) {
+				printf("sys_exec:0x%x\n", argv[0]);
 	context_uload(current, pathname, argv, envp);
 	switch_boot_pcb();
 	yield();	

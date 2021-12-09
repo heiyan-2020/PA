@@ -27,11 +27,18 @@ static int cmd_echo(char* str) {
 	return 0;
 }
 
-static int cmd_run(char* path) {
+static int cmd_run(char* path, char* args) {
 	char* pt = path + strlen(path);
 	while (*pt != '\n') pt--;
 	*pt = '\0';
-	execvp(path, NULL);
+	char** argv = (char**) malloc(16 * sizeof(char*));
+	for (int i = 0; i < 16; i++) {
+		argv[i] = strtok(NULL, " ");
+		if (argv[i] == NULL) {
+			break;
+		}
+	}
+	execvp(path, argv);
 	return 0;
 }
 
@@ -59,7 +66,7 @@ static void sh_handle_cmd(char *_cmd) {
 			}
 		}
 		if (i == NR_CMD) {
-			cmd_run(cmd);
+			cmd_run(cmd, args);
 			}
 		}
 	}

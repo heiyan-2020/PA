@@ -39,7 +39,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	proc->cp->GPRx = (uint32_t)stack_space;
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
-	printf("argc = %d\n", argc);
+	assert(argc > 0);
 	*(int*)stack_space = argc;
 	char** argv_start = (char**)stack_space + 1;
 	char** argv_end = (char**)argv_start + argc;

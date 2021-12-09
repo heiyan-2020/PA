@@ -40,6 +40,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
 	assert(argc > 0);
+	printf("argc=%d\n", argc);
 	*(int*)stack_space = argc;
 	char** argv_start = (char**)stack_space + 1;
 	char** argv_end = (char**)argv_start + argc;
@@ -53,6 +54,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	char* string_area = (char*) envp_end;
 	for (int i = 0; i < argc; i++) {
 		memcpy(string_area, argv[i], strlen(argv[i]) + 1);
+		printf("%s\n", argv[i]);
 		argv_start[i] = string_area;
 		string_area += strlen(string_area) + 1;
 	}

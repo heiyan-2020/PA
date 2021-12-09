@@ -35,11 +35,11 @@ static int cmd_run(char* path, char* args) {
 	argv[0] = path;
 	for (int i = 0; i < 16; i++) {
 		argv[i + 1] = strtok(NULL, " ");
-		printf("%s\n", argv[i]);
 		if (argv[i + 1] == NULL) {
 			break;
 		}
 	}
+	printf("before\n");
 	execvp(path, argv);
 	return 0;
 }

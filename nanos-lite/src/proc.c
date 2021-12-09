@@ -34,7 +34,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 		.end = proc->stack + STACK_SIZE
 	};
 	printf("before addr = 0x%x, value = 0x%x\n", &argv[0], argv[0]);
-	void* entry = (void*)loader(pcb, pathname);
+	void* entry = (void*)loader(proc, pathname);
 
 	printf("after addr = 0x%x, value = 0x%x\n", &argv[0], argv[0]);
 	proc->cp = ucontext(NULL, stackArea, entry);	

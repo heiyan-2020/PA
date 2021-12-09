@@ -39,6 +39,7 @@ static int cmd_run(char* path, char* args) {
 			break;
 		}
 	}
+	printf("0x%x", argv[0]);
 	int i = 0;
 	execvp(path, argv);
 	return 0;

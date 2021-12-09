@@ -68,15 +68,15 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 void naive_uload(PCB*, const char*);
 void init_proc() {
 //	context_kload(&pcb[0], hello_fun, "first!!!");
-	char* const argv[] = {"/bin/exec-test", NULL};
-	context_uload(&pcb[0], "/bin/exec-test", argv, NULL);
+	//char* const argv[] = {"/bin/exec-test", NULL};
+//	context_uload(&pcb[0], "/bin/exec-test", argv, NULL);
 //	context_kload(&pcb[1], hello_fun, "second!!!");
   switch_boot_pcb();
 
   Log("Initializing processes...");
 
   // load program here
-//	naive_uload(NULL, "/bin/exec-test");
+	naive_uload(NULL, "/bin/nterm");
 }
 
 Context* schedule(Context *prev) {

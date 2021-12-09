@@ -58,7 +58,6 @@ int fs_open(const char* filepath, int flags, int mode) {
 				return i;
 		}
 	}
-	printf("%s\n", filepath);
 	assert(0);
 }
 

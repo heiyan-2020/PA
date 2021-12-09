@@ -84,6 +84,9 @@ void init_proc() {
 }
 
 Context* schedule(Context *prev) {
+	while (1) {
+		printf("heap_start = 0x%x\n", heap.start);
+	}
 	current->cp = prev;
 	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 	return current->cp;

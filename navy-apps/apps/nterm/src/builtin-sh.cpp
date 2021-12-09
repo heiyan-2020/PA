@@ -31,10 +31,8 @@ static int cmd_run(char* path, char* args) {
 	char* pt = path + strlen(path);
 	while (*pt != '\n') pt--;
 	*pt = '\0';
+	args = strtok(NULL, " ");
 	char** argv = (char**) malloc(16 * sizeof(char*));
-	while (1) {
-		printf("here\n");
-	}
 	for (int i = 0; i < 16; i++) {
 		argv[i] = strtok(NULL, " ");
 		if (argv[i] == NULL) {

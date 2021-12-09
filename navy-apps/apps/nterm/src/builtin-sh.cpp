@@ -35,13 +35,13 @@ static int cmd_run(char* path, char* args) {
 	argv[0] = path;
 	for (int i = 0; i < 16; i++) {
 		char* arg = strtok(NULL, " ");
-		pt = arg + strlen(arg);
-		while (*pt != '\n') pt--;
-		*pt = '\0';
 		argv[i + 1] = arg;
 		if (arg == NULL) {
 			break;
 		}
+		pt = arg + strlen(arg);
+		while (*pt != '\n') pt--;
+		*pt = '\0';
 	}
 	int i = 0;
 	execvp(path, argv);

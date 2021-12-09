@@ -13,7 +13,10 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
+		if (j == 1000) {
     Log("Hello World from Nanos-lite with arg '%s' for the %dth time!", (char*)arg, j);
+		j = 0;
+		}
     j ++;
     yield();
   }
@@ -84,9 +87,6 @@ void init_proc() {
 }
 
 Context* schedule(Context *prev) {
-	while (1) {
-		printf("heap_start = 0x%x\n", heap.start);
-	}
 	current->cp = prev;
 	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 	return current->cp;

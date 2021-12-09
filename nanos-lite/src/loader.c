@@ -13,6 +13,8 @@ static Elf_Ehdr elf_header[1];
 static Elf_Phdr prog_header[1];
 size_t ramdisk_read(void*, size_t, size_t);
 uintptr_t loader(PCB *pcb, const char *filename) {
+	char** addr = (char**)0x830135f0;
+	printf("%s\n", *addr);
 	//read the elf_header.
 	int fd = fs_open(filename, 0, 0);	
 	fs_read(fd, elf_header, sizeof(Elf_Ehdr));

@@ -38,6 +38,9 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	void* stack_space = new_page(8);
 	proc->cp->GPRx = (uint32_t)stack_space;
 	size_t argc = 0; 
+	while (1) {
+		printf("%s\n", argv[0]);
+	}
 	while (argv != NULL && argv[argc] != NULL) {printf("%s\n", argv[argc++]);}
 	assert(argc > 0);
 	*(int*)stack_space = argc;

@@ -13,7 +13,7 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-		if (j == 1000) {
+		if (j == 10000000) {
     Log("Hello World from Nanos-lite with arg '%s' for the %dth time!", (char*)arg, j);
 		j = 0;
 		}
@@ -45,7 +45,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	proc->cp->GPRx = (uint32_t)stack_space;
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
-	assert(argc == 1);
+	assert(argc > 0);
 	*(int*)stack_space = argc;
 	char** argv_start = (char**)stack_space + 1;
 	char** argv_end = (char**)argv_start + argc;

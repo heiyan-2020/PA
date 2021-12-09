@@ -36,13 +36,10 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 		.start = proc->stack, 
 		.end = proc->stack + STACK_SIZE
 	};
-	printf("before addr = 0x%x, value = 0x%x\n", &argv[0], argv[0]);
-	void* entry = (void*)loader(proc, pathname);
-
-	printf("after addr = 0x%x, value = 0x%x\n", &argv[0], argv[0]);
-	proc->cp = ucontext(NULL, stackArea, entry);	
+//	void* entry = (void*)loader(proc, pathname);
+//	proc->cp = ucontext(NULL, stackArea, entry);	
 	void* stack_space = new_page(8);
-	proc->cp->GPRx = (uint32_t)stack_space;
+//	proc->cp->GPRx = (uint32_t)stack_space;
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
 	assert(argc > 0);
@@ -71,6 +68,9 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 		i++;
 	}
 	envp_start[i] = NULL;
+	void* entry = (void*)loader(proc, pathname);
+	proc->cp = ucontext(NULL, stackArea, entry);	
+	proc->cp->GPRx = (uint32_t)stack_space;
 }
 void naive_uload(PCB*, const char*);
 void init_proc() {

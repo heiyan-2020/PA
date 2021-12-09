@@ -7,7 +7,7 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
 		case EVENT_YIELD: 
 				{
-					printf("yield succuss!\n"); 
+//					printf("yield succuss!\n"); 
 //					c->mepc += 4;
 					Context* ret = schedule(c);
 					return ret;

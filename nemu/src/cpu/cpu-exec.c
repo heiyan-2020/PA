@@ -28,11 +28,13 @@ struct {
 	.header = 0
 };
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc, int n) {
-#ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) log_write("%s\n", _this->logbuf);
-	if (n == 1) {
+#ifdef CONFIG_ITRACE
+if (n == 1) {
 		printf("%s\n", _this->logbuf);		
 	}
+#endif
+#ifdef CONFIG_ITRACE_COND
+  if (ITRACE_COND) log_write("%s\n", _this->logbuf);
 #endif
 #ifdef CONFIG_RTRACE_COND
 	sprintf(ring_buf.buffer[(ring_buf.header++) % BUFFERSIZE], "%s\n", _this->logbuf);		

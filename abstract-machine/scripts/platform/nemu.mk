@@ -29,6 +29,6 @@ run: image
 gdb: image
 	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) gdb ARGS="$(NEMUFLAGS)" IMG=$(IMAGE).bin
 sdb: image
-	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) gdb ARGS="--elf=$(IMAGE).elf -l $(shell dirname $(IMAGE).elf)/nemu-log.txt \
+	$(MAKE) -C $(NEMU_HOME) ISA=$(ISA) run ARGS="--elf=$(IMAGE).elf -l $(shell dirname $(IMAGE).elf)/nemu-log.txt \
 " IMG=$(IMAGE).bin
 

@@ -33,9 +33,9 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 		.start = proc->stack, 
 		.end = proc->stack + STACK_SIZE
 	};
-	printf("before 0x%x\n", argv[0]);
+	printf("before argv=0x%x\n", argv);
 	void* entry = (void*)loader(pcb, pathname);
-	printf("after 0x%x\n", argv[0]);
+	printf("after argv=0x%x\n", argv);
 	proc->cp = ucontext(NULL, stackArea, entry);	
 	void* stack_space = new_page(8);
 	proc->cp->GPRx = (uint32_t)stack_space;

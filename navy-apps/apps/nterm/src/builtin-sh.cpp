@@ -33,6 +33,7 @@ static int cmd_run(char* path, char* args) {
 	*pt = '\0';
 	char** argv = (char**) malloc(16 * sizeof(char*));
 	argv[0] = path;
+	printf("%x\n", path);
 	for (int i = 0; i < 16; i++) {
 		argv[i + 1] = strtok(NULL, " ");
 		if (argv[i + 1] == NULL) {

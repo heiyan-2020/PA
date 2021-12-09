@@ -3,8 +3,8 @@
 
 extern char _heap_start;
 int main(const char *args);
-#define HEAP_SIZE 0x4000000
-Area heap = RANGE(&_heap_start, &_heap_start + HEAP_SIZE);
+//#define HEAP_SIZE 0x4000000
+Area heap = RANGE(&_heap_start, PGSIZE);
 #ifndef MAINARGS
 #define MAINARGS ""
 #endif

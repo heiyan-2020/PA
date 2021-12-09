@@ -33,7 +33,6 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 		.start = proc->stack, 
 		.end = proc->stack + STACK_SIZE
 	};
-	printf("argv = 0x%x\n", argv);
 	printf("before 0x%x\n", argv[0]);
 	void* entry = (void*)loader(pcb, pathname);
 	printf("after 0x%x\n", argv[0]);

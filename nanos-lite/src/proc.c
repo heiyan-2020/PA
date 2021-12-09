@@ -29,19 +29,18 @@ void context_kload(PCB* proc, void (*entry)(void *), void* arg) {
 uintptr_t loader(PCB *pcb, const char *filename);
 
 void context_uload(PCB* proc, const char* pathname, char* const argv[], char* const envp[]) {
-				printf("before 0x%x\n", argv[0]);
 	Area stackArea = {
 		.start = proc->stack, 
 		.end = proc->stack + STACK_SIZE
 	};
+printf("before 0x%x\n", argv[0]);
 	void* entry = (void*)loader(pcb, pathname);
+	printf("after 0x%x\n", argv[0]);
 	proc->cp = ucontext(NULL, stackArea, entry);	
 	void* stack_space = new_page(8);
 	proc->cp->GPRx = (uint32_t)stack_space;
 	size_t argc = 0; 
-	printf("after 0x%x\n", argv[0]);
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
-	printf("0x%x\n", argv[0]);
 	assert(argc == 1);
 	*(int*)stack_space = argc;
 	char** argv_start = (char**)stack_space + 1;

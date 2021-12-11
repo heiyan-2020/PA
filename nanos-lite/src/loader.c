@@ -56,6 +56,7 @@ void load_page(PCB* pcb, int fd) {
 	for (int i = 0; i < page_num; i++) {
 		void* page_frame = new_page(1);
 		map(_as, vaddr, page_frame, 0);
+		printf("page_frame = 0x%x\n", page_frame);
 		memcpy(page_frame, pt, pgsize);
 		vaddr += pgsize;
 		pt += pgsize;

@@ -43,6 +43,8 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 }
 
 void load_page(PCB* pcb, int fd) {
+	printf("%d\n%d\n", prog_header->p_memsz , prog_header->p_filesz);
+
 	int pgsize = pcb->as.pgsize;
 	int page_num = prog_header->p_memsz / pcb->as.pgsize;
 	page_num = page_num > 0 ? page_num : 1;

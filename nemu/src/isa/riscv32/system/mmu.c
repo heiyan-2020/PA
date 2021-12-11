@@ -3,9 +3,6 @@
 #include <memory/vaddr.h>
 
 int isa_mmu_check(vaddr_t vaddr, int len, int type) {
-	if (!in_pmem(vaddr)) {
-		return MMU_DIRECT;
-	}
 	word_t tmp_satp = (word_t)cpu.satp;
 	if (tmp_satp >> 31) {
 		return MMU_TRANSLATE;
@@ -24,12 +21,12 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	paddr_t pg_dic = (paddr_t)(va << (PGSIZE_WIDTH));	
 	word_t pg_dic_item = paddr_read(pg_dic + pg_dic_num * sizeof(word_t), sizeof(word_t));
 	if ((pg_dic_item & VALID_MASK) == 0) {
-			return MEM_RET_FAIL;
+			return vaddr;
 	}
 	paddr_t pg_table = (paddr_t)(pg_dic_item >> (PGSIZE_WIDTH) << (PGSIZE_WIDTH)); 
 	word_t pg_table_item = paddr_read(pg_table + pg_table_num * sizeof(word_t), sizeof(word_t));
 	if ((pg_table_item & VALID_MASK) == 0) {
-		return MEM_RET_FAIL;
+		return vaddr;
 	}
 	return (pg_table_item & ~((1 << PGSIZE_WIDTH) - 1)) | vaddr_offset;
 }

@@ -28,10 +28,11 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 		fs_lseek(fd, offset, SEEK_SET);
 		fs_read(fd, prog_header, len);
 		assert(prog_header->p_memsz >= prog_header->p_filesz);
+		printf("%d, %d\n", prog_header->p_memsz, prog_header->p_filesz);
 		offset += len;
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {
-						load_page(pcb, fd);
+			load_page(pcb, fd);
 			//uint8_t* vaddr = (uint8_t*)prog_header->p_vaddr;
 			//fs_lseek(fd, prog_header->p_offset, SEEK_SET);
 			//fs_read(fd, vaddr, prog_header->p_filesz);

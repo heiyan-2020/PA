@@ -57,8 +57,7 @@ void load_helper(void* buf, int fd, int current) {
 
 void load_page(PCB* pcb, int fd) {
 	pgsize = pcb->as.pgsize;
-	printf("memsz is %d\n", prog_header->p_memsz);
-	int page_num = prog_header->p_memsz / pcb->as.pgsize;
+	int page_num = prog_header->p_memsz / pcb->as.pgsize + 1;
 //	page_num = page_num > 0 ? page_num : 1;
 	void* vaddr = (void*)prog_header->p_vaddr;
 	AddrSpace* _as = &pcb->as;

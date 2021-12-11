@@ -20,7 +20,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	uintptr_t pg_table_num = (va >> (PGSIZE_WIDTH)) & ((1 << PGTABLE_WIDTH) - 1);
 	uintptr_t vaddr_offset = vaddr & ((1 << PGSIZE_WIDTH) - 1);
 	uintptr_t* pg_dic = (uintptr_t*)(va << (PGTABLE_WIDTH));	
-	printf("pg_dic = %ln, pg_dic_num = %ld\n", pg_dic, pg_dic_num);
+	printf("pg_dic = 0x%ln, pg_dic_num = %ld\n", pg_dic, pg_dic_num);
 	if ((pg_dic[pg_dic_num] & VALID_MASK) == 0) {
 			return MEM_RET_FAIL;
 	}

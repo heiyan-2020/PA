@@ -4,6 +4,7 @@
 #include "syscall.h"
 #include <proc.h>
 void naive_uload(PCB*, const char*);
+int mm_brk(uintptr_t brk);
 void context_uload(PCB* proc, const char* pathname, char* const argv[], char* const envp[]);
 void switch_boot_pcb();
 
@@ -79,7 +80,8 @@ void sys_lseek(Context* c) {
 }
 
 void sys_brk(Context* c) {
-	c->GPRx = 0;
+	c->GPRx = mm_brk(c->GPR2);
+	
 }
 
 void sys_gettimeofday(Context* c, uintptr_t _GPR2) {

@@ -1,4 +1,5 @@
 #include <memory.h>
+#include <proc.h>
 
 static void *pf = NULL;
 
@@ -23,9 +24,20 @@ static void* pg_alloc(int n) {
 void free_page(void *p) {
   panic("not implement yet");
 }
-
+extern PCB* current;
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
+	if (brk > current->max_brk) {
+		void* base = (void*)ROUNDUP(current->max_brk, PGSIZE);
+		int page_num = (brk - (uintptr_t)base) / PGSIZE + 1;
+		void* page_frame = new_page(page_num);
+		for (int i = 0; i < page_num; i++) {
+			map(&current->as, base, page_frame, 1);
+			base += PGSIZE;
+			page_frame += PGSIZE;
+		}
+		current->max_brk = brk;
+	}
   return 0;
 }
 

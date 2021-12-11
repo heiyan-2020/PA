@@ -30,6 +30,7 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 		offset += len;
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {
+						printf("time\n");
 						load_page(pcb, fd);
 			//uint8_t* vaddr = (uint8_t*)prog_header->p_vaddr;
 			//fs_lseek(fd, prog_header->p_offset, SEEK_SET);

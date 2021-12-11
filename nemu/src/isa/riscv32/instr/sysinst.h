@@ -32,7 +32,7 @@ def_EHelper(csrrs) {
 		case MTVEC: system_reg = &cpu.mtvec;break;
 		case MCAUSE: system_reg = &cpu.mcause;break;
 		case MSTATUS: system_reg = &cpu.mstatus;break;
-		case SATP: system_reg = &cpu.satp;break;
+		case SATP: {system_reg = &cpu.satp;printf("here\n");break;}
 		case MEPC: system_reg = &cpu.mepc;break;
 		default: assert(0);
 	}

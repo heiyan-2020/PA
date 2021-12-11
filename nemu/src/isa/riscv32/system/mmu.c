@@ -28,5 +28,6 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	if ((pg_table_item & VALID_MASK) == 0) {
 		return MEM_RET_FAIL;
 	}
+	printf("pg_dic = 0x%x, pg_dic_num = %x, pg_table = 0x%x, pg_table_num = %x\n",pg_dic, pg_dic_num, pg_table, pg_table_num);
 	return (pg_table_item & ~((1 << PGSIZE_WIDTH) - 1)) | vaddr_offset;
 }

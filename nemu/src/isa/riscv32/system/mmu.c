@@ -15,18 +15,18 @@ int isa_mmu_check(vaddr_t vaddr, int len, int type) {
 #define	VALID_MASK 1
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	word_t va = (word_t)cpu.satp;
-	printf("va = 0x%x\n", va);
 	word_t pg_dic_num = va >> (PGSIZE_WIDTH + PGTABLE_WIDTH);
 	word_t pg_table_num = (va >> (PGSIZE_WIDTH)) & ((1 << PGTABLE_WIDTH) - 1);
 	word_t vaddr_offset = vaddr & ((1 << PGSIZE_WIDTH) - 1);
-	word_t* pg_dic = (word_t*)(va << (PGSIZE_WIDTH));	
-	printf("pg_dic_num = %d\n", pg_dic_num);
-	if ((pg_dic[pg_dic_num] & VALID_MASK) == 0) {
+	paddr_t pg_dic = (paddr_t)(va << (PGSIZE_WIDTH));	
+	word_t pg_dic_item = paddr_read(pg_dic + pg_dic_num * sizeof(word_t), sizeof(word_t));
+	if ((pg_dic_item & VALID_MASK) == 0) {
 			return MEM_RET_FAIL;
 	}
-	word_t* pg_table = (word_t*)(pg_dic[pg_dic_num] >> (PGSIZE_WIDTH)); 
-	if ((pg_table[pg_table_num] & VALID_MASK) == 0) {
+	paddr_t pg_table = (paddr_t)(pg_dic_item >> (PGSIZE_WIDTH)); 
+	word_t pg_table_item = paddr_read(pg_table + pg_table_num * sizeof(word_t), sizeof(word_t));
+	if ((pg_table_item & VALID_MASK) == 0) {
 		return MEM_RET_FAIL;
 	}
-	return (pg_table[pg_table_num] & ~((1 << PGSIZE_WIDTH) - 1)) | vaddr_offset;
+	return (pg_table_item & ~((1 << PGSIZE_WIDTH) - 1)) | vaddr_offset;
 }

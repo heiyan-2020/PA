@@ -80,8 +80,8 @@ void sys_lseek(Context* c) {
 }
 
 void sys_brk(Context* c) {
+				printf("1\n");
 	c->GPRx = mm_brk(c->GPR2);
-	
 }
 
 void sys_gettimeofday(Context* c, uintptr_t _GPR2) {

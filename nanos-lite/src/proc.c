@@ -38,6 +38,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	};
 	AddrSpace* _as = &proc->as;
 	protect(_as);	
+	assert(_as != NULL);
 	//initialize stack space.
 	int stack_pages = STACK_SIZE / PGSIZE; 
 	void* stack_space = new_page(stack_pages);

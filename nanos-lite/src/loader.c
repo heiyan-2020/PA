@@ -30,7 +30,6 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 		offset += len;
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {
-						printf("time\n");
 						load_page(pcb, fd);
 			//uint8_t* vaddr = (uint8_t*)prog_header->p_vaddr;
 			//fs_lseek(fd, prog_header->p_offset, SEEK_SET);
@@ -44,6 +43,7 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 void load_page(PCB* pcb, int fd) {
 	int pgsize = pcb->as.pgsize;
 	int page_num = prog_header->p_memsz / pcb->as.pgsize;
+	printf("page_num = %d\n", page_num);
 	void* vaddr = (void*)prog_header->p_vaddr;
 	AddrSpace* _as = &pcb->as;
 

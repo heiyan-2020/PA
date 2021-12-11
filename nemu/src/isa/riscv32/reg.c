@@ -24,6 +24,9 @@ word_t isa_reg_str2val(const char *s, bool *success) {
 		if (strcmp("pc", s + 1) == 0) {
 			return cpu.pc;
 		}
+		if (strcmp("satp", s + 1) == 0) {
+			return cpu.satp;
+		}
 		*success = false;
 		return 0;
 }

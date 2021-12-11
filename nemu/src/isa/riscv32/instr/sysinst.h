@@ -9,12 +9,14 @@ def_EHelper(ecall) {
 #define MCAUSE 0x00000342
 #define MSTATUS 0x00000300
 #define MEPC	0x00000341
+#define SATP 0X00000180
 def_EHelper(csrrw) {
 	rtlreg_t* system_reg;
 	switch (id_src2->imm) {
 		case MTVEC: system_reg = &cpu.mtvec;break;
 		case MCAUSE: system_reg = &cpu.mcause;break;
 		case MSTATUS: system_reg = &cpu.mstatus;break;
+		case SATP: system_reg = &cpu.satp;break;
 		case MEPC: system_reg = &cpu.mepc;break;
 		default: assert(0);
 	}
@@ -30,6 +32,7 @@ def_EHelper(csrrs) {
 		case MTVEC: system_reg = &cpu.mtvec;break;
 		case MCAUSE: system_reg = &cpu.mcause;break;
 		case MSTATUS: system_reg = &cpu.mstatus;break;
+		case SATP: system_reg = &cpu.satp;break;
 		case MEPC: system_reg = &cpu.mepc;break;
 		default: assert(0);
 	}

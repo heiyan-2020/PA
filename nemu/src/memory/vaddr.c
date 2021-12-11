@@ -15,6 +15,7 @@ word_t vaddr_read(vaddr_t addr, int len) {
 	if (isa_mmu_check(addr, len, MEM_TYPE_READ) == MMU_TRANSLATE) {
 		word_t ret =  isa_mmu_translate(addr, len, MEM_TYPE_READ);
 		assert(ret == addr);
+		printf("ret = 0x%x\n", ret);
 		addr = ret;
 	}
   return paddr_read(addr, len);

@@ -8,7 +8,6 @@ struct Context {
 		uintptr_t gpr[32];	
 	};
 	uintptr_t mcause, mstatus, mepc;
-	uintptr_t trash;
 	//may need to change place.
 //  void *pdir;
 };

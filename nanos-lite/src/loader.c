@@ -57,7 +57,7 @@ void load_helper(void* buf, int fd, int current) {
 void load_page(PCB* pcb, int fd) {
 	pgsize = pcb->as.pgsize;
 	int page_num = prog_header->p_memsz / pcb->as.pgsize;
-	page_num = page_num > 0 ? page_num : 1;
+//	page_num = page_num > 0 ? page_num : 1;
 	void* vaddr = (void*)prog_header->p_vaddr;
 	AddrSpace* _as = &pcb->as;
 	fs_lseek(fd, prog_header->p_offset, SEEK_SET);
@@ -68,7 +68,7 @@ void load_page(PCB* pcb, int fd) {
 	int current = 0;
 	for (int i = 0; i < page_num; i++) {
 		void* page_frame = new_page(1);
-		map(_as, vaddr, page_frame, 0);
+		map(_as, vaddr, page_frame, 1);
 		printf("vaddr = 0x%x, page_frame = 0x%x\n", vaddr, page_frame);
 		load_helper(page_frame, fd, current);
 		vaddr += pgsize;

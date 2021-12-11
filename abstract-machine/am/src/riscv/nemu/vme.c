@@ -29,7 +29,6 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   pgfree_usr = pgfree_f;
 
   kas.ptr = pgalloc_f(PGSIZE);
-	printf("kas.ptr = 0x%x\n", kas.ptr);
   int i;
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
@@ -72,6 +71,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	uint32_t* pg_dic = as->ptr;
 	uint32_t pg_dic_num = (uint32_t)va >> (PGSIZE_WIDTH + PGTABLE_WIDTH);
 	uint32_t pg_table_num = ((uint32_t)va >> (PGSIZE_WIDTH)) & ((1 << PGTABLE_WIDTH) - 1);
+	printf("pg_dic = 0x%x, pg_dic_num = %d, pg_table_num = %d\n", pg_dic, pg_dic_num, pg_table_num);
 	if ((pg_dic[pg_dic_num] & VALID_MASK) == 0) {
 		pg_dic[pg_dic_num] = (uint32_t)pgalloc_usr(PGSIZE);
 		pg_dic[pg_dic_num] |= 1;

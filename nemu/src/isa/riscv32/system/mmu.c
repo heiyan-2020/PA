@@ -3,6 +3,9 @@
 #include <memory/vaddr.h>
 
 int isa_mmu_check(vaddr_t vaddr, int len, int type) {
+	if (!in_pmem(vaddr)) {
+		return MMU_DIRECT;
+	}
 	word_t tmp_satp = (word_t)cpu.satp;
 	if (tmp_satp >> 31) {
 		return MMU_TRANSLATE;

@@ -43,19 +43,15 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 }
 
 void load_page(PCB* pcb, int fd) {
-	printf("%d\n%d\n", prog_header->p_memsz , prog_header->p_filesz);
-
 	int pgsize = pcb->as.pgsize;
 	int page_num = prog_header->p_memsz / pcb->as.pgsize;
 	page_num = page_num > 0 ? page_num : 1;
 	void* vaddr = (void*)prog_header->p_vaddr;
 	AddrSpace* _as = &pcb->as;
-	printf("page_num = %d\n", page_num);
 	fs_lseek(fd, prog_header->p_offset, SEEK_SET);
 	uint8_t buf[prog_header->p_memsz];
-	printf("buf = 0x%x\n", buf);
+	printf("buf = 0x%x, prog_header = 0x%x\n", buf, prog_header);
 	fs_read(fd, buf, prog_header->p_filesz);
-	printf("%d\n%d\n", prog_header->p_memsz , prog_header->p_filesz);
 	memset(buf + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);
 
 	void* pt = buf;

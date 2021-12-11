@@ -43,7 +43,7 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 void load_page(PCB* pcb, int fd) {
 	int pgsize = pcb->as.pgsize;
 	int page_num = prog_header->p_memsz / pcb->as.pgsize;
-	printf("page_num = %d\n", page_num);
+	page_num = page_num > 0 ? page_num : 1;
 	void* vaddr = (void*)prog_header->p_vaddr;
 	AddrSpace* _as = &pcb->as;
 

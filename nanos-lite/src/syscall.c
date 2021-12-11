@@ -109,7 +109,7 @@ void do_syscall(Context *c) {
 		case SYS_exit:sys_exit(c);break;
 		case SYS_yield: sys_yield(c);break;
 		case SYS_write: sys_write(c);break;
-		case SYS_brk: {printf("1\n");sys_brk(c);break;}
+		case SYS_brk: sys_brk(c);break;
 		case SYS_open: sys_open(c);break;
 		case SYS_read: sys_read(c);break;
 		case SYS_lseek: sys_lseek(c);break;

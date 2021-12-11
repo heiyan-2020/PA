@@ -1,6 +1,6 @@
 #ifndef __SYSCALL_H__
 #define __SYSCALL_H__
-//#define STRACE y
+#define STRACE y
 
 #define FOREACH(CALL)  \
   CALL(SYS_exit)  \

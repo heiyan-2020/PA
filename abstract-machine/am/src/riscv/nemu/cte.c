@@ -11,6 +11,7 @@ Context* __am_irq_handle(Context *c) {
 			case 0xb:{
 							 if (c->GPR1 == -1) {
 							 		ev.event = EVENT_YIELD;
+									printf("yield\n");
 									c->mepc += 4;
 							 } else {
 							 		ev.event = EVENT_SYSCALL;

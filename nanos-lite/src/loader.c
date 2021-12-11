@@ -46,7 +46,7 @@ void load_page(PCB* pcb, int fd) {
 	page_num = page_num > 0 ? page_num : 1;
 	void* vaddr = (void*)prog_header->p_vaddr;
 	AddrSpace* _as = &pcb->as;
-
+	printf("page_num = %d\n", page_num);
 	fs_lseek(fd, prog_header->p_offset, SEEK_SET);
 	uint8_t buf[prog_header->p_memsz];
 	fs_read(fd, buf, prog_header->p_filesz);

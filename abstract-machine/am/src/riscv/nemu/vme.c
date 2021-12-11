@@ -16,7 +16,6 @@ static Area segments[] = {      // Kernel memory mappings
 static inline void set_satp(void *pdir) {
   uintptr_t mode = 1ul << (__riscv_xlen - 1);
   asm volatile("csrw satp, %0" : : "r"(mode | ((uintptr_t)pdir >> 12)));
-	printf("have been here\n");
 }
 
 static inline uintptr_t get_satp() {
@@ -31,6 +30,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 
   kas.ptr = pgalloc_f(PGSIZE);
 
+	printf("before for loop\n");
   int i;
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
@@ -38,7 +38,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
       map(&kas, va, va, 0);
     }
   }
-
+	printf("after for loop\n");
   set_satp(kas.ptr);
   vme_enable = 1;
 

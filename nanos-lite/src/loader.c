@@ -27,6 +27,7 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 	for(uint32_t i = 0; i < elf_header->e_phnum; i++) {
 		fs_lseek(fd, offset, SEEK_SET);
 		fs_read(fd, prog_header, len);
+		assert(prog_header->p_memsz >= prog_header->p_filesz);
 		offset += len;
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {

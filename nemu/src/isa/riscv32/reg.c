@@ -13,6 +13,8 @@ void isa_reg_display() {
 	for (int i = 0; i < 32; i ++) {
 		printf("%s\t\t%x\t\t%d\n", regs[i], cpu.gpr[i]._32, cpu.gpr[i]._32);
 	}
+printf("%s\t\t%x\t\t%d\n", "pc", cpu.pc, cpu.pc);
+printf("%s\t\t%x\t\t%d\n", "satp", cpu.satp, cpu.satp);
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {

@@ -15,8 +15,8 @@ int isa_mmu_check(vaddr_t vaddr, int len, int type) {
 #define	VALID_MASK 1
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	word_t va = (word_t)cpu.satp;
-	word_t pg_dic_num = va >> (PGSIZE_WIDTH + PGTABLE_WIDTH);
-	word_t pg_table_num = (va >> (PGSIZE_WIDTH)) & ((1 << PGTABLE_WIDTH) - 1);
+	word_t pg_dic_num = vaddr >> (PGSIZE_WIDTH + PGTABLE_WIDTH);
+	word_t pg_table_num = (vaddr >> (PGSIZE_WIDTH)) & ((1 << PGTABLE_WIDTH) - 1);
 	word_t vaddr_offset = vaddr & ((1 << PGSIZE_WIDTH) - 1);
 	paddr_t pg_dic = (paddr_t)(va << (PGSIZE_WIDTH));	
 	word_t pg_dic_item = paddr_read(pg_dic + pg_dic_num * sizeof(word_t), sizeof(word_t));

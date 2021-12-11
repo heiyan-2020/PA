@@ -23,9 +23,10 @@ void sys_yield(Context *c) {
 }
 
 void sys_exit(Context* c) {
-	char* argv[] = {"/bin/nterm", NULL};
-	sys_execve("/bin/nterm", argv, NULL);
-	c->GPRx = c->GPR2 & 0xFF;
+//	char* argv[] = {"/bin/nterm", NULL};
+//	sys_execve("/bin/nterm", argv, NULL);
+//	c->GPRx = c->GPR2 & 0xFF;
+	halt(0);
 }
 
 void sys_write(Context* c) {

@@ -36,10 +36,19 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 		.start = proc->stack, 
 		.end = proc->stack + STACK_SIZE
 	};
-//	void* entry = (void*)loader(proc, pathname);
-//	proc->cp = ucontext(NULL, stackArea, entry);	
-	void* stack_space = new_page(8);
-//	proc->cp->GPRx = (uint32_t)stack_space;
+	AddrSpace* _as = &proc->as;
+	protect(_as);	
+	//initialize stack space.
+	int stack_pages = STACK_SIZE / PGSIZE; 
+	void* stack_space = new_page(stack_pages);
+
+	void* vaddr_stack = proc->as.area.end - STACK_SIZE;
+	for (int i = 0; i < stack_pages; i++) {
+		map(_as, vaddr_stack, stack_space, 1);
+		vaddr_stack += PGSIZE;
+		stack_space += PGSIZE;
+	}
+	//fill the stack space.
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
 	assert(argc > 0);
@@ -67,15 +76,16 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 		i++;
 	}
 	envp_start[i] = NULL;
+	//fill the PCB.
 	void* entry = (void*)loader(proc, pathname);
 	proc->cp = ucontext(NULL, stackArea, entry);	
 	proc->cp->GPRx = (uint32_t)stack_space;
 }
 void naive_uload(PCB*, const char*);
 void init_proc() {
-	context_kload(&pcb[0], hello_fun, "first!!!");
-	char* const argv[] = {"/bin/bird", NULL};
-	context_uload(&pcb[1], "/bin/bird", argv, NULL);
+	//context_kload(&pcb[0], hello_fun, "first!!!");
+	char* const argv[] = {"/bin/dummy", NULL};
+	context_uload(&pcb[0], "/bin/dummy", argv, NULL);
 //	context_kload(&pcb[1], hello_fun, "second!!!");
   switch_boot_pcb();
 

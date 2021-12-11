@@ -51,7 +51,7 @@ void load_page(PCB* pcb, int fd) {
 	uint8_t buf[prog_header->p_memsz];
 	printf("buf = 0x%x\n", buf);
 	fs_read(fd, buf, prog_header->p_filesz);
-	printf("%d\n", prog_header->p_memsz - prog_header->p_filesz);
+	printf("%d\n%d\n", prog_header->p_memsz , prog_header->p_filesz);
 	memset(buf + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);
 
 	void* pt = buf;

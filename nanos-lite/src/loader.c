@@ -28,7 +28,6 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 		fs_lseek(fd, offset, SEEK_SET);
 		fs_read(fd, prog_header, len);
 		assert(prog_header->p_memsz >= prog_header->p_filesz);
-		printf("%d, %d\n", prog_header->p_memsz, prog_header->p_filesz);
 		offset += len;
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {
@@ -41,28 +40,39 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 	}
   return (uintptr_t)elf_header->e_entry;
 }
+static int pgsize;
+void load_helper(void* buf, int fd, int current) {
+	if (current + pgsize <= prog_header->p_filesz) {
+		fs_read(fd, buf, pgsize);
+	} else if (current <= prog_header->p_filesz) {
+		int rem = prog_header->p_filesz - current;
+		assert(rem < pgsize);
+		fs_read(fd, buf, rem);
+		memset(buf + rem, 0, pgsize - rem);
+	} else {
+		memset(buf, 0, pgsize);
+	}
+}
 
 void load_page(PCB* pcb, int fd) {
-	int pgsize = pcb->as.pgsize;
+	pgsize = pcb->as.pgsize;
 	int page_num = prog_header->p_memsz / pcb->as.pgsize;
 	page_num = page_num > 0 ? page_num : 1;
 	void* vaddr = (void*)prog_header->p_vaddr;
 	AddrSpace* _as = &pcb->as;
 	fs_lseek(fd, prog_header->p_offset, SEEK_SET);
-	uint8_t buf[prog_header->p_memsz];
-	printf("buf = 0x%x, prog_header = 0x%x\n", buf, prog_header);
-	fs_read(fd, buf, prog_header->p_filesz);
-	memset(buf + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);
+//	uint8_t buf[prog_header->p_memsz];
+//	fs_read(fd, buf, prog_header->p_filesz);
+//	memset(buf + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);
 
-	void* pt = buf;
-
+	int current = 0;
 	for (int i = 0; i < page_num; i++) {
 		void* page_frame = new_page(1);
 		map(_as, vaddr, page_frame, 0);
 		printf("vaddr = 0x%x, page_frame = 0x%x\n", vaddr, page_frame);
-		memcpy(page_frame, pt, pgsize);
+		load_helper(page_frame, fd, current);
 		vaddr += pgsize;
-		pt += pgsize;
+		current += pgsize;
 	}
 }
 

@@ -27,6 +27,7 @@ void free_page(void *p) {
 extern PCB* current;
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
+	printf("max_brk = 0x%x\n", current->max_brk);
 	if (brk > current->max_brk) {
 		void* base = (void*)ROUNDUP(current->max_brk, PGSIZE);
 		int page_num = (brk - (uintptr_t)base) / PGSIZE + 1;
@@ -38,6 +39,7 @@ int mm_brk(uintptr_t brk) {
 		}
 		current->max_brk = brk;
 	}
+	printf("brk = 0x%x\n", brk);
   return 0;
 }
 

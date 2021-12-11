@@ -66,7 +66,20 @@ void __am_switch(Context *c) {
   }
 }
 
+#define PGSIZE_WIDTH  12
+#define PGTABLE_WIDTH 10
+#define	VALID_MASK 1
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+	uint32_t* pg_dic = as->ptr;
+	uint32_t pg_dic_num = (uint32_t)va >> (PGSIZE_WIDTH + PGTABLE_WIDTH);
+	uint32_t pg_table_num = ((uint32_t)va >> (PGSIZE_WIDTH)) & ((1 << PGTABLE_WIDTH) - 1);
+	if ((pg_dic[pg_dic_num] & VALID_MASK) == 0) {
+		pg_dic[pg_dic_num] = (uint32_t)pgalloc_usr(PGSIZE);
+		pg_dic[pg_dic_num] |= 1;
+	}	
+	uint32_t* pg_table = (uint32_t*)(((uint32_t)pg_dic[pg_dic_num]) >> (PGSIZE_WIDTH)); 
+	pg_table[pg_table_num] = (uint32_t)pa;
+	pg_table[pg_table_num] |= 1;
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {

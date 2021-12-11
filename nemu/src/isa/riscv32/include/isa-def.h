@@ -9,7 +9,7 @@ typedef struct {
   } gpr[32];
 
   vaddr_t pc;
-	rtlreg_t mcause, mstatus, mepc, mtvec;
+	rtlreg_t mcause, mstatus, mepc, mtvec, satp;
 } riscv32_CPU_state;
 
 // decode
@@ -71,6 +71,6 @@ typedef struct {
   } instr;
 } riscv32_ISADecodeInfo;
 
-#define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
+//#define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
 
 #endif

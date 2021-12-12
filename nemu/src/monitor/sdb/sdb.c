@@ -75,7 +75,7 @@ static int cmd_x(char *args) {
 	int bytes = n4bytes * 4;
 	printf("0x%08x:", address);
 	for (int i = 0; i < bytes; i += 4) {
-		printf("0x%x", vaddr_read(address + i, 4));
+		printf("0x%08x ", vaddr_read(address + i, 4));
 //		printf(" 0x%02x%02x%02x%02x", *guest_to_host(address + i + 3), vaddr_read(address + i + 2, 1), vaddr_read(address + i + 1, 1), vaddr_read(address + i, 1));
 	}
 	printf("\n");

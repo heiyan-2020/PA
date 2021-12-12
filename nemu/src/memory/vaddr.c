@@ -2,7 +2,7 @@
 #include <memory/paddr.h>
 
 word_t vaddr_ifetch(vaddr_t addr, int len) {
-				printf("vaddr = 0x%x, ", addr);
+				printf("vaddr = 0x%x\n", addr);
 	if (isa_mmu_check(addr, len, MEM_TYPE_IFETCH) == MMU_TRANSLATE) {
 		addr = isa_mmu_translate(addr, len, MEM_TYPE_IFETCH);
 	}

@@ -41,7 +41,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	//initialize stack space.
 	int stack_pages = STACK_SIZE / PGSIZE; 
 	void* stack_space = new_page(stack_pages);
-
+	void* begin = stack_space;
 	void* vaddr_stack = proc->as.area.end - STACK_SIZE;
 	for (int i = 0; i < stack_pages; i++) {
 		map(_as, vaddr_stack, stack_space, 1);
@@ -52,8 +52,8 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
 	assert(argc > 0);
-	*(int*)stack_space = argc;
-	char** argv_start = (char**)stack_space + 1;
+	*(int*)begin = argc;
+	char** argv_start = (char**)begin + 1;
 	char** argv_end = (char**)argv_start + argc;
 	*(argv_end++) = NULL;
 

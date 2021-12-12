@@ -94,7 +94,6 @@ void init_proc() {
   // load program here
 //	naive_uload(NULL, "/bin/nterm");
 }
-
 Context* schedule(Context *prev) {
 	current->cp = prev;
 //	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);

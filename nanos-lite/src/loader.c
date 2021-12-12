@@ -68,13 +68,11 @@ void load_page(PCB* pcb, int fd) {
 	fs_lseek(fd, prog_header->p_offset, SEEK_SET);
 	int current = 0;
 	int offset = ((uint32_t)vaddr) & (pgsize - 1);
-	printf("%d\n", offset);
 	if (offset != 0) {
 		void* page_frame = new_page(1);
 		map(_as, vaddr, page_frame, 1);
 		load_helper(page_frame + offset, fd, current, pgsize - offset);
 		vaddr += (pgsize - offset);
-		printf("0x%x\n", vaddr);
 	}
 //	uint8_t buf[prog_header->p_memsz];
 //	fs_read(fd, buf, prog_header->p_filesz);

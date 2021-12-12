@@ -84,8 +84,8 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 void naive_uload(PCB*, const char*);
 void init_proc() {
 	//context_kload(&pcb[0], hello_fun, "first!!!");
-	char* const argv[] = {"/bin/nterm", NULL};
-	context_uload(&pcb[0], "/bin/nterm", argv, NULL);
+	char* const argv[] = {"/bin/nslider", NULL};
+	context_uload(&pcb[0], "/bin/nslider", argv, NULL);
 //	context_kload(&pcb[1], hello_fun, "second!!!");
   switch_boot_pcb();
 

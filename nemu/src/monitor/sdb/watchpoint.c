@@ -40,7 +40,6 @@ void new_wp(char *expression) {
 		strcpy(active_wp->expression, expression);
 		bool success = true;
 		active_wp->preValue = expr(expression, &success);
-		printf("prevalue = 0x%x\n", active_wp->preValue);
 		head = active_wp;
 	}
 }

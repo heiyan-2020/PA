@@ -72,7 +72,7 @@ void load_page(PCB* pcb, int fd) {
 	if (offset != 0) {
 		void* page_frame = new_page(1);
 		map(_as, vaddr, page_frame, 1);
-		load_helper(page_frame, fd, current, pgsize - offset);
+		load_helper(page_frame + offset, fd, current, pgsize - offset);
 		vaddr += (pgsize - offset);
 	}
 //	uint8_t buf[prog_header->p_memsz];

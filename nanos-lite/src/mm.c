@@ -30,6 +30,7 @@ int mm_brk(uintptr_t brk) {
 				printf("brk = 0x%x, max_brk = 0x%x\n", brk, current->max_brk);
 	if (brk > current->max_brk) {
 		void* base = (void*)ROUNDUP(current->max_brk, PGSIZE);
+		printf("base = 0x%x\n", base);
 		int page_num = (brk - (uintptr_t)base) / PGSIZE + 1;
 		void* page_frame = new_page(page_num);
 		for (int i = 0; i < page_num; i++) {

@@ -43,6 +43,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	void* stack_space = new_page(stack_pages);
 
 	void* vaddr_stack = proc->as.area.end - STACK_SIZE;
+	proc->cp->GPRx = (uint32_t)vaddr_stack;
 	for (int i = 0; i < stack_pages; i++) {
 		map(_as, vaddr_stack, stack_space, 1);
 		vaddr_stack += PGSIZE;
@@ -79,8 +80,6 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	//fill the PCB.
 	void* entry = (void*)loader(proc, pathname);
 	proc->cp = ucontext(_as, stackArea, entry);	
-	proc->cp->GPRx = (uint32_t)vaddr_stack;
-	printf("vaddr_stack = 0x%x\n", vaddr_stack);
 }
 void naive_uload(PCB*, const char*);
 void init_proc() {

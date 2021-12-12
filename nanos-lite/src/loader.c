@@ -59,7 +59,6 @@ void load_helper(void* buf, int fd, int current) {
 }
 
 void load_page(PCB* pcb, int fd) {
-				printf("newload\n");
 	pgsize = pcb->as.pgsize;
 	int page_num = prog_header->p_memsz / pcb->as.pgsize + 1;
 //	page_num = page_num > 0 ? page_num : 1;
@@ -75,10 +74,9 @@ void load_page(PCB* pcb, int fd) {
 	for (int i = 0; i < page_num; i++) {
 		void* page_frame = new_page(1);
 		map(_as, vaddr, page_frame, 1);
+		printf("vaddr = 0x%x, paddr = 0x%x\n", vaddr, page_frame);
 		load_helper(page_frame, fd, current);
-		printf("before vaddr = 0x%x\n", vaddr);
 		vaddr += pgsize;
-		printf("after vaddr = 0x%x\n", vaddr);
 		current += pgsize;
 	}
 }

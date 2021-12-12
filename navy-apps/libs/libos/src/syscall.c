@@ -66,7 +66,7 @@ extern char _end;
 void *_sbrk(intptr_t increment) {
 	static char* program_break = (char *)&_end;	
 	char* preBreak;
-	if (_syscall_(SYS_brk, increment, 0, 0) == 0) {
+	if (_syscall_(SYS_brk, program_break + increment, 0, 0) == 0) {
 		preBreak = program_break;
 		program_break += increment;
 		return (void*)preBreak;

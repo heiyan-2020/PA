@@ -36,6 +36,7 @@ int mm_brk(uintptr_t brk) {
 			page_num++;
 			printf("pagenum = %d\n", page_num);
 		} else {
+			current->max_brk = brk;
 			return 0;
 		}
 		void* page_frame = new_page(page_num);

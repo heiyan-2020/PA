@@ -46,6 +46,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	void* rec = vaddr_stack;
 	for (int i = 0; i < stack_pages; i++) {
 		map(_as, vaddr_stack, stack_space, 1);
+		printf("vaddr = 0x%x, paddr = 0x%x\n", vaddr_stack, stack_space);
 		vaddr_stack += PGSIZE;
 		stack_space += PGSIZE;
 	}

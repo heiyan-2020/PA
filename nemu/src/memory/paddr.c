@@ -38,6 +38,7 @@ void init_mem() {
 }
 
 word_t paddr_read(paddr_t addr, int len) {
+assert(addr != 0);
 #ifdef CONFIG_MTRACE
 	log_write("from 0x%x read %d bytes\n", addr, len);	
 #endif

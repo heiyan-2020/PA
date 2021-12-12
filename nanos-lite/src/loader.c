@@ -41,6 +41,7 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 		}
 	}
 	pcb->max_brk = program_break;
+	printf("program_break = 0x%x\n", program_break);
   return (uintptr_t)elf_header->e_entry;
 }
 static int pgsize;

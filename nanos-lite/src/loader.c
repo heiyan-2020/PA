@@ -41,7 +41,7 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 		}
 	}
 	pcb->max_brk = ROUNDUP(program_break, PGSIZE);
-	printf("program_break = 0x%x\n", program_break);
+	printf("program_break = 0x%x\n", pcb->max_brk);
   return (uintptr_t)elf_header->e_entry;
 }
 static int pgsize;

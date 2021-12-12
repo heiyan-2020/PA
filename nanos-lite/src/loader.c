@@ -38,6 +38,8 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 		//	memset(vaddr + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);			
 		}
 	}
+	uint32_t* pt = (uint32_t*)0x4005fadc;
+	printf("value = 0x%x\n", *pt);
   return (uintptr_t)elf_header->e_entry;
 }
 static int pgsize;

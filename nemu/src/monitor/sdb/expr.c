@@ -259,7 +259,6 @@ uint32_t eval(int begin, int end, bool* success) {
 //				result |= (tmp << (8 * i));
 //			}
 			result = vaddr_read(address, 4);
-			printf("result = 0x%x\n", result);
 			return result;
 		}
 	}

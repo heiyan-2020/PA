@@ -21,13 +21,11 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	paddr_t pg_dic = (paddr_t)(va << (PGSIZE_WIDTH));	
 	word_t pg_dic_item = paddr_read(pg_dic + pg_dic_num * sizeof(word_t), sizeof(word_t));
 	if ((pg_dic_item & VALID_MASK) == 0) {
-					printf("not valid 0x%x\n", vaddr);
 			return vaddr;
 	}
 	paddr_t pg_table = (paddr_t)(pg_dic_item >> (PGSIZE_WIDTH) << (PGSIZE_WIDTH)); 
 	word_t pg_table_item = paddr_read(pg_table + pg_table_num * sizeof(word_t), sizeof(word_t));
 	if ((pg_table_item & VALID_MASK) == 0) {
-					printf("not valid 0x%x\n", vaddr);
 		return vaddr;
 	}
 	return (pg_table_item & ~((1 << PGSIZE_WIDTH) - 1)) | vaddr_offset;

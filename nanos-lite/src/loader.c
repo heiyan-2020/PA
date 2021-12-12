@@ -49,11 +49,11 @@ void load_helper(void* buf, int fd, int current, int size) {
 		assert(rem < size);
 		fs_read(fd, buf, rem);
 		memset(buf + rem, 0, size - rem);
-//		uint32_t* pt = (uint32_t*) buf;
-//		for (int i = 0; i < size; i+=4) {
-//						printf("0x%x: 0x%x\n", prog_header->p_vaddr + current + i, *pt);
-//			pt++;
-//		}
+		uint32_t* pt = (uint32_t*) buf;
+		for (int i = 0; i < size; i+=4) {
+						printf("0x%x: 0x%x\n", prog_header->p_vaddr + current + i, *pt);
+			pt++;
+		}
 	} else {
 		memset(buf, 0, size);
 	}

@@ -52,10 +52,9 @@ void load_helper(void* buf, int fd, int current) {
 		printf("current = 0x%x, filesz = 0x%x\n", current, prog_header->p_filesz);
 		uint32_t* pt = (uint32_t*) buf;
 		for (int i = 0; i < pgsize; i+=4) {
-			printf("0x%x  ", *pt);
+			printf("0x%x: 0x%x\n",prog_header->p_vaddr + current ,*pt);
 			pt++;
 		}
-		printf("\n");
 	} else {
 		memset(buf, 0, pgsize);
 	}

@@ -10,11 +10,12 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 
 
 word_t vaddr_read(vaddr_t addr, int len) {
-				if (addr == 0xa0000100) {
-					printf("asdasda\n");
-				}
+				vaddr_t old = addr;
 	if (isa_mmu_check(addr, len, MEM_TYPE_READ) == MMU_TRANSLATE) {
 		addr =  isa_mmu_translate(addr, len, MEM_TYPE_READ);
+	}
+	if (old == 0xa0000100) {
+		printf("addr = 0x%x\n", addr);
 	}
   return paddr_read(addr, len);
 }

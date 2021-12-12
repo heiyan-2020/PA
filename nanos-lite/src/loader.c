@@ -41,20 +41,20 @@ uintptr_t loader(PCB *pcb, const char *filename) {
   return (uintptr_t)elf_header->e_entry;
 }
 static int pgsize;
-void load_helper(void* buf, int fd, int current) {
-	if (current + pgsize <= prog_header->p_filesz) {
+void load_helper(void* buf, int fd, int current, int size) {
+	if (current + size <= prog_header->p_filesz) {
 		fs_read(fd, buf, pgsize);
 	} else if (current <= prog_header->p_filesz) {
 		int rem = prog_header->p_filesz - current;
-		assert(rem < pgsize);
+		assert(rem < size);
 		fs_read(fd, buf, rem);
-		memset(buf + rem, 0, pgsize - rem);
+		memset(buf + rem, 0, size - rem);
 		uint32_t* pt = (uint32_t*) buf;
-		for (int i = 0; i < pgsize; i+=4) {
+		for (int i = 0; i < size; i+=4) {
 			pt++;
 		}
 	} else {
-		memset(buf, 0, pgsize);
+		memset(buf, 0, size);
 	}
 }
 
@@ -66,23 +66,24 @@ void load_page(PCB* pcb, int fd) {
 	//printf("vaddr = 0x%x, filesz = 0x%x, memsz = 0x%x\n", vaddr, prog_header->p_filesz, prog_header->p_memsz);
 	AddrSpace* _as = &pcb->as;
 	fs_lseek(fd, prog_header->p_offset, SEEK_SET);
+	int current = 0;
 	int offset = ((uint32_t)vaddr) & 0x1000;
+	printf("%d\n", offset);
 	if (offset != 0) {
 		void* page_frame = new_page(1);
 		map(_as, vaddr, page_frame, 1);
-		fs_read(fd, page_frame + offset, pgsize - offset);
+		load_helper(page_frame, fd, current, pgsize - offset);
 		vaddr += (pgsize - offset);
 	}
 //	uint8_t buf[prog_header->p_memsz];
 //	fs_read(fd, buf, prog_header->p_filesz);
 //	memset(buf + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);
 
-	int current = 0;
 	for (int i = 0; i < page_num; i++) {
 		void* page_frame = new_page(1);
 		map(_as, vaddr, page_frame, 1);
 		printf("vaddr = 0x%x, paddr = 0x%x\n", vaddr, page_frame);
-		load_helper(page_frame, fd, current);
+		load_helper(page_frame, fd, current, pgsize);
 		vaddr += pgsize;
 		current += pgsize;
 	}

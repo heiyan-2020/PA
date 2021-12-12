@@ -43,7 +43,7 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 static int pgsize;
 void load_helper(void* buf, int fd, int current, int size) {
 	if (current + size <= prog_header->p_filesz) {
-		fs_read(fd, buf, pgsize);
+		fs_read(fd, buf, size);
 	} else if (current <= prog_header->p_filesz) {
 		int rem = prog_header->p_filesz - current;
 		assert(rem < size);
@@ -68,14 +68,14 @@ void load_page(PCB* pcb, int fd) {
 	AddrSpace* _as = &pcb->as;
 	fs_lseek(fd, prog_header->p_offset, SEEK_SET);
 	int current = 0;
-//	int offset = ((uint32_t)vaddr) & (pgsize - 1);
-//	if (offset != 0) {
-//		void* page_frame = new_page(1);
-//		map(_as, vaddr, page_frame, 1);
-//		load_helper(page_frame + offset, fd, current, pgsize - offset);
-//		vaddr += (pgsize - offset);
-//		current += pgsize - offset;
-//	}
+	int offset = ((uint32_t)vaddr) & (pgsize - 1);
+	if (offset != 0) {
+		void* page_frame = new_page(1);
+		map(_as, vaddr, page_frame, 1);
+		load_helper(page_frame + offset, fd, current, pgsize - offset);
+		vaddr += (pgsize - offset);
+		current += pgsize - offset;
+	}
 //	uint8_t buf[prog_header->p_memsz];
 //	fs_read(fd, buf, prog_header->p_filesz);
 //	memset(buf + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);

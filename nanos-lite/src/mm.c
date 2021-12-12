@@ -27,14 +27,14 @@ void free_page(void *p) {
 extern PCB* current;
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
-				printf("brk = 0x%x, max_brk = 0x%x\n", brk, current->max_brk);
+//				printf("brk = 0x%x, max_brk = 0x%x\n", brk, current->max_brk);
 	if (brk > current->max_brk) {
 		void* base = (void*)ROUNDUP(current->max_brk, PGSIZE);
-		printf("base = 0x%x\n", base);
+//		printf("base = 0x%x\n", base);
 		int page_num = (brk - (uintptr_t)base) / PGSIZE;
 		if ((int)(brk - (uintptr_t) base) >= 0) {
 			page_num++;
-			printf("pagenum = %d\n", page_num);
+//			printf("pagenum = %d\n", page_num);
 		} else {
 			current->max_brk = brk;
 			return 0;
@@ -42,7 +42,7 @@ int mm_brk(uintptr_t brk) {
 		void* page_frame = new_page(page_num);
 		for (int i = 0; i < page_num; i++) {
 			map(&current->as, base, page_frame, 1);
-			printf("base = 0x%x, page_frame = 0x%x\n", base, page_frame);
+//			printf("base = 0x%x, page_frame = 0x%x\n", base, page_frame);
 			base += PGSIZE;
 			page_frame += PGSIZE;
 		}

@@ -40,7 +40,7 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 		//	memset(vaddr + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);			
 		}
 	}
-	pcb->max_brk = program_break;
+	pcb->max_brk = ROUNDUP(program_break, PGSIZE);
 	printf("program_break = 0x%x\n", program_break);
   return (uintptr_t)elf_header->e_entry;
 }

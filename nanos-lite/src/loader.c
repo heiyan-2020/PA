@@ -81,7 +81,6 @@ void load_page(PCB* pcb, int fd) {
 	for (int i = 0; i < page_num; i++) {
 		void* page_frame = new_page(1);
 		map(_as, vaddr, page_frame, 1);
-		printf("vaddr = 0x%x, paddr = 0x%x\n", vaddr, page_frame);
 		load_helper(page_frame, fd, current, pgsize);
 		vaddr += pgsize;
 		current += pgsize;

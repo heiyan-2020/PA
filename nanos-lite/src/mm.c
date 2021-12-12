@@ -47,6 +47,7 @@ int mm_brk(uintptr_t brk) {
 			page_frame += PGSIZE;
 		}
 		current->max_brk = brk;
+		printf("max_brk = 0x%x\n", current->max_brk);
 	}
   return 0;
 }

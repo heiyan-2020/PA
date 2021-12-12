@@ -66,6 +66,13 @@ void load_page(PCB* pcb, int fd) {
 	//printf("vaddr = 0x%x, filesz = 0x%x, memsz = 0x%x\n", vaddr, prog_header->p_filesz, prog_header->p_memsz);
 	AddrSpace* _as = &pcb->as;
 	fs_lseek(fd, prog_header->p_offset, SEEK_SET);
+	int offset = ((uint32_t)vaddr) & 0x1000;
+	if (offset != 0) {
+		void* page_frame = new_page(1);
+		map(_as, vaddr, page_frame, 1);
+		fs_read(fd, page_frame + offset, pgsize - offset);
+		vaddr += (pgsize - offset);
+	}
 //	uint8_t buf[prog_header->p_memsz];
 //	fs_read(fd, buf, prog_header->p_filesz);
 //	memset(buf + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);

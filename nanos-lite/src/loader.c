@@ -24,6 +24,7 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 	//read the program_header.
 	size_t offset = elf_header->e_phoff;
 	size_t len = elf_header->e_phentsize;
+	uintptr_t program_break = 0;
 	for(uint32_t i = 0; i < elf_header->e_phnum; i++) {
 		fs_lseek(fd, offset, SEEK_SET);
 		fs_read(fd, prog_header, len);
@@ -32,12 +33,14 @@ uintptr_t loader(PCB *pcb, const char *filename) {
 		//seg needs to be loaded.
 		if (prog_header->p_type == 0x1) {
 			load_page(pcb, fd);
+			program_break = prog_header->p_vaddr + prog_header->p_memsz;
 			//uint8_t* vaddr = (uint8_t*)prog_header->p_vaddr;
 			//fs_lseek(fd, prog_header->p_offset, SEEK_SET);
 			//fs_read(fd, vaddr, prog_header->p_filesz);
 		//	memset(vaddr + prog_header->p_filesz, 0, prog_header->p_memsz - prog_header->p_filesz);			
 		}
 	}
+	pcb->max_brk = program_break;
   return (uintptr_t)elf_header->e_entry;
 }
 static int pgsize;

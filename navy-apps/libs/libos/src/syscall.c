@@ -64,7 +64,7 @@ int _write(int fd, void *buf, size_t count) {
 }
 extern char _end;
 void *_sbrk(intptr_t increment) {
-	static char* program_break = (char *)0x50000000;	
+	static char* program_break = (char *)&_end;	
 	char* preBreak;
 	if (_syscall_(SYS_brk, program_break + increment, 0, 0) == 0) {
 		preBreak = program_break;

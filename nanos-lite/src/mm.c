@@ -34,6 +34,7 @@ int mm_brk(uintptr_t brk) {
 		int page_num = (brk - (uintptr_t)base) / PGSIZE;
 		if ((int)(brk - (uintptr_t) base) >= 0) {
 			page_num++;
+			printf("pagenum = %d\n", page_num);
 		} else {
 			return 0;
 		}

@@ -25,6 +25,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 			return vaddr;
 	}
 	paddr_t pg_table = (paddr_t)(pg_dic_item >> (PGSIZE_WIDTH) << (PGSIZE_WIDTH)); 
+	assert(pg_table + pg_table_num * sizeof(word_t) != 0);
 	word_t pg_table_item = paddr_read(pg_table + pg_table_num * sizeof(word_t), sizeof(word_t));
 	if ((pg_table_item & VALID_MASK) == 0) {
 		return vaddr;

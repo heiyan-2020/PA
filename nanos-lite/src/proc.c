@@ -80,6 +80,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	void* entry = (void*)loader(proc, pathname);
 	proc->cp = ucontext(_as, stackArea, entry);	
 	proc->cp->GPRx = (uint32_t)vaddr_stack;
+	printf("vaddr_stack = 0x%x\n", vaddr_stack);
 }
 void naive_uload(PCB*, const char*);
 void init_proc() {

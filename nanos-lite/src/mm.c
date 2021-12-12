@@ -37,7 +37,6 @@ int mm_brk(uintptr_t brk) {
 		} else {
 			return 0;
 		}
-		printf("page_num = %d\n", page_num);
 		void* page_frame = new_page(page_num);
 		for (int i = 0; i < page_num; i++) {
 			map(&current->as, base, page_frame, 1);

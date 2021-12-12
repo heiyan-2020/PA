@@ -32,7 +32,7 @@ int mm_brk(uintptr_t brk) {
 		void* base = (void*)ROUNDUP(current->max_brk, PGSIZE);
 		printf("base = 0x%x\n", base);
 		int page_num = (brk - (uintptr_t)base) / PGSIZE;
-		if (page_num >= 0) {
+		if (brk - (uintptr_t) base >= 0) {
 			page_num++;
 		} else {
 			return 0;

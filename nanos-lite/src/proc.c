@@ -80,7 +80,6 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	void* entry = (void*)loader(proc, pathname);
 	proc->cp = ucontext(_as, stackArea, entry);	
 	proc->cp->GPRx = (uint32_t)begin;
-	proc->max_brk = 0x50000000;
 }
 void naive_uload(PCB*, const char*);
 void init_proc() {

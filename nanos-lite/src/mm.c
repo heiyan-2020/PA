@@ -42,12 +42,11 @@ int mm_brk(uintptr_t brk) {
 		void* page_frame = new_page(page_num);
 		for (int i = 0; i < page_num; i++) {
 			map(&current->as, base, page_frame, 1);
-//			printf("base = 0x%x, page_frame = 0x%x\n", base, page_frame);
+			printf("base = 0x%x, page_frame = 0x%x\n", base, page_frame);
 			base += PGSIZE;
 			page_frame += PGSIZE;
 		}
 		current->max_brk = brk;
-		printf("max_brk = 0x%x\n", current->max_brk);
 	}
   return 0;
 }

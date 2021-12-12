@@ -67,7 +67,7 @@ void load_page(PCB* pcb, int fd) {
 	AddrSpace* _as = &pcb->as;
 	fs_lseek(fd, prog_header->p_offset, SEEK_SET);
 	int current = 0;
-	int offset = ((uint32_t)vaddr) & 0x1000;
+	int offset = ((uint32_t)vaddr) & 0x0111;
 	printf("%d\n", offset);
 	if (offset != 0) {
 		void* page_frame = new_page(1);

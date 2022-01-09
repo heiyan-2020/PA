@@ -1,6 +1,7 @@
 #include <isa.h>
 #include <string.h>
 #include <memory/paddr.h>
+#include <memory/vaddr.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -251,7 +252,7 @@ uint32_t eval(int begin, int end, bool* success) {
 		} else {
 			assert(tokens[op].type == TK_DEREF);
 			uint32_t result = 0;
-			paddr_t address;
+			vaddr_t address;
 			address = eval(op + 1, end, success);
 //			for (int i = 3; i >= 0; i --) {
 //				uint8_t bits = guest_to_host(address + (3 - i));

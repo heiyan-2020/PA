@@ -2706,6 +2706,7 @@ stbi_inline static int stbi__bitreverse16(int n)
       lut[i] = n;
     }
   }
+	printf("stb_image.h 2709:addr of lut is %x\n", lut);
   return lut[(unsigned short)n];
 #else
   n = ((n & 0xAAAA) >>  1) | ((n & 0x5555) << 1);

@@ -40,6 +40,7 @@ int mm_brk(uintptr_t brk) {
 			return 0;
 		}
 		void* page_frame = new_page(page_num);
+		printf("mm.c 43:page_frame=0x%x\n", page_frame);
 		for (int i = 0; i < page_num; i++) {
 			map(&current->as, base, page_frame, 1);
 			base += PGSIZE;

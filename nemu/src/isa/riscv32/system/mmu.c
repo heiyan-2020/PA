@@ -29,6 +29,6 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	if ((pg_table_item & VALID_MASK) == 0) {
 		return vaddr;
 	}
-//	printf("mmu.c 32:pg_table=0x%x, pg_table_item=0x%x\n",pg_table ,pg_table_item);
+	printf("mmu.c 32:pg_table=0x%x, pg_table_item=0x%x\n",pg_table ,pg_table_item);
 	return (pg_table_item & ~((1 << PGSIZE_WIDTH) - 1)) | vaddr_offset;
 }

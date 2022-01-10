@@ -78,6 +78,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	uint32_t* pg_table = (uint32_t*)(((((uint32_t)pg_dic[pg_dic_num]) >> (PGSIZE_WIDTH))) << (PGSIZE_WIDTH)); 
 	pg_table[pg_table_num] = (uint32_t)pa;
 	pg_table[pg_table_num] |= 1;
+	printf("pg_table=0x%x\n", pg_table);
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {

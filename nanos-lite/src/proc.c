@@ -13,7 +13,7 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-		if (j == 100) {
+		if (j == 10000) {
     Log("Hello World from Nanos-lite with arg '%s' for the %dth time!", (char*)arg, j);
 		j = 0;
 		}
@@ -86,8 +86,8 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 void naive_uload(PCB*, const char*);
 void init_proc() {
 	//context_kload(&pcb[0], hello_fun, "first!!!");
-	char* const argv[] = {"/bin/bird", NULL};
-	context_uload(&pcb[0], "/bin/bird", argv, NULL);
+	char* const argv[] = {"/bin/pal", NULL};
+	context_uload(&pcb[0], "/bin/pal", argv, NULL);
 	context_kload(&pcb[1], hello_fun, "second!!!");
   switch_boot_pcb();
 

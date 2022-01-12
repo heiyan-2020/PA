@@ -38,7 +38,7 @@ static struct rule {
 	{"&&", TK_AND},
 	{"^\\*", TK_DEREF},
 	{">", TK_G},
-	{"\\<", TK_L},
+	{"<", TK_L},
 	{"^-", TK_NEG}
 };
 

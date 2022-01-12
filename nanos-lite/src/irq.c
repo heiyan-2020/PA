@@ -8,9 +8,9 @@ static Context* do_event(Event e, Context* c) {
 		case EVENT_YIELD: 
 				{
 					printf("yield succuss!\n"); 
-					//Context* ret = schedule(c);
-				//	assert(ret != NULL);
-			//		return ret;
+					Context* ret = schedule(c);
+					assert(ret != NULL);
+					return ret;
 				break;
 				}
 		case EVENT_SYSCALL:{ 

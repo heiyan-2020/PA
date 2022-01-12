@@ -7,7 +7,6 @@ static PCB pcb_boot = {};
 PCB *current = NULL;
 
 void switch_boot_pcb() {
-				printf("pcb_boot = 0x%x\n", &pcb_boot);
   current = &pcb_boot;
 }
 
@@ -93,9 +92,6 @@ void init_proc() {
   switch_boot_pcb();
 
   Log("Initializing processes...");
-
-  // load program here
-//	naive_uload(NULL, "/bin/nterm");
 }
 Context* schedule(Context *prev) {
 	current->cp = prev;

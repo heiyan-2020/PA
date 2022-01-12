@@ -9,7 +9,7 @@
 int precedence[32] = {0, 4, 7, 4, 3, 3, 1, 1, 0, 0, 0, 7, 11, 2, 2};
 
 enum {
-  TK_NOTYPE, TK_PLUS, TK_EQ, TK_SUB, TK_DIV, TK_MUL, TK_LEFT, TK_RIGHT, TK_NUM, TK_HEXNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF, TK_G,TK_NEG
+  TK_NOTYPE, TK_PLUS, TK_EQ, TK_SUB, TK_DIV, TK_MUL, TK_LEFT, TK_RIGHT, TK_NUM, TK_HEXNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF, TK_G,TK_L,TK_NEG
 };
 int find_op(int begin, int end);
 bool check_parentheses(int begin, int end);
@@ -38,6 +38,7 @@ static struct rule {
 	{"&&", TK_AND},
 	{"^\\*", TK_DEREF},
 	{">", TK_G},
+	{"<", TK_L},
 	{"^-", TK_NEG}
 };
 
@@ -125,6 +126,7 @@ static bool make_token(char *e) {
 								case TK_NEQ:
 								case TK_AND:
 								case TK_G:
+								case TK_L:
 								case TK_RIGHT: {
 									struct token tmp_token;
 									tmp_token.type = rules[i].token_type;
@@ -250,6 +252,7 @@ uint32_t eval(int begin, int end, bool* success) {
 				case TK_NEQ: return lhs != rhs;
 				case TK_AND: return lhs && rhs;
 				case TK_G: return lhs > rhs;
+				case TK_L: return lhs < rhs;
 				default : assert(0);
 			}		
 		} else {

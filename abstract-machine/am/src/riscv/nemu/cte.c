@@ -19,6 +19,11 @@ Context* __am_irq_handle(Context *c) {
 									c->mepc += 4;
 							 }
 							 }	break;
+			case 0x80000007: {
+											 	ev.event = EVENT_IRQ_TIMER;
+												c->mepc += 4;
+												break;
+											 }
       default: ev.event = EVENT_ERROR; break;
     }
 
@@ -44,7 +49,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	Context* newContext = kstack.end - sizeof(Context);
 	newContext->mepc = (uintptr_t)entry;
-	newContext->mstatus = 0x1800;
+	newContext->mstatus = 0x1808;
 	//support arguments passing.
 	newContext->gpr[a0] = (uint32_t)arg;
   return newContext;

@@ -84,9 +84,9 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 void naive_uload(PCB*, const char*);
 void init_proc() {
 	//context_kload(&pcb[0], hello_fun, "first!!!");
-	char* const argv[] = {"/bin/pal", NULL};
-	context_uload(&pcb[0], "/bin/pal", argv, NULL);
-	context_kload(&pcb[1], hello_fun, "second!!!");
+	char* const argv[] = {"/bin/bird", NULL};
+	context_uload(&pcb[0], "/bin/bird", argv, NULL);
+//	context_kload(&pcb[1], hello_fun, "second!!!");
   switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -96,7 +96,7 @@ void init_proc() {
 }
 Context* schedule(Context *prev) {
 	current->cp = prev;
-	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-//	current = &pcb[0];
+//	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+	current = &pcb[0];
 	return current->cp;
 }

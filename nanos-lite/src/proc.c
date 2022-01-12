@@ -7,6 +7,7 @@ static PCB pcb_boot = {};
 PCB *current = NULL;
 
 void switch_boot_pcb() {
+				printf("pcb_boot = 0x%x\n", &pcb_boot);
   current = &pcb_boot;
 }
 

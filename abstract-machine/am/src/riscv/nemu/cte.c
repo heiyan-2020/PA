@@ -22,7 +22,7 @@ Context* __am_irq_handle(Context *c) {
 							 }	
 			case 0x80000007: {
 											 	ev.event = EVENT_IRQ_TIMER;
-												c->mepc += 4;
+										//		c->mepc += 4;
 												break;
 											 }
       default: ev.event = EVENT_ERROR; break;

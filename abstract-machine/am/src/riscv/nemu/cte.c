@@ -14,11 +14,12 @@ Context* __am_irq_handle(Context *c) {
 							 if (c->GPR1 == -1) {
 							 		ev.event = EVENT_YIELD;
 									c->mepc += 4;
-							 } else {
+							 	} else {
 							 		ev.event = EVENT_SYSCALL;
 									c->mepc += 4;
-							 }
-							 }	break;
+							 		}
+								break;
+							 }	
 			case 0x80000007: {
 											 	ev.event = EVENT_IRQ_TIMER;
 												c->mepc += 4;

@@ -11,6 +11,7 @@ static Context* do_event(Event e, Context* c) {
 					//Context* ret = schedule(c);
 				//	assert(ret != NULL);
 			//		return ret;
+				break;
 				}
 		case EVENT_SYSCALL:{ 
 						do_syscall(c); 

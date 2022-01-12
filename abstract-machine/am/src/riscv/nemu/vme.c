@@ -78,6 +78,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 			printf("va=0x%x, pa=0x%x\n", va, pa);
 			printf("pg_dic[num]=0x%x\n", pg_dic[pg_dic_num]);
 	uint32_t* pg_table = (uint32_t*)(((((uint32_t)pg_dic[pg_dic_num]) >> (PGSIZE_WIDTH))) << (PGSIZE_WIDTH)); 
+	printf("pg_table=0x%x\n", pg_table);
 	pg_table[pg_table_num] = (uint32_t)pa;
 	pg_table[pg_table_num] |= 1;
 //	printf("pg_table=0x%x\n", pg_table);

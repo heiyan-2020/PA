@@ -2728,7 +2728,7 @@ static int stbi__zbuild_huffman(stbi__zhuffman *z, const stbi_uc *sizelist, int 
 {
    int i,k=0;
    int code, next_code[16], sizes[17];
-
+	printf("stb_image.h 2731:z=0x%x,sizelist=0x%x\n", z, sizelist);
    // DEFLATE spec for generating codes
    memset(sizes, 0, sizeof(sizes));
    memset(z->fast, 0, sizeof(z->fast));

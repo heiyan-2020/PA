@@ -53,6 +53,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}
 	assert(argc > 0);
+	printf("proc.c 56:begin=0x%x\n", begin);
 	*(int*)begin = argc;
 	char** argv_start = (char**)begin + 1;
 	char** argv_end = (char**)argv_start + argc;

@@ -26,6 +26,7 @@ Context* __am_irq_handle(Context *c) {
     assert(c != NULL);
   }
 	__am_switch(c);
+	printf("cte.c 29: c=0x%x\n", c);
   return c;
 }
 

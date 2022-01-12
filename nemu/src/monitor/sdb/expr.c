@@ -6,7 +6,7 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-int precedence[32] = {0, 4, 7, 4, 3, 3, 1, 1, 0, 0, 0, 7, 11, 2, 2};
+int precedence[32] = {0, 4, 7, 4, 3, 3, 1, 1, 0, 0, 0, 7, 11, 2, 2, 2, 2};
 
 enum {
   TK_NOTYPE, TK_PLUS, TK_EQ, TK_SUB, TK_DIV, TK_MUL, TK_LEFT, TK_RIGHT, TK_NUM, TK_HEXNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF, TK_G,TK_L,TK_NEG

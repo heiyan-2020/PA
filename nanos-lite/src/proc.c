@@ -32,12 +32,16 @@ void context_kload(PCB* proc, void (*entry)(void *), void* arg) {
 uintptr_t loader(PCB *pcb, const char *filename);
 
 void context_uload(PCB* proc, const char* pathname, char* const argv[], char* const envp[]) {
-	Area stackArea = {
-		.start = proc->stack, 
-		.end = proc->stack + STACK_SIZE
-	};
+//	Area stackArea = {
+//		.start = proc->stack, 
+//		.end = proc->stack + STACK_SIZE
+//	};
 	AddrSpace* _as = &proc->as;
 	protect(_as);	
+	Area stackArea = {
+		.end = _as->area.end,
+		.start = _as->area.end - STACK_SIZE
+	};
 	//initialize stack space.
 	int stack_pages = STACK_SIZE / PGSIZE; 
 	void* stack_space = new_page(stack_pages);

@@ -69,7 +69,6 @@ void __am_switch(Context *c) {
 #define	VALID_MASK 1
 void map(AddrSpace *as, void *va, void *pa, int prot) {
 	uint32_t* pg_dic = as->ptr;
-	printf("va=0x%x, dic=0x%x\n", va, pg_dic);
 	uint32_t pg_dic_num = (uint32_t)va >> (PGSIZE_WIDTH + PGTABLE_WIDTH);
 	uint32_t pg_table_num = ((uint32_t)va >> (PGSIZE_WIDTH)) & ((1 << PGTABLE_WIDTH) - 1);
 	if ((pg_dic[pg_dic_num] & VALID_MASK) == 0) {

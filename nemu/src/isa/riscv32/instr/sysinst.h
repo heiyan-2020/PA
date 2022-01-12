@@ -3,7 +3,7 @@
 #define _a1 cpu.gpr[11]._32
 #define _a2 cpu.gpr[12]._32
 def_EHelper(ecall) {
-	rtl_li(s, &(s->dnpc), isa_raise_intr(11, cpu.mtvec));
+	rtl_li(s, &(s->dnpc), isa_raise_intr(11, cpu.pc));
 }
 #define MTVEC 0x00000305
 #define MCAUSE 0x00000342

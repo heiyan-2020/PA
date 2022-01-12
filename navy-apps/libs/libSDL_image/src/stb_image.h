@@ -2966,7 +2966,6 @@ static int stbi__compute_huffman_codes(stbi__zbuf *a)
       int s = stbi__zreceive(a,3);
       codelength_sizes[length_dezigzag[i]] = (stbi_uc) s;
    }
-	 printf("stb_image.h 2969:&z_codelength=0x%x, codelength_sizes=0x%x\n", &z_codelength, codelength_sizes);
    if (!stbi__zbuild_huffman(&z_codelength, codelength_sizes, 19)) return 0;
 
    n = 0;

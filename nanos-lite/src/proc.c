@@ -96,7 +96,7 @@ void init_proc() {
   Log("Initializing processes...");
 }
 //RATIO is used to determine priority.
-#define RATIO 1
+#define RATIO 10
 Context* schedule(Context *prev) {
 	static int count = 0;
 	if (count++ < RATIO) {

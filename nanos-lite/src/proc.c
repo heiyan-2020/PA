@@ -93,7 +93,7 @@ void init_proc() {
 
   Log("Initializing processes...");
 }
-#define RATIO 10
+#define RATIO 10000
 Context* schedule(Context *prev) {
 	static int count = 0;
 	if (count++ < RATIO) {

@@ -99,11 +99,9 @@ void init_proc() {
 #define RATIO 100
 Context* schedule(Context *prev) {
 	static int count = 0;
-	printf("count=%d\n", count);
 	if (count++ < RATIO) {
 		current->cp = prev;
 		current = &pcb[0];
-		printf("pcb[0]\n");
 		return current->cp;
 	} else {
 		count = 0;

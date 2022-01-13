@@ -101,13 +101,11 @@ Context* schedule(Context *prev) {
 	if (count++ < RATIO) {
 		current->cp = prev;
 		current = &pcb[0];
-		printf("this way\n");
 		return current->cp;
 	} else {
 		count = 0;
 		current->cp = prev;
 		current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-		printf("haha\n");
 		return current->cp;
 	}
 }

@@ -50,12 +50,14 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   return true;
 }
 #define a0 10
+#define sp 2
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	Context* newContext = kstack.end - sizeof(Context);
 	newContext->mepc = (uintptr_t)entry;
 	newContext->mstatus = 0x1808;
 	//support arguments passing.
 	newContext->gpr[a0] = (uint32_t)arg;
+	newContext->gpr[2] = (uint32_t)newContext;
 	int tmp = 0;
 	asm volatile("csrw mscratch, %0": : "r"(tmp));
   return newContext;

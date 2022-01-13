@@ -7,7 +7,7 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
 		case EVENT_YIELD: 
 				{
-					printf("yield succuss!\n"); 
+//					printf("yield succuss!\n"); 
 					Context* ret = schedule(c);
 					assert(ret != NULL);
 					return ret;
@@ -18,7 +18,7 @@ static Context* do_event(Event e, Context* c) {
 						break;
 						  }
 		case EVENT_IRQ_TIMER: {
-														printf("TIMER_INTERRUPT SUCC!\n");
+//														printf("TIMER_INTERRUPT SUCC!\n");
 														Context* ret = schedule(c);
 														assert(ret != NULL);
 														return ret;

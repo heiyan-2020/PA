@@ -38,7 +38,8 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 	int stack_pages = STACK_SIZE / PGSIZE; 
 	void* stack_space = new_page(stack_pages);
 	Area stackArea = {
-		.start = stack_space, 
+		.start = proc->stack, 
+		.end = proc->stack + STACK_SIZE
 	};
 //	void* begin = stack_space;
 	void* vaddr_stack = proc->as.area.end - STACK_SIZE;

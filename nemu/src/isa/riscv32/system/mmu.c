@@ -20,6 +20,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	word_t pg_table_num = (vaddr >> (PGSIZE_WIDTH)) & ((1 << PGTABLE_WIDTH) - 1);
 	word_t vaddr_offset = vaddr & ((1 << PGSIZE_WIDTH) - 1);
 	paddr_t pg_dic = (paddr_t)(va << (PGSIZE_WIDTH));	
+	printf("pg_dic=0x%x\n", pg_dic);
 	word_t pg_dic_item = paddr_read(pg_dic + pg_dic_num * sizeof(word_t), sizeof(word_t));
 //	printf("pg_dic = 0x%x, pg_dic_num = 0x%x, pg_dic_item = 0x%x\n",pg_dic, pg_dic_num, pg_dic_item);
 	if ((pg_dic_item & VALID_MASK) == 0) {

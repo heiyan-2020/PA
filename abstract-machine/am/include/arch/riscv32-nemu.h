@@ -7,7 +7,7 @@ struct Context {
 		void* pdir;
 		uintptr_t gpr[32];	
 	};
-	uintptr_t mcause, mstatus, mepc;
+	uintptr_t mcause, mstatus, mepc, np;
 	//may need to change place.
 //  void *pdir;
 };

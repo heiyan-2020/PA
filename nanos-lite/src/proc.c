@@ -93,6 +93,7 @@ void init_proc() {
 
   Log("Initializing processes...");
 }
+//RATIO is used to determine priority.
 #define RATIO 10000
 Context* schedule(Context *prev) {
 	static int count = 0;
@@ -106,8 +107,4 @@ Context* schedule(Context *prev) {
 		current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 		return current->cp;
 	}
-//	current->cp = prev;
-//	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-//	current = &pcb[0];
-//	return current->cp;
 }

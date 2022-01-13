@@ -51,6 +51,7 @@ save_context:
 ker:
 	li t0, 0
 label_1:	
+	STORE t0, OFFSET_NP(sp) 
   csrr t0, mcause
   csrr t1, mstatus
   csrr t2, mepc

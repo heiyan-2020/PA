@@ -106,7 +106,7 @@ Context* schedule(Context *prev) {
 	} else {
 		count = 0;
 		current->cp = prev;
-		current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+		current = &pcb[1];
 		return current->cp;
 	}
 }

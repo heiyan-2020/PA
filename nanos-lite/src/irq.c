@@ -18,7 +18,7 @@ static Context* do_event(Event e, Context* c) {
 						break;
 						  }
 		case EVENT_IRQ_TIMER: {
-//														printf("TIMER_INTERRUPT SUCC!\n");
+														printf("TIMER_INTERRUPT SUCC!\n");
 														Context* ret = schedule(c);
 														assert(ret != NULL);
 														return ret;

@@ -8,7 +8,6 @@ PCB *current = NULL;
 
 void switch_boot_pcb() {
   current = &pcb_boot;
-	printf("&boot=0x%x, &pcb[0]=0x%x, &pcb[1]=0x%x\n", current, &pcb[0], &pcb[1]);
 }
 
 void hello_fun(void *arg) {
@@ -102,11 +101,13 @@ Context* schedule(Context *prev) {
 	if (count++ < RATIO) {
 		current->cp = prev;
 		current = &pcb[0];
+		printf("this way\n");
 		return current->cp;
 	} else {
 		count = 0;
 		current->cp = prev;
 		current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+		printf("haha\n");
 		return current->cp;
 	}
 }

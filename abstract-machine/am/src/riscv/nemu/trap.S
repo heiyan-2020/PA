@@ -78,7 +78,9 @@ label_1:
   csrw mepc, t2
 	LOAD t1, OFFSET_NP(sp)
 	beqz t1, label_2
+	addi sp, sp, CONTEXT_SIZE
 	csrw mscratch, sp
+	addi sp, sp, -CONTEXT_SIZE
 label_2:
   MAP(REGS, POP)
 	LOAD sp, OFFSET_SP(sp) 

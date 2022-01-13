@@ -58,6 +58,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	//support arguments passing.
 	newContext->gpr[a0] = (uint32_t)arg;
 	newContext->gpr[2] = (uint32_t)newContext;
+	newContext->np = 0;
 	int tmp = 0;
 	asm volatile("csrw mscratch, %0": : "r"(tmp));
   return newContext;

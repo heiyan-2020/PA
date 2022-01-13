@@ -93,9 +93,21 @@ void init_proc() {
 
   Log("Initializing processes...");
 }
+#define RATIO 10
 Context* schedule(Context *prev) {
-	current->cp = prev;
-	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+	static int count = 0;
+	if (count++ < RATIO) {
+		current->cp = prev;
+		current = &pcb[0];
+		return current->cp;
+	} else {
+		count = 0;
+		current->cp = prev;
+		current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+		return current->cp;
+	}
+//	current->cp = prev;
+//	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 //	current = &pcb[0];
-	return current->cp;
+//	return current->cp;
 }

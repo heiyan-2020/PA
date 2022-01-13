@@ -1,7 +1,9 @@
 #include <am.h>
 #include <riscv/riscv.h>
 #include <klib.h>
-
+#define USER 1
+#define CONTEXT_SIZE  ((32 + 4) * XLEN)
+#define XLEN  4
 static Context* (*user_handler)(Event, Context*) = NULL;
 void __am_get_cur_as(Context *c);
 void __am_switch(Context *c);
@@ -39,8 +41,9 @@ extern void __am_asm_trap(void);
 
 bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
+	int tmp = 0;
   asm volatile("csrw mtvec, %0" : : "r"(__am_asm_trap));
-
+	asm volatile("csrw mscratch, %0": : "r"(tmp));
   // register event handler
   user_handler = handler;
 
@@ -53,6 +56,8 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	newContext->mstatus = 0x1808;
 	//support arguments passing.
 	newContext->gpr[a0] = (uint32_t)arg;
+	int tmp = 0;
+	asm volatile("csrw mscratch, %0": : "r"(tmp));
   return newContext;
 }
 

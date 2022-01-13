@@ -26,14 +26,31 @@ f(30) f(31)
 #define OFFSET_CAUSE  (32 * XLEN)
 #define OFFSET_STATUS (33 * XLEN)
 #define OFFSET_EPC    (34 * XLEN)
-
+#define OFFSET_NP  		(35 * XLEN)
+#define KERNEL				(0)
+#define USER					(1)
 .align 3
 .globl __am_asm_trap
 __am_asm_trap:
+	//exchange ksp and sp.
+
+	csrrw sp, mscratch, sp   
+	bnez sp, save_context     
+	csrr sp, mscratch   
+	
+save_context:
   addi sp, sp, -CONTEXT_SIZE
-
+	
   MAP(REGS, PUSH)
-
+	csrr t0, mscratch
+	STORE t0,  OFFSET_SP(sp)
+	addi t0, t0, -CONTEXT_SIZE
+	beq sp, t0, ker
+	li t0, 1
+	bnez t0, label_1
+ker:
+	li t0, 0
+label_1:	
   csrr t0, mcause
   csrr t1, mstatus
   csrr t2, mepc
@@ -41,6 +58,9 @@ __am_asm_trap:
   STORE t0, OFFSET_CAUSE(sp)
   STORE t1, OFFSET_STATUS(sp)
   STORE t2, OFFSET_EPC(sp)
+
+	li t0, 0
+	csrw mscratch, t0
 
   # set mstatus.MPRV to pass difftest
   li a0, (1 << 17)
@@ -55,8 +75,10 @@ __am_asm_trap:
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1
   csrw mepc, t2
-
+	LOAD t1, OFFSET_NP(sp)
+	beqz t1, label_2
+	csrw mscratch, sp
+label_2:
   MAP(REGS, POP)
-
-  addi sp, sp, CONTEXT_SIZE
+	LOAD sp, OFFSET_SP(sp) 
   mret

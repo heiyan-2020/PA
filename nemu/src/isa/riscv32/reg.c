@@ -15,6 +15,7 @@ void isa_reg_display() {
 	}
 printf("%s\t\t%x\t\t%d\n", "pc", cpu.pc, cpu.pc);
 printf("%s\t\t%x\t\t%d\n", "satp", cpu.satp, cpu.satp);
+printf("%s\t\t%x\t\t%d\n", "mscratch", cpu.mscratch, cpu.mscratch);
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {

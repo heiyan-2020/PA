@@ -85,7 +85,6 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
 	Context* newContext = kstack.end - sizeof(Context);
-	printf("vme.c 88:newContext=0x%x\n", newContext);
 	newContext->mepc = (uintptr_t)entry;
 	newContext->mstatus = 0x1808;
 	newContext->pdir = as->ptr;

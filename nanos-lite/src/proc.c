@@ -89,8 +89,8 @@ void init_proc() {
 	//context_kload(&pcb[0], hello_fun, "first!!!");
 	char* const argv[] = {"/bin/pal", NULL};
 	context_uload(&pcb[0], "/bin/pal", argv, NULL);
-//	char* const argv_1[] = {"/bin/hello", NULL};
-	context_kload(&pcb[1], hello_fun, "ffff");
+	char* const argv_1[] = {"/bin/hello", NULL};
+	context_uload(&pcb[1], "/bin/hello",argv_1, NULL);
   switch_boot_pcb();
 
   Log("Initializing processes...");

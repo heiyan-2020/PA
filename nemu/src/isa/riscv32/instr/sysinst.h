@@ -22,10 +22,11 @@ def_EHelper(csrrw) {
 		case MSCRATCH: system_reg = &cpu.mscratch;break; 
 		default: assert(0);
 	}
+	word_t tmp = *dsrc1;
 	if (ddest != &cpu.gpr[0]._32) {
 		rtl_addi(s, ddest, system_reg, 0);
 	}
-	rtl_addi(s, system_reg, dsrc1, 0);
+	rtl_addi(s, system_reg, &tmp, 0);
 }
 
 def_EHelper(csrrs) {

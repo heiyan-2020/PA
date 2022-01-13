@@ -29,12 +29,11 @@ Context* __am_irq_handle(Context *c) {
 											 }
       default: ev.event = EVENT_ERROR; break;
     }
-
+	c->mstatus = ((c->mstatus & ~(1 << 3)) | (1 << 3));
     c = user_handler(ev, c);
     assert(c != NULL);
   }
 	__am_switch(c);
-	c->mstatus = ((c->mstatus & ~(1 << 3)) | (1 << 3));
   return c;
 }
 

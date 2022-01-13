@@ -49,7 +49,7 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 		vaddr_stack += PGSIZE;
 		stack_space += PGSIZE;
 	}
-	stackArea.end = stack_space;
+//	stackArea.end = stack_space;
 	//fill the stack space.
 	size_t argc = 0; 
 	while (argv != NULL && argv[argc] != NULL) {argc++;}

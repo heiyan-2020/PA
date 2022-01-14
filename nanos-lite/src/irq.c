@@ -7,7 +7,6 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
 		case EVENT_YIELD: 
 				{
-					printf("yield succuss!\n"); 
 					Context* ret = schedule(c);
 					assert(ret != NULL);
 					return ret;

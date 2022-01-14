@@ -15,7 +15,7 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
-				yield();
+		yield();
 	const char* charBuf = (const char*) buf;
 	size_t count = 0;
 	while (count < len) {

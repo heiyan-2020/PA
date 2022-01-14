@@ -34,14 +34,7 @@ void sys_write(Context* c) {
 	int fd = c->GPR2;
 	const char* buf = (char*)c->GPR3;
 	size_t count = c->GPR4;
-//	if (fd == 1 || fd == 2) {
-//		for (int i = 0; i < count; i++) {
-//			putch(buf[i]);
-//		}	
-//		c->GPRx = count;
-//	} else {
 		c->GPRx = fs_write(fd,(const void*) buf, count);
-//	}
 }
 
 void sys_read(Context* c) {

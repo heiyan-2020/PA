@@ -24,7 +24,7 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 	}
 	return count;
 }
-
+int fg_pcb = 1;
 size_t events_read(void *buf, size_t offset, size_t len) {
 			//	yield();
 	char buffer[32];
@@ -37,6 +37,12 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	}
 	if (keydown) {
 		bytesReadIn = sprintf(buffer, "kd %s\n", keyname[keycode], keycode);
+		switch (keycode) {
+			case AM_KEY_F1: fg_pcb = 1;break;
+			case AM_KEY_F2: fg_pcb = 2;break;
+			case AM_KEY_F3: fg_pcb = 3;break;
+			default:break;
+		}
 	} else {
 		bytesReadIn = sprintf(buffer, "ku %s\n", keyname[keycode], keycode);
 	}

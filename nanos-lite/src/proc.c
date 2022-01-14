@@ -87,21 +87,26 @@ void context_uload(PCB* proc, const char* pathname, char* const argv[], char* co
 void naive_uload(PCB*, const char*);
 void init_proc() {
 	//context_kload(&pcb[0], hello_fun, "first!!!");
-	char* const argv[] = {"/bin/nterm", NULL};
-	context_uload(&pcb[0], "/bin/nterm", argv, NULL);
-	char* const argv_1[] = {"/bin/hello", NULL};
-	context_uload(&pcb[1], "/bin/hello",argv_1, NULL);
+	char* const argv_0[] = {"/bin/hello", NULL};
+	context_uload(&pcb[0], "/bin/hello", argv_0, NULL);
+	char* const argv_1[] = {"/bin/pal", NULL};
+	context_uload(&pcb[1], "/bin/pal",argv_1, NULL);
+	char* const argv_2[] = {"/bin/bird", NULL};
+	context_uload(&pcb[2], "/bin/bird",argv_2, NULL);
+	char* const argv_3[] = {"/bin/nslider", NULL};
+	context_uload(&pcb[3], "/bin/nslider",argv_3, NULL);
   switch_boot_pcb();
 
   Log("Initializing processes...");
 }
 //RATIO is used to determine priority.
 #define RATIO 100
+extern int fg_pcb;
 Context* schedule(Context *prev) {
 	static int count = 0;
 	if (count++ < RATIO) {
 		current->cp = prev;
-		current = &pcb[0];
+		current = &pcb[fg_pcb];
 		return current->cp;
 	} else {
 		count = 0;

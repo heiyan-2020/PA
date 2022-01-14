@@ -48,4 +48,5 @@ def_EHelper(mret) {
 	word_t mpie = (cpu.mstatus >> 7) & 0x1;
 	cpu.mstatus = ((cpu.mstatus & ~(1 << 3)) | (mpie << 3));
 	cpu.mstatus = ((cpu.mstatus & ~(1 << 7)) | (1 << 7));
+	printf("sysinst.h 51: mstatus=0x%x\n", cpu.mstatus);
 }

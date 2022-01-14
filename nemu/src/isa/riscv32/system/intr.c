@@ -13,6 +13,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
 	word_t mie = (cpu.mstatus >> 3) & 0x1;
 	cpu.mstatus = ((cpu.mstatus & ~(1 << 7)) | (mie << 7));
 	cpu.mstatus = ((cpu.mstatus & ~(1 << 3)) | (0 << 3));
+	printf("intr.c 16:mstatus=0x%x\n", cpu.mstatus);
   return cpu.mtvec;
 }
 

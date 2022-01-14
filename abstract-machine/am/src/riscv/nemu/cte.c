@@ -33,7 +33,6 @@ Context* __am_irq_handle(Context *c) {
     assert(c != NULL);
   }
 	__am_switch(c);
-	printf("cte.c 36:mstatus=0x%x\n", c->mstatus);
   return c;
 }
 

@@ -40,9 +40,9 @@ extern void __am_asm_trap(void);
 
 bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
-	int tmp = 0;
+  int tmp = 0;
   asm volatile("csrw mtvec, %0" : : "r"(__am_asm_trap));
-	asm volatile("csrw mscratch, %0": : "r"(tmp));
+  asm volatile("csrw mscratch, %0": : "r"(tmp));
   // register event handler
   user_handler = handler;
 
